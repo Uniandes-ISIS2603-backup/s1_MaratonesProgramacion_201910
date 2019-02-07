@@ -40,7 +40,7 @@ import javax.persistence.MappedSuperclass;
  * @author ISIS2603
  */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class UsuarioEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,7 +65,7 @@ public abstract class BaseEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BaseEntity other = (BaseEntity) obj;
+        final UsuarioEntity other = (UsuarioEntity) obj;
         return Objects.equals(this.id, other.id);
     }
 

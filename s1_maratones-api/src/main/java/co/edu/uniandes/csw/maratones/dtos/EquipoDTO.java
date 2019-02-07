@@ -36,7 +36,34 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author ISIS2603
  */
 public class EquipoDTO implements Serializable {
+    private UsuarioDTO coach;
+    private String nombreEquipo;
+    private UsuarioDTO[] participantes;
 
+    public UsuarioDTO getCoach() {
+        return coach;
+    }
+
+    public void setCoach(UsuarioDTO coach) {
+        this.coach = coach;
+    }
+
+    public String getNombreEquipo() {
+        return nombreEquipo;
+    }
+
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
+    }
+
+    public UsuarioDTO[] getParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(UsuarioDTO[] participantes) {
+        this.participantes = participantes;
+    }
+    
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
