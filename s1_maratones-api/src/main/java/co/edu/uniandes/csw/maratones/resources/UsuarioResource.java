@@ -38,6 +38,13 @@ import javax.ws.rs.WebApplicationException;
  */
 public class UsuarioResource {
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+    
+    @POST
+    public UsuarioDTO crearUsuario(UsuarioDTO pusuario) {
+        return pusuario;
+    }
+    
+/*    
     private UsuarioLogic elUsuariolLogic;
     @Inject
     
@@ -51,12 +58,12 @@ public class UsuarioResource {
      * @return JSON {@link UsuarioDTO} - El usuario guardado con el atributo id
      * autogenerado.
      */
-    @POST
+/*    @POST
     public UsuarioDTO crearUsuario(UsuarioDTO pusuario) {
-    LOGGER.log(Level.INFO, "UserResource createUser: input: {0}", pusuario);
-    UsuarioDTO elUsuarioDTO = new UsuarioDTO(elUsuariolLogic.crearUsuario(pusuario.toEntity()));
-    LOGGER.log(Level.INFO, "UserResource createUser: output: {0}", elUsuarioDTO);
-    return elUsuarioDTO;
+        LOGGER.log(Level.INFO, "UserResource createUser: input: {0}", pusuario);
+        UsuarioDTO elUsuarioDTO = new UsuarioDTO(elUsuariolLogic.crearUsuario(pusuario.toEntity()));
+        LOGGER.log(Level.INFO, "UserResource createUser: output: {0}", elUsuarioDTO);
+        return elUsuarioDTO;
     }
     
     /**
@@ -65,7 +72,7 @@ public class UsuarioResource {
      * @return JSONArray {@link UsuarioDetailDTO} - Los usuarios encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
-    @GET
+/*    @GET
     public List<UsuarioDetailDTO> getUsuarios() {
         LOGGER.info("UserResource Users: input: void");
         List<UsuarioDetailDTO> listaUsuarios = listEntity2DTO(elUsuariolLogic.getUsuarios());
@@ -82,7 +89,7 @@ public class UsuarioResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el autor.
      */
-    @GET
+/*    @GET
     @Path("{nombresUsuario: \\d+}")
     public UsuarioDetailDTO getUsuario(@PathParam("nombreUsuario") Long elNombreUsuario) {
         LOGGER.log(Level.INFO, "UserResource getUsuario: input: {0}", elNombreUsuario);
@@ -107,7 +114,7 @@ public class UsuarioResource {
      * Error de lógica que se genera cuando no se encuentra el usuario a
      * actualizar.
      */
-    @PUT
+/*    @PUT
     @Path("{nombresUsuario: \\d+}")
     public UsuarioDetailDTO updateUsuario(@PathParam("nombreUsuario") Long elNombreUsuario, UsuarioDetailDTO elUsuario) {
         LOGGER.log(Level.INFO, "UserResource updateUsuario: input: elNombreUsuario: {0} , usuario: {1}", new Object[]{elNombreUsuario, elUsuario});
@@ -131,7 +138,7 @@ public class UsuarioResource {
          * @throws WebApplicationException {@link WebApplicationExceptionMapper}
          * Error de lógica que se genera cuando no se encuentra el autor a borrar.
          */
-    @DELETE
+/*    @DELETE
     @Path("{nombresUsuario: \\d+}")
     public void deleteUsuario(@PathParam("elNombreUsuario") Long elNombreUsuario) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UserResource deleteUsuario: input: {0}", elNombreUsuario);
@@ -148,13 +155,14 @@ public class UsuarioResource {
          * @param entityList Lista de UsuarioEntity a convertir.
          * @return Lista de UsuarioDetailDTO convertida.
          */
-    private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
+/*    private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
         List<UsuarioDetailDTO> list = new ArrayList<>();
         for (UsuarioEntity entity : entityList) {
             list.add(new UsuarioDetailDTO(entity));
         }
         return list;
     }
+    
 }
 
 
