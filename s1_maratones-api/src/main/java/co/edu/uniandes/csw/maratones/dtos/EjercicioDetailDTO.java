@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author estudiante
  */
-public class EjercicioDetailDTO implements Serializable{
+public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     
     /*
     
@@ -29,6 +29,11 @@ public class EjercicioDetailDTO implements Serializable{
      */
     public List<CompetenciaDTO> getCompetencias() {
         return competencias;
+    }
+    
+    public EjercicioDetailDTO()
+    {
+        
     }
 
     /**
