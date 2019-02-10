@@ -44,7 +44,10 @@ public class SubmissionDTO implements Serializable{
     */
     private String codigo;
 
-    
+    public SubmissionDTO()
+    {
+        
+    }
     
     /**
      * @return the tiempo

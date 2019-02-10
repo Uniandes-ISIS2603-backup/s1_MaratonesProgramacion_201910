@@ -22,6 +22,11 @@ public class LenguajeDTO implements Serializable{
     
     */
     private int experiencia;
+    
+    public LenguajeDTO()
+    {
+        
+    }
 
     /**
      * @return the nombre

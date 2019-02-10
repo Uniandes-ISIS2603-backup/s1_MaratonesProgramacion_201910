@@ -45,8 +45,10 @@ public class EjercicioDTO implements Serializable{
 
     
     
-    
-    
+    public EjercicioDTO()
+    {
+        
+    }
     
     
     
