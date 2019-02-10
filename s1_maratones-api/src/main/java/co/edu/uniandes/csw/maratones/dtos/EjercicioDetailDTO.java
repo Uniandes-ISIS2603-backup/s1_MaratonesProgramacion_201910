@@ -16,9 +16,9 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     
     /*
     
-    */
-    private List<CompetenciaDTO> competencias;
     
+    private List<CompetenciaDTO> competencias;
+    */
     /*
     
     */
@@ -26,10 +26,11 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
 
     /**
      * @return the competencias
-     */
+     
     public List<CompetenciaDTO> getCompetencias() {
         return competencias;
     }
+    */
     
     public EjercicioDetailDTO()
     {
@@ -38,11 +39,11 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
 
     /**
      * @param competencias the competencias to set
-     */
+     
     public void setCompetencias(List<CompetenciaDTO> competencias) {
         this.competencias = competencias;
     }
-
+    * */
     /**
      * @return the submissions
      */
