@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
-import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -71,8 +70,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
 
     private List<EquipoDTO> equipos;
-    private List<LenguajeDTO> lenguajes;
-    private List<SubmissionDTO> submission;
+    //private List<LenguajeDTO> lenguajes;
+    //private List<SubmissionDTO> submission;
 
     public List<EquipoDTO> getEquipos() {
         return equipos;
@@ -82,7 +81,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         this.equipos = equipos;
     }
 
-    public List<LenguajeDTO> getLenguajes() {
+    /*public List<LenguajeDTO> getLenguajes() {
         return lenguajes;
     }
 
@@ -98,6 +97,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         this.submission = submission;
     }
 
+    */
     
     @Override
     public String toString() {
