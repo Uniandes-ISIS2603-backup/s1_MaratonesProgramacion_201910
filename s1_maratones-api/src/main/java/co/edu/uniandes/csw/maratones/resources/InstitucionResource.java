@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.resources;
 
-import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
+import co.edu.uniandes.csw.maratones.dtos.InstitucionDTO;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -15,22 +15,17 @@ import javax.ws.rs.Produces;
 
 /**
  *
- * @author estudiante
+ * @author c.mendez11
  */
-
-@Path("lenguajes")
-@Produces("application/json")
-@Consumes("application/json")
+@Path ( "instituciones" )
+@Produces ( "application/json" )
+@Consumes ( "application/json" )
 @RequestScoped
-public class LenguajeResource {
-    
-    
-    private static final Logger LOGGER = Logger.getLogger(LenguajeResource.class.getName());
-    
-    @POST
-    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje)
-    {
-        return lenguaje;
-    }
-    
+public class InstitucionResource {
+      private static final Logger LOGGER = Logger.getLogger(InstitucionResource.class.getName()); 
+     
+   @POST
+   public InstitucionDTO crearInstitucion(InstitucionDTO institucion){
+       return institucion;
+   }
 }

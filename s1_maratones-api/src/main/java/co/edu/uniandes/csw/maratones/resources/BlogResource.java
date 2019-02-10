@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.resources;
 
-import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
+import co.edu.uniandes.csw.maratones.dtos.BlogDTO;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -15,22 +15,17 @@ import javax.ws.rs.Produces;
 
 /**
  *
- * @author estudiante
+ * @author c.mendez11
  */
-
-@Path("lenguajes")
-@Produces("application/json")
-@Consumes("application/json")
-@RequestScoped
-public class LenguajeResource {
-    
-    
-    private static final Logger LOGGER = Logger.getLogger(LenguajeResource.class.getName());
-    
-    @POST
-    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje)
-    {
-        return lenguaje;
-    }
-    
+@Path ( "blogs" )
+@Produces ( "application/json" )
+@Consumes ( "application/json" )
+@RequestScoped   
+public class BlogResource {
+     private static final Logger LOGGER = Logger.getLogger(BlogResource.class.getName()); 
+     
+   @POST
+   public BlogDTO crearBlog(BlogDTO blog){
+       return blog;
+   }
 }

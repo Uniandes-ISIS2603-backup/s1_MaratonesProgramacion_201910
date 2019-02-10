@@ -19,19 +19,19 @@ import javax.ws.rs.Produces;
  */
 
 
-@Path("lenguajes")
+@Path("submissions")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class SubmissionResource {
     
     
-    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SubmissionResource.class.getName());
     
     @POST
-    public SubmissionDTO createSubmission(SubmissionDTO lenguaje)
+    public SubmissionDTO createSubmission(SubmissionDTO submission)
     {
-        return lenguaje;
+        return submission;
     }
     
 }

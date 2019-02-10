@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class EjercicioResource {
     
-    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(EjercicioResource.class.getName());
     
     @POST
     public EjercicioDTO createEjercicio(EjercicioDTO ejercicio)
