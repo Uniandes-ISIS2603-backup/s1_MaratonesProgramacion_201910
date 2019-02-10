@@ -5,13 +5,52 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author estudiante
  */
-public class LenguajeDTO {
+public class LenguajeDTO implements Serializable{
    
+    /*
+    
+    */
     private String nombre;
+    
+    /*
+    
+    */
+    private int experiencia;
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the experiencia
+     */
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    /**
+     * @param experiencia the experiencia to set
+     */
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
+    }
+    
     
     
 }
