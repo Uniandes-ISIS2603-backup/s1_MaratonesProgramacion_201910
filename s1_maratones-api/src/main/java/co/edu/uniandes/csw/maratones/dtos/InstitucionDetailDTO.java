@@ -5,13 +5,14 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author estudiante
  */
-public class InstitucionDetailDTO extends InstitucionDTO{
+public class InstitucionDetailDTO extends InstitucionDTO implements Serializable{
     private List<UsuarioDTO> miembros;
     private List<EquipoDTO> equipos;
 

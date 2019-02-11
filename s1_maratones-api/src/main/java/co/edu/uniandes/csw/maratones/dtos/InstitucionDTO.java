@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import java.io.Serializable;
+
 
 /**
  * InstitucionDTO Objeto de transferencia de datos de Institucion. Los DTO contienen las
@@ -32,7 +34,7 @@ package co.edu.uniandes.csw.maratones.dtos;
 /**
  * @author c.mendez11
  */
-public class InstitucionDTO {
+public class InstitucionDTO implements Serializable{
     private String nombre;
     private String imagen;
     private String ubicacion;

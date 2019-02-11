@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author estudiante
+ * @author aa.rodriguezv
  */
 public class LenguajeDTO implements Serializable{
    

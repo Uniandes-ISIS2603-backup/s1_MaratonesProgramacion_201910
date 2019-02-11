@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author estudiante
+ * @author aa.rodriguezv
  */
 public class SubmissionDTO implements Serializable{
     
