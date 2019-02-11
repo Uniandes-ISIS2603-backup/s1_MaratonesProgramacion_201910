@@ -44,15 +44,72 @@ public abstract class UsuarioEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String rol;
+    private String nombreUsuario;
+    private String nombre;
+    private String imagen;
+    private String correo;
+    private String clave;
+    private int puntaje;
+    
 
-    public Long getId() {
-        return id;
+    public String getRol() {
+        return rol;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -66,13 +123,13 @@ public abstract class UsuarioEntity implements Serializable {
             return false;
         }
         final UsuarioEntity other = (UsuarioEntity) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.nombreUsuario, other.nombreUsuario);
     }
 
     @Override
     public int hashCode() {
-        if (this.getId() != null) {
-            return this.getId().hashCode();
+        if (this.getNombreUsuario() != null) {
+            return this.getNombreUsuario().hashCode();
         }
         return super.hashCode();
     }
