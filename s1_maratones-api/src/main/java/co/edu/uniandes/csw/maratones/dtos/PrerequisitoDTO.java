@@ -28,7 +28,7 @@ public class PrerequisitoDTO implements Serializable{
     /**
      * @param nivel the puntaje to set
      */
-    public void setPuntaje(int nivel) {
+    public void setNivel(int nivel) {
         this.nivel = nivel;
     }
 }
