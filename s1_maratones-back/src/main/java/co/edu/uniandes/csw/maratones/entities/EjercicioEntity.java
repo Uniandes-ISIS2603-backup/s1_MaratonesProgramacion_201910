@@ -5,13 +5,16 @@
  */
 package co.edu.uniandes.csw.maratones.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Angel Rodriguez aa.rodriguezv
  */
-public class EjercicioEntity {
+@Entity
+public class EjercicioEntity extends BaseEntity implements Serializable{
     
     
      /*
