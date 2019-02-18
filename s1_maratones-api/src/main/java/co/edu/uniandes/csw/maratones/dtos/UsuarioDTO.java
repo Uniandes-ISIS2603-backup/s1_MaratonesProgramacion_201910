@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.HashMap;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -80,7 +81,29 @@ public class UsuarioDTO implements Serializable {
     private String clave;
     private int puntaje;
     
+    /**
+     * Constructor por defecto
+     */
+    public UsuarioDTO() {
+    }
 
+    /**
+     * Constructor a partir de la entidad
+     *
+     * @param usuarioEntity La entidad del libro
+     */
+    public UsuarioDTO(UsuarioEntity usuarioEntity) {
+        if (usuarioEntity != null) {
+            this.nombre = usuarioEntity.getNombre();
+            this.nombreUsuario = usuarioEntity.getNombreUsuario();
+            this.clave = usuarioEntity.getClave();
+            this.correo = usuarioEntity.getCorreo();
+            this.imagen = usuarioEntity.getImagen();
+            this.rol = usuarioEntity.getRol();
+            this.puntaje = usuarioEntity.getPuntaje();
+        }
+    }
+    
     public String getRol() {
         return rol;
     }
@@ -144,5 +167,22 @@ public class UsuarioDTO implements Serializable {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
    
-    
+    /**
+     * Método para transformar el DTO a una entidad.
+     *
+     * @return La entidad del libro asociado.
+     */
+    public UsuarioEntity toEntity() {
+        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        usuarioEntity.setClave(this.clave);
+        usuarioEntity.setCorreo(this.correo);
+        usuarioEntity.setImagen(this.imagen);
+        usuarioEntity.setNombre(this.nombre);
+        usuarioEntity.setNombreUsuario(this.nombreUsuario);
+        usuarioEntity.setPuntaje(this.puntaje);
+        usuarioEntity.setRol(this.rol);
+
+        
+        return usuarioEntity;
+    }
 }
