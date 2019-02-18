@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.maratones.persistence;
 
 import co.edu.uniandes.csw.maratones.entities.ForoEntity;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,8 @@ import javax.persistence.TypedQuery;
 
 @Stateless
 public class ForoPersistence {
+    
+    //private static final Logger LOGGER = Logger.getLogger(ForoPersistence.class.getNombre());
     
     @PersistenceContext(unitName = "maratonesPU")
     protected EntityManager em;

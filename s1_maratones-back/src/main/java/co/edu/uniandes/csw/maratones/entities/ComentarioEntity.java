@@ -6,7 +6,10 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -19,6 +22,10 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     private String mensaje;
     
     private int votos;
+    
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private ForoEntity foro;
     
     public ComentarioEntity(){
         
@@ -50,6 +57,20 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
      */
     public void setVotos(int votos) {
         this.votos = votos;
+    }
+
+    /**
+     * @return the foro
+     */
+    public ForoEntity getForo() {
+        return foro;
+    }
+
+    /**
+     * @param foro the foro to set
+     */
+    public void setForo(ForoEntity foro) {
+        this.foro = foro;
     }
 
 }

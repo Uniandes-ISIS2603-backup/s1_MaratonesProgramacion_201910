@@ -6,10 +6,15 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -26,6 +31,10 @@ public class ForoEntity extends BaseEntity implements Serializable{
     
     @Temporal(TemporalType.DATE)
     private Date fecha;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "foro", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<ComentarioEntity> comentarios = new ArrayList<ComentarioEntity>();
     
     public ForoEntity() {
     }
@@ -84,5 +93,19 @@ public class ForoEntity extends BaseEntity implements Serializable{
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioEntity> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioEntity> comentarios) {
+        this.comentarios = comentarios;
     }
 }
