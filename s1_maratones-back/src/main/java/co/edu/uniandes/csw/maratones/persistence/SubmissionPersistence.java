@@ -54,12 +54,12 @@ public class SubmissionPersistence {
      * @return null si no existe ninguna competenica con el nombre del argumento.
      * Si existe alguna devuelve la primera.
      */
-    public SubmissionEntity findByName(String nombre) {
-        LOGGER.log(Level.INFO, "Consultando submission por nombre ", nombre);
+    public SubmissionEntity findByName(String codigo) {
+        LOGGER.log(Level.INFO, "Consultando submission por codigo ", codigo);
         // Se crea un query para buscar competencias con el nombre que recibe el método como argumento. ":nombre" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From SubmissionEntity e where e.nombre = :nombre", SubmissionEntity.class);
+        TypedQuery query = em.createQuery("Select e From SubmissionEntity e where e.codigo = :codigo", SubmissionEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
-        query = query.setParameter("nombre", nombre);
+        query = query.setParameter("codigo", codigo);
         // Se invoca el query se obtiene la lista resultado
         List<SubmissionEntity> sameName = query.getResultList();
         SubmissionEntity result;
@@ -70,7 +70,7 @@ public class SubmissionPersistence {
         } else {
             result = sameName.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar submission por nombre ", nombre);
+        LOGGER.log(Level.INFO, "Saliendo de consultar submission por codigo ", codigo);
         return result;
     }
     

@@ -30,28 +30,37 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class EjercicioPersistenceTest {
+  
     
-   @Inject
-    private EjercicioPersistence ejercicioPersistence;
+    @Inject
+    private EjercicioPersistence ejerPersistence;
+    
+    
+    @PersistenceContext
+    private EntityManager em;
+    
     
     /**
      * Lista que tiene los datos de prueba.
      */
     private List<EjercicioEntity> data = new ArrayList<EjercicioEntity>();
+    
+    
     /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
-     */
-    @PersistenceContext
-    private EntityManager em;   
-
-/**
      * Variable para martcar las transacciones del em anterior cuando se
      * crean/borran datos para las pruebas.
      */
     @Inject
     UserTransaction utx;
 
+    
+     /**
+     *
+     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
+     * embebido. El jar contiene las clases de Editorial, el descriptor de la
+     * base de datos y el archivo beans.xml para resolver la inyección de
+     * dependencias.
+     */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -61,7 +70,8 @@ public class EjercicioPersistenceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
-     /**
+    
+       /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -81,17 +91,17 @@ public class EjercicioPersistenceTest {
             }
         }
     }
-
-    /**
+    
+       /**
      * Limpia las tablas que están implicadas en la prueba.
      *
      *
      */
     private void clearData() {
-        em.createQuery("delete from EjercicioEntity").executeUpdate();
+        em.createQuery("delete from SubmissionEntity").executeUpdate();
     }
 
-     /**
+    /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      *
@@ -110,16 +120,17 @@ public class EjercicioPersistenceTest {
     }
     
     
+    
     /**
-     * Prueba para crear un ejercicio.
+     * Prueba para crear una competencia.
      *
      *
      */
     @Test
-    public void createEjercicioTest() {
+    public void createSubmissionTest() {
         PodamFactory factory = new PodamFactoryImpl();
         EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
-        EjercicioEntity result = ejercicioPersistence.create(newEntity);
+        EjercicioEntity result = ejerPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
 
@@ -129,32 +140,31 @@ public class EjercicioPersistenceTest {
     }
     
     /**
-     * Prueba para eliminar un Ejercicio.
+     * Prueba para eliminar un Competencia.
      *
      *
      */
     @Test
-    public void deleteEjercicioTest() {
+    public void deleteSubmissionTest() {
         EjercicioEntity entity = data.get(0);
         System.out.println(entity.getId() +" El Id de entity");
-        ejercicioPersistence.delete(entity.getId());
+        ejerPersistence.delete(entity.getId());
         EjercicioEntity deleted = em.find(EjercicioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
     
         /**
-     * Prueba para consultar un ejercicio por nombre.
+     * Prueba para consultar una competencia por nombre.
      *
      *
      */
     @Test
-    public void FindEjercicioByNameTest() {
+    public void FindSubmissionByNameTest() {
         EjercicioEntity entity = data.get(0);
-        EjercicioEntity newEntity = ejercicioPersistence.findByName(entity.getNombre());
+        EjercicioEntity newEntity = ejerPersistence.findByName(entity.getNombre());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-    } 
+    }
     
-    
-    
+      
 }

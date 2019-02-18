@@ -47,6 +47,10 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     */
     private int nivel;
 
+  
+
+    
+    
     /**
      * @return the nombre
      */
@@ -133,26 +137,4 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
 
     
     
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final EjercicioEntity other = (EjercicioEntity) obj;
-        return Objects.equals(this.getNombre(), other.getNombre());
-    }
-
-    @Override
-    public int hashCode() {
-        if (this.getNombre() != null) {
-            return this.getNombre().hashCode();
-        }
-        return super.hashCode();
-    }
 }
