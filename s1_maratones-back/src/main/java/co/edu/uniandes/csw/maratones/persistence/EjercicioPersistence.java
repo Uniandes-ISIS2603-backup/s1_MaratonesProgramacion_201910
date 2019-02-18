@@ -54,7 +54,7 @@ public class EjercicioPersistence {
     public EjercicioEntity findByName(String nombre) {
         LOGGER.log(Level.INFO, "Consultando ejercicio por nombre ", nombre);
         // Se crea un query para buscar competencias con el nombre que recibe el método como argumento. ":nombre" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From CompetenciaEntity e where e.nombre = :nombre", EjercicioEntity.class);
+        TypedQuery query = em.createQuery("Select e From EjrcicioEntity e where e.nombre = :nombre", EjercicioEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
         query = query.setParameter("nombre", nombre);
         // Se invoca el query se obtiene la lista resultado
