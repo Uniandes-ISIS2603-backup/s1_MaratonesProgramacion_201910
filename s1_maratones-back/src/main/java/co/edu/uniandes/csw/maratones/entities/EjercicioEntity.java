@@ -145,7 +145,7 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
             return false;
         }
         final EjercicioEntity other = (EjercicioEntity) obj;
-        return Objects.equals(this.nombre, other.nombre);
+        return Objects.equals(this.getNombre(), other.getNombre());
     }
 
     @Override
