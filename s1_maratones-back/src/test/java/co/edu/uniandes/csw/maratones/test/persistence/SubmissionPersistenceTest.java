@@ -127,7 +127,7 @@ public class SubmissionPersistenceTest {
      *
      */
     @Test
-    public void createCompetenciaTest() {
+    public void createSubmissionTest() {
         PodamFactory factory = new PodamFactoryImpl();
         SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
         SubmissionEntity result = submissionPersistence.create(newEntity);
@@ -145,7 +145,7 @@ public class SubmissionPersistenceTest {
      *
      */
     @Test
-    public void deleteCompetenciaTest() {
+    public void deleteSubmissionTest() {
         SubmissionEntity entity = data.get(0);
         System.out.println(entity.getId() +" El Id de entity");
         submissionPersistence.delete(entity.getId());
@@ -159,7 +159,7 @@ public class SubmissionPersistenceTest {
      *
      */
     @Test
-    public void FindEditorialByNameTest() {
+    public void FindSubmissionByNameTest() {
         SubmissionEntity entity = data.get(0);
         SubmissionEntity newEntity = submissionPersistence.findByName(entity.getCodigo());
         Assert.assertNotNull(newEntity);
