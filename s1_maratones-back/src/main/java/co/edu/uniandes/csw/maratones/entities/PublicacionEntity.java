@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -14,6 +15,7 @@ import javax.persistence.TemporalType;
  *
  * @author c.mendez11
  */
+@Entity
 public class PublicacionEntity extends BaseEntity implements Serializable{
 
     @Temporal(TemporalType.DATE)
