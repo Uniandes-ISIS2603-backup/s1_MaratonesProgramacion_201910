@@ -139,7 +139,7 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
             return false;
         }
         final SubmissionEntity other = (SubmissionEntity) obj;
-        return this.codigo.equals(other.codigo);
+        return this.getCodigo().equals(other.getCodigo());
     }
 
     @Override
