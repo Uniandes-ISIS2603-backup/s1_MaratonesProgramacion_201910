@@ -162,27 +162,5 @@ public class UsuarioDTO implements Serializable {
 
     
     
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
    
-    /**
-     * Método para transformar el DTO a una entidad.
-     *
-     * @return La entidad del libro asociado.
-     */
-    public UsuarioEntity toEntity() {
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
-        usuarioEntity.setClave(this.clave);
-        usuarioEntity.setCorreo(this.correo);
-        usuarioEntity.setImagen(this.imagen);
-        usuarioEntity.setNombre(this.nombre);
-        usuarioEntity.setNombreUsuario(this.nombreUsuario);
-        usuarioEntity.setPuntaje(this.puntaje);
-        usuarioEntity.setRol(this.rol);
-
-        
-        return usuarioEntity;
-    }
 }

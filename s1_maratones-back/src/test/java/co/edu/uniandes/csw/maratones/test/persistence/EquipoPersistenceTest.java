@@ -49,7 +49,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Camilalonart
  */
 @RunWith(Arquillian.class)
-public class UsuarioPersistenceTest {
+public class EquipoPersistenceTest {
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
     @Inject
     private UsuarioPersistence usuarioPersistence;
