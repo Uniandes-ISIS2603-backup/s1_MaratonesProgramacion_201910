@@ -127,28 +127,11 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     
     
     
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final SubmissionEntity other = (SubmissionEntity) obj;
-        return this.getCodigo().equals(other.getCodigo());
-    }
-
-    @Override
-    public int hashCode() {
-        if (this.getCodigo() != null) {
-            return this.codigo.hashCode();
-        }
-        return super.hashCode();
-    }
+    
+    
+    
+    
+    
     
     
 }
