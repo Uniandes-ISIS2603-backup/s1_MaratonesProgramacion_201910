@@ -151,7 +151,7 @@ public class LenguajePersistenceTest {
         LenguajeEntity entity = data.get(0);
         System.out.println(entity.getId() +" El Id de entity");
         lenguajePersistence.delete(entity.getId());
-        CompetenciaEntity deleted = em.find(CompetenciaEntity.class, entity.getId());
+        LenguajeEntity deleted = em.find(LenguajeEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
     

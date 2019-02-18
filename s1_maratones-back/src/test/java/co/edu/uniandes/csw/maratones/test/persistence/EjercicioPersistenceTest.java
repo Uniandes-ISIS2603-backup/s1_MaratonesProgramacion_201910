@@ -31,36 +31,27 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class EjercicioPersistenceTest {
     
-     
-    @Inject
+   @Inject
     private EjercicioPersistence ejercicioPersistence;
-    
-    
-    @PersistenceContext
-    private EntityManager em;
-    
     
     /**
      * Lista que tiene los datos de prueba.
      */
     private List<EjercicioEntity> data = new ArrayList<EjercicioEntity>();
-    
-    
     /**
+     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
+     * datos por fuera de los métodos que se están probando.
+     */
+    @PersistenceContext
+    private EntityManager em;   
+
+/**
      * Variable para martcar las transacciones del em anterior cuando se
      * crean/borran datos para las pruebas.
      */
     @Inject
     UserTransaction utx;
 
-    
-     /**
-     *
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Editorial, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
-     */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -70,8 +61,7 @@ public class EjercicioPersistenceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
-    
-       /**
+     /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -91,8 +81,8 @@ public class EjercicioPersistenceTest {
             }
         }
     }
-    
-       /**
+
+    /**
      * Limpia las tablas que están implicadas en la prueba.
      *
      *
@@ -101,7 +91,7 @@ public class EjercicioPersistenceTest {
         em.createQuery("delete from EjercicioEntity").executeUpdate();
     }
 
-    /**
+     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      *
@@ -120,8 +110,8 @@ public class EjercicioPersistenceTest {
     }
     
     
-   /**
-     * Prueba para crear una competencia.
+    /**
+     * Prueba para crear un ejercicio.
      *
      *
      */
@@ -139,7 +129,7 @@ public class EjercicioPersistenceTest {
     }
     
     /**
-     * Prueba para eliminar un Competencia.
+     * Prueba para eliminar un Ejercicio.
      *
      *
      */
@@ -153,7 +143,7 @@ public class EjercicioPersistenceTest {
     }
     
         /**
-     * Prueba para consultar una competencia por nombre.
+     * Prueba para consultar un ejercicio por nombre.
      *
      *
      */
@@ -163,8 +153,8 @@ public class EjercicioPersistenceTest {
         EjercicioEntity newEntity = ejercicioPersistence.findByName(entity.getNombre());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-    }
+    } 
     
-            
+    
     
 }
