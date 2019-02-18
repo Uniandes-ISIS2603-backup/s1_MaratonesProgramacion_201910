@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -70,9 +71,95 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
 
     private List<EquipoDTO> equipos;
-    //private List<LenguajeDTO> lenguajes;
-    //private List<SubmissionDTO> submission;
+    private List<LenguajeDTO> lenguajes;
+    private List<SubmissionDTO> submission;
+    private String rol;
+    private String nombreUsuario;
+    private String nombre;
+    private String imagen;
+    private String correo;
+    private String clave;
+    private int puntaje;
+    
+    /**
+     * Constructor por defecto
+     */
+    public UsuarioDetailDTO() {
+    }
 
+    /**
+     * Constructor a partir de la entidad
+     *
+     * @param usuarioEntity La entidad del libro
+     */
+    public UsuarioDetailDTO(UsuarioEntity usuarioEntity) {
+        if (usuarioEntity != null) {
+            this.nombre = usuarioEntity.getNombre();
+            this.nombreUsuario = usuarioEntity.getNombreUsuario();
+            this.clave = usuarioEntity.getClave();
+            this.correo = usuarioEntity.getCorreo();
+            this.imagen = usuarioEntity.getImagen();
+            this.rol = usuarioEntity.getRol();
+            this.puntaje = usuarioEntity.getPuntaje();
+        }
+    }
+    
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+    
     public List<EquipoDTO> getEquipos() {
         return equipos;
     }
@@ -81,7 +168,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         this.equipos = equipos;
     }
 
-    /*public List<LenguajeDTO> getLenguajes() {
+    public List<LenguajeDTO> getLenguajes() {
         return lenguajes;
     }
 
@@ -97,7 +184,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         this.submission = submission;
     }
 
-    */
+    
     
     @Override
     public String toString() {
