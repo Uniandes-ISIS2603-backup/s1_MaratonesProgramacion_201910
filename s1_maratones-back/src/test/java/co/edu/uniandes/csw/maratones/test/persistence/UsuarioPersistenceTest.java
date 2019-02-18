@@ -37,6 +37,8 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
+import org.junit.Test;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -109,5 +111,17 @@ public class UsuarioPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from UsuarioEnity").executeUpdate();
+    }
+    
+    @Test
+    public void createTest() {
+        PodamFactory factory = new PodamFactoryImpl();
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        UsuarioEntity result = usuarioPersistence.create(newEntity);
+        Assert.assertNotNull(result);
+
+        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
+
+        Assert.assertEquals(newEntity.getId(), entity.getId());
     }
 }
