@@ -48,7 +48,7 @@ public class UsuarioResource {
     */    
     private UsuarioLogic elUsuariolLogic;
     @Inject
-    
+ 
     
     /**
      * Crea un nuevo usuario con la informacion que se recibe en el cuerpo de la
@@ -59,28 +59,30 @@ public class UsuarioResource {
      * @return JSON {@link UsuarioDTO} - El usuario guardado con el atributo id
      * autogenerado.
      */
+    /*
     @POST
     public UsuarioDTO crearUsuario(UsuarioDTO pusuario) {
         LOGGER.log(Level.INFO, "UserResource createUser: input: {0}", pusuario);
-        UsuarioDTO elUsuarioDTO = new UsuarioDTO(elUsuariolLogic.crearUsuario(pusuario.toEntity()));
+        //UsuarioDTO elUsuarioDTO = new UsuarioDTO(elUsuariolLogic.crearUsuario(pusuario.toEntity()));
         LOGGER.log(Level.INFO, "UserResource createUser: output: {0}", elUsuarioDTO);
         return elUsuarioDTO;
-    }
-    
+}
+ */
     /**
      * Busca y devuelve todos los usuarios que existen en la aplicacion.
      *
      * @return JSONArray {@link UsuarioDetailDTO} - Los usuarios encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
+    /*
     @GET
     public List<UsuarioDetailDTO> getUsuarios() {
         LOGGER.info("UserResource Users: input: void");
-        List<UsuarioDetailDTO> listaUsuarios = listEntity2DTO(elUsuariolLogic.getUsuarios());
+        //List<UsuarioDetailDTO> listaUsuarios = listEntity2DTO(elUsuariolLogic.getUsuarios());
         LOGGER.log(Level.INFO, "UserResource getUsuarios: output: {0}", listaUsuarios);
         return listaUsuarios;
     }
-    
+
     /**
      * Busca el usuario con el nombreUsuario asociado recibido en la URL y lo devuelve.
      *
@@ -110,14 +112,14 @@ public class UsuarioResource {
      * Error de lógica que se genera cuando no se encuentra el usuario a
      * actualizar.
      */
+    /*
     @PUT
     @Path("{nombresUsuario: \\d+}")
     public UsuarioDetailDTO updateUsuario(@PathParam("nombreUsuario") String elNombreUsuario, UsuarioDetailDTO elUsuario) {
        UsuarioDetailDTO u = new UsuarioDetailDTO();
        return u;
     }
-    
-    
+    */
     /**
          * Borra el autor con el id asociado recibido en la URL.
          *
@@ -128,31 +130,33 @@ public class UsuarioResource {
          * @throws WebApplicationException {@link WebApplicationExceptionMapper}
          * Error de lógica que se genera cuando no se encuentra el autor a borrar.
          */
+    /*
     @DELETE
     @Path("{nombresUsuario: \\d+}")
     public void deleteUsuario(@PathParam("elNombreUsuario") String elNombreUsuario) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "UserResource deleteUsuario: input: {0}", elNombreUsuario);
-        if (elUsuariolLogic.getUsuario(elNombreUsuario) == null) {
+        //if (elUsuariolLogic.getUsuario(elNombreUsuario) == null) {
             throw new WebApplicationException("El recurso /usuarios/" + elNombreUsuario + " no existe.", 404);
         }
-                elUsuariolLogic.deleteUsuario(elNombreUsuario);
-        LOGGER.info("UserResource deleteUsuario: output: void");
+        //        elUsuariolLogic.deleteUsuario(elNombreUsuario);
+        //LOGGER.info("UserResource deleteUsuario: output: void");
     }
-    
-    /**
+    */
+   /**
          * Convierte una lista de UsuarioEntity a una lista de UsuarioDetailDTO.
          *
          * @param entityList Lista de UsuarioEntity a convertir.
          * @return Lista de UsuarioDetailDTO convertida.
          */
+/*
     private List<UsuarioDetailDTO> listEntity2DTO(List<UsuarioEntity> entityList) {
         List<UsuarioDetailDTO> list = new ArrayList<>();
-        for (UsuarioEntity entity : entityList) {
-            list.add(new UsuarioDetailDTO(entity));
-        }
+        ///for (UsuarioEntity entity : entityList) {
+            //list.add(new UsuarioDetailDTO(entity));
+       // }
         return list;
     }
-    
+    */
 }
 
 

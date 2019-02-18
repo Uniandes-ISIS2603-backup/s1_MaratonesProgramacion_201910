@@ -19,6 +19,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -119,15 +120,49 @@ public class EjercicioPersistenceTest {
     }
     
     
+   /**
+     * Prueba para crear una competencia.
+     *
+     *
+     */
+    @Test
+    public void createEjercicioTest() {
+        PodamFactory factory = new PodamFactoryImpl();
+        EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        EjercicioEntity result = ejercicioPersistence.create(newEntity);
+
+        Assert.assertNotNull(result);
+
+        EjercicioEntity entity = em.find(EjercicioEntity.class, result.getId());
+
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+    }
     
+    /**
+     * Prueba para eliminar un Competencia.
+     *
+     *
+     */
+    @Test
+    public void deleteEjercicioTest() {
+        EjercicioEntity entity = data.get(0);
+        System.out.println(entity.getId() +" El Id de entity");
+        ejercicioPersistence.delete(entity.getId());
+        EjercicioEntity deleted = em.find(EjercicioEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
     
-    
-    
-    public void createSubmissionTest()
-    {
-        EjercicioEntity sub = new EjercicioEntity();
-        em.persist(sub);
-        Assert.assertNotNull(sub.getId());
+        /**
+     * Prueba para consultar una competencia por nombre.
+     *
+     *
+     */
+    @Test
+    public void FindEjercicioByNameTest() {
+        EjercicioEntity entity = data.get(0);
+        EjercicioEntity newEntity = ejercicioPersistence.findByName(entity.getNombre());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
     
             

@@ -5,8 +5,9 @@
  */
 package co.edu.uniandes.csw.maratones.test.persistence;
 
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
-import co.edu.uniandes.csw.maratones.persistence.SubmissionPersistence;
+import co.edu.uniandes.csw.maratones.persistence.LenguajePersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -32,7 +34,7 @@ public class LenguajePersistenceTest {
     
      
     @Inject
-    private SubmissionPersistence ejercicioPersistence;
+    private LenguajePersistence lenguajePersistence;
     
     
     @PersistenceContext
@@ -64,7 +66,7 @@ public class LenguajePersistenceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(LenguajeEntity.class.getPackage())
-                .addPackage(SubmissionPersistence.class.getPackage())
+                .addPackage(LenguajePersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -121,14 +123,51 @@ public class LenguajePersistenceTest {
     
     
     
-    
-    
-    public void createSubmissionTest()
-    {
-        LenguajeEntity sub = new LenguajeEntity();
-        em.persist(sub);
-        Assert.assertNotNull(sub.getId());
+    /**
+     * Prueba para crear un lenguaje.
+     *
+     *
+     */
+    @Test 
+    public void createLenguajeTest() {
+        PodamFactory factory = new PodamFactoryImpl();
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        LenguajeEntity result = lenguajePersistence.create(newEntity);
+
+        Assert.assertNotNull(result);
+
+        LenguajeEntity entity = em.find(LenguajeEntity.class, result.getId());
+
+        Assert.assertEquals(newEntity.getId(), entity.getId());
     }
+    
+    /**
+     * Prueba para eliminar un Competencia.
+     *
+     *
+     */
+    @Test
+    public void deleteLenguajeTest() {
+        LenguajeEntity entity = data.get(0);
+        System.out.println(entity.getId() +" El Id de entity");
+        lenguajePersistence.delete(entity.getId());
+        CompetenciaEntity deleted = em.find(CompetenciaEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+    
+        /**
+     * Prueba para consultar una competencia por nombre.
+     *
+     *
+     */
+    @Test
+    public void FindLenguajeByNameTest() {
+        LenguajeEntity entity = data.get(0);
+        LenguajeEntity newEntity = lenguajePersistence.findByName(entity.getNombre());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+    }
+
     
             
     

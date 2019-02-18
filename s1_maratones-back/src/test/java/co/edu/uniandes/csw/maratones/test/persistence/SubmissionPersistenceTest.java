@@ -19,6 +19,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -120,16 +121,52 @@ public class SubmissionPersistenceTest {
     
     
     
-    
-    
-    
-    public void createSubmissionTest()
-    {
-        SubmissionEntity sub = new SubmissionEntity();
-        em.persist(sub);
-        Assert.assertNotNull(sub.getId());
+    /**
+     * Prueba para crear una competencia.
+     *
+     *
+     */
+    @Test
+    public void createCompetenciaTest() {
+        PodamFactory factory = new PodamFactoryImpl();
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        SubmissionEntity result = submissionPersistence.create(newEntity);
+
+        Assert.assertNotNull(result);
+
+        SubmissionEntity entity = em.find(SubmissionEntity.class, result.getId());
+
+        Assert.assertEquals(newEntity.getId(), entity.getId());
     }
     
+    /**
+     * Prueba para eliminar un Competencia.
+     *
+     *
+     */
+    @Test
+    public void deleteCompetenciaTest() {
+        SubmissionEntity entity = data.get(0);
+        System.out.println(entity.getId() +" El Id de entity");
+        submissionPersistence.delete(entity.getId());
+        SubmissionEntity deleted = em.find(SubmissionEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+    
+        /**
+     * Prueba para consultar una competencia por nombre.
+     *
+     *
+     */
+    @Test
+    public void FindEditorialByNameTest() {
+        SubmissionEntity entity = data.get(0);
+        SubmissionEntity newEntity = submissionPersistence.findByName(entity.getCodigo());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getCodigo(), newEntity.getCodigo());
+    }
+    
+      
             
     
     
