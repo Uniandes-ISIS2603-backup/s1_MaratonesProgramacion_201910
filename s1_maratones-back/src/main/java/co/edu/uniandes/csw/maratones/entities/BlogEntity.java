@@ -22,9 +22,9 @@ public class BlogEntity extends BaseEntity implements Serializable{
     private String nombre;
     private String descripcion;
     
-    @PodamExclude
+  /*  @PodamExclude
     @OneToMany(mappedBy = "blog")
-    private List<PublicacionEntity> publicaciones = new ArrayList<PublicacionEntity>();
+    private List<PublicacionEntity> publicaciones = new ArrayList<PublicacionEntity>();*/
     
     public BlogEntity(){
      

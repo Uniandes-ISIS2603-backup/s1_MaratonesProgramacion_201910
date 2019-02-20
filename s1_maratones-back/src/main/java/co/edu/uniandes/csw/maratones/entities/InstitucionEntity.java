@@ -24,9 +24,9 @@ public class InstitucionEntity extends BaseEntity implements Serializable{
     private String ubicacion;
     private String descripcion;
     
-    @PodamExclude
+    /*@PodamExclude
     @OneToMany(mappedBy = "institucion")
-    private List<UsuarioEntity> usuarios = new ArrayList<UsuarioEntity>();
+    private List<UsuarioEntity> usuarios = new ArrayList<UsuarioEntity>();*/
      
     public InstitucionEntity(){
         
