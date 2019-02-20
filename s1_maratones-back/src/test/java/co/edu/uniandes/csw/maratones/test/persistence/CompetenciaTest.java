@@ -6,10 +6,7 @@
 package co.edu.uniandes.csw.maratones.test.persistence;
 
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
-import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
-import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
-import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
