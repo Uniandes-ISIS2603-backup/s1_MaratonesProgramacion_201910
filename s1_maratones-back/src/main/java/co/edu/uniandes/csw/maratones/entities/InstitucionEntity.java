@@ -6,7 +6,11 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -19,6 +23,11 @@ public class InstitucionEntity extends BaseEntity implements Serializable{
     private String imagen;
     private String ubicacion;
     private String descripcion;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "institucion")
+    private List<UsuarioEntity> usuarios = new ArrayList<UsuarioEntity>();
+     
     public InstitucionEntity(){
         
     }

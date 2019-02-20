@@ -6,7 +6,11 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -17,8 +21,13 @@ public class BlogEntity extends BaseEntity implements Serializable{
 
     private String nombre;
     private String descripcion;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "blog")
+    private List<PublicacionEntity> publicaciones = new ArrayList<PublicacionEntity>();
+    
     public BlogEntity(){
-        
+     
     }
     /**
      * @return the nombre
