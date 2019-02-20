@@ -110,5 +110,50 @@ public class PublicacionPersistenceTest {
         PublicacionEntity entity = em.find(PublicacionEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(entity.getTexto(), newEntity.getTexto());
+    }
+    
+    @Test
+    public void getPublicaionesTest() {
+        List<PublicacionEntity> list = pp.findall();
+        Assert.assertEquals(data.size(), list.size());
+        for (PublicacionEntity ent : list) {
+            boolean found = false;
+            for (PublicacionEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    @Test
+    public void getPublicacionTest() {
+        PublicacionEntity entity = data.get(0);
+        PublicacionEntity newEntity = pp.find(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(entity.getTexto(), newEntity.getTexto());
+    }
+     @Test
+    public void deletePublicacionTest() {
+        PublicacionEntity entity = data.get(0);
+        pp.delete(entity.getId());
+        PublicacionEntity deleted = em.find(PublicacionEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+     @Test
+    public void updatePublicacionTest() {
+        PublicacionEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        PublicacionEntity newEntity = factory.manufacturePojo(PublicacionEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        pp.update(newEntity);
+
+        PublicacionEntity resp = em.find(PublicacionEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getTexto(), resp.getTexto());
     }
 }
