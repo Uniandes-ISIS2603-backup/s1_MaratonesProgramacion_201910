@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.PublicacionEntity;
 import java.util.Date;
 
 /**
@@ -63,5 +64,26 @@ public class PublicacionDTO {
     public void setTexto(String texto) {
         this.texto = texto;
     }
-    
+    /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public PublicacionEntity toEntity(){
+        PublicacionEntity publicacionEntity = new PublicacionEntity();
+        publicacionEntity.setFecha(this.fecha);
+        publicacionEntity.setTexto(this.texto);
+       return publicacionEntity;
+    }
+    /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     */
+     public PublicacionDTO(PublicacionEntity publicacionEntity) {
+        if (publicacionEntity != null) {
+            this.fecha = publicacionEntity.getFecha();
+            this.texto = publicacionEntity.getTexto();
+         
+        }
+     }
 }
