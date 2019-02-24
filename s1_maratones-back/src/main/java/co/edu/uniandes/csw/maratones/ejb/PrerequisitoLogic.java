@@ -27,15 +27,15 @@ public class PrerequisitoLogic {
     
     public PrerequisitoEntity createPrerequisito (PrerequisitoEntity prerequisitoEntity) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicial proceso de creacion del prerequisito");
+        LOGGER.log(Level.INFO, "Iniciar proceso de creacion del prerequisito");
         
         //Se verifica que el prerequisito creado tenga un nivel positivo.
-        if(prerequisitoEntity.getNivel()<0)
+        if(prerequisitoEntity.getNivel()<0 || prerequisitoEntity.getNivel()>10)
         {
             throw new BusinessLogicException("El nivel del prerequisito no puede ser negativo"+prerequisitoEntity.getId());
         }
         
-        createPrerequisito(prerequisitoEntity);
+        prerequisitoEntity = prerequisitosPersistence.create(prerequisitoEntity);
         
         return prerequisitoEntity;
     }
