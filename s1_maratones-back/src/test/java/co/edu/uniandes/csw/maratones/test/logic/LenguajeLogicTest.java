@@ -5,10 +5,10 @@
  */
 package co.edu.uniandes.csw.maratones.test.logic;
 
-import co.edu.uniandes.csw.maratones.ejb.SubmissionLogic;
-import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
+import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.maratones.persistence.SubmissionPersistence;
+import co.edu.uniandes.csw.maratones.persistence.LenguajePersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,8 +31,9 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Angel Rodriguez aa.rodriguezv
  */
 @RunWith(Arquillian.class)
-public class SubmissionLogicTest {
+public class LenguajeLogicTest {
     
+       
   private PodamFactory factory = new PodamFactoryImpl();
     
   
@@ -50,13 +51,13 @@ public class SubmissionLogicTest {
      /**
      * Lista que tiene los datos de prueba.
      */
-    private List<SubmissionEntity> data = new ArrayList<SubmissionEntity>();
+    private List<LenguajeEntity> data = new ArrayList<LenguajeEntity>();
 
   
    
     
     @Inject 
-    private SubmissionLogic submissionLogic;
+    private LenguajeLogic lenguajeLogic;
     
     
     
@@ -71,9 +72,9 @@ public class SubmissionLogicTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(SubmissionEntity.class.getPackage())
-                .addPackage(SubmissionLogic.class.getPackage())
-                .addPackage(SubmissionPersistence.class.getPackage())
+                .addPackage(LenguajeEntity.class.getPackage())
+                .addPackage(LenguajeLogic.class.getPackage())
+                .addPackage(LenguajePersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -103,7 +104,7 @@ public class SubmissionLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from SubmissionEntity").executeUpdate();
+        em.createQuery("delete from LenguajeEntity").executeUpdate();
     }
     
     /**
@@ -112,7 +113,7 @@ public class SubmissionLogicTest {
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
-            SubmissionEntity entity = factory.manufacturePojo(SubmissionEntity.class);
+            LenguajeEntity entity = factory.manufacturePojo(LenguajeEntity.class);
 
             em.persist(entity);
             data.add(entity);
@@ -123,14 +124,14 @@ public class SubmissionLogicTest {
     
     
     @Test 
-    public void createSubmissionTest() throws BusinessLogicException
+    public void createLenguajeTest() throws BusinessLogicException
     {
-        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
-        SubmissionEntity result = submissionLogic.createSubmission(newEntity);
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        LenguajeEntity result = lenguajeLogic.createLenguaje(newEntity);
         Assert.assertNotNull(result);
-        SubmissionEntity entity = em.find(SubmissionEntity.class, result.getId());
+        LenguajeEntity entity = em.find(LenguajeEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getCodigo(), entity.getCodigo());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
         
     }
     
@@ -138,11 +139,10 @@ public class SubmissionLogicTest {
     
     @Test(expected = BusinessLogicException.class)
     
-    public void createSubmissionConMismoCodigoTest() throws BusinessLogicException {
-        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
-        newEntity.setCodigo(data.get(0).getCodigo());
-        submissionLogic.createSubmission(newEntity);
+    public void createLenguajeConMismoNombreTest() throws BusinessLogicException {
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        newEntity.setNombre(data.get(0).getNombre());
+        lenguajeLogic.createLenguaje(newEntity);
     }
 
-    
 }

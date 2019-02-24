@@ -47,14 +47,14 @@ public class EjercicioPersistence {
     /**
      * Busca si hay alguna competencia con el nombre que se envía de argumento
      *
-     * @param name: Nombre de la competencia que se está buscando
+     * @param name: Nombre del ejercicio que se está buscando
      * @return null si no existe ninguna competenica con el nombre del argumento.
      * Si existe alguna devuelve la primera.
      */
     public EjercicioEntity findByName(String nombre) {
         LOGGER.log(Level.INFO, "Consultando ejercicio por nombre ", nombre);
         // Se crea un query para buscar competencias con el nombre que recibe el método como argumento. ":nombre" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From EjrcicioEntity e where e.nombre = :nombre", EjercicioEntity.class);
+        TypedQuery query = em.createQuery("Select e From EjercicioEntity e where e.nombre = :nombre", EjercicioEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
         query = query.setParameter("nombre", nombre);
         // Se invoca el query se obtiene la lista resultado
@@ -69,5 +69,25 @@ public class EjercicioPersistence {
         }
         LOGGER.log(Level.INFO, "Saliendo de consultar ejercicio por nombre ", nombre);
         return result;
+    }
+    
+     /**
+     * 
+     * @return 
+     */
+    public List<EjercicioEntity> findAll()
+    {
+        TypedQuery<EjercicioEntity> query = em.createQuery("select u from EjercicioEntity u", EjercicioEntity.class);
+        return query.getResultList();
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return 
+     */
+    public EjercicioEntity find(Long id)
+    {
+        return em.find(EjercicioEntity.class, id);
     }
 }
