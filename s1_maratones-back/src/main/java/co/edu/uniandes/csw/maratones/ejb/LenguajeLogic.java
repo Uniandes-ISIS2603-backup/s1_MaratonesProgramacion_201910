@@ -22,7 +22,12 @@ public class LenguajeLogic {
   @Inject  
   private LenguajePersistence persistence;
   
-    
+    /**
+     * 
+     * @param lenguaje
+     * @return
+     * @throws BusinessLogicException 
+     */
     public LenguajeEntity createLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
         if(persistence.findByName(lenguaje.getNombre()) != null)
@@ -30,8 +35,33 @@ public class LenguajeLogic {
             throw new BusinessLogicException("Ya existe un lenguaje con el nombre: " + lenguaje.getNombre());
         }
         
+        if(lenguaje.getExperiencia() <= 0)
+        {
+            throw new BusinessLogicException("No se puede configurar un lenguaje con una experiencia menor o igual a 0");
+        }
         
         lenguaje = persistence.create(lenguaje);
+        
+        return lenguaje;
+    }
+    
+    /**
+     * 
+     * @param lenguaje 
+     */
+    public LenguajeEntity updateLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
+    {
+        if(persistence.find(lenguaje.getId()) == null)
+        {
+             throw new BusinessLogicException("No existe un lenguaje con el nombre: " + lenguaje.getNombre());
+        }
+        
+        if(lenguaje.getExperiencia() <= 0)
+        {
+            throw new BusinessLogicException("No se puede configurar un lenguaje con una experiencia menor o igual a 0");
+        }
+        
+        lenguaje = persistence.update(lenguaje);
         
         return lenguaje;
     }

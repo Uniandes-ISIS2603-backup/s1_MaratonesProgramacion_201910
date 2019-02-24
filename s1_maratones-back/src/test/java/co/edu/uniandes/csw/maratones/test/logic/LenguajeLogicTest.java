@@ -127,6 +127,7 @@ public class LenguajeLogicTest {
     public void createLenguajeTest() throws BusinessLogicException
     {
         LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        newEntity.setExperiencia((int) Math.abs(Math.round(Math.random())) + 1);
         LenguajeEntity result = lenguajeLogic.createLenguaje(newEntity);
         Assert.assertNotNull(result);
         LenguajeEntity entity = em.find(LenguajeEntity.class, result.getId());
@@ -142,6 +143,31 @@ public class LenguajeLogicTest {
     public void createLenguajeConMismoNombreTest() throws BusinessLogicException {
         LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
         newEntity.setNombre(data.get(0).getNombre());
+        lenguajeLogic.createLenguaje(newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    
+    public void createLenguajeConExperienciaMenorIgualACeroTest() throws BusinessLogicException {
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        newEntity.setExperiencia(0);
+        lenguajeLogic.createLenguaje(newEntity);
+    }
+    
+    
+    @Test(expected = BusinessLogicException.class)
+    public void updateLenguajeQueNoExiste() throws BusinessLogicException
+    {
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        lenguajeLogic.updateLenguaje(newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    
+    public void updateLenguajeConExperienciaMenorIgualACeroTest() throws BusinessLogicException {
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        newEntity.setNombre(data.get(0).getNombre());
+        newEntity.setExperiencia(0);
         lenguajeLogic.createLenguaje(newEntity);
     }
 
