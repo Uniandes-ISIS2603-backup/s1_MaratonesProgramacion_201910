@@ -37,9 +37,26 @@ public class UsuarioLogic {
             throw new BusinessLogicException("ya existe un usuario con ese nombre de usuario");
         }*/
         if (usuarioEntity.getNombreUsuario().length() > 6) {
-            throw new BusinessLogicException("el usuario debe tener minimo 6 caracteres");
+            throw new BusinessLogicException("el nombre usuario debe tener minimo 6 caracteres");
         }
-        
+        if (usuarioEntity.getNombreUsuario().equals("")) {
+            throw new BusinessLogicException("el nombre usuario no puede estar vacio");
+        }
+        if (usuarioEntity.getNombre().equals("")) {
+            throw new BusinessLogicException("el nombre no puede estar vacio");
+        }
+        if (!usuarioEntity.getCorreo().contains("@losalpes.edu.co")) {
+            throw new BusinessLogicException("el correo debe ser de la institucion, es decir, incluir @losalpes.edu.co");
+        }
+        if (usuarioEntity.getClave().length()> 7) {
+            throw new BusinessLogicException("la clave debe tener un minimo de 8 caracteres");
+        }
+        if (usuarioEntity.getClave().matches("[a-zA-Z ]*\\d+.*")) {
+            throw new BusinessLogicException("la clave debe incluir numeros");
+        }
+        if (!usuarioEntity.getRol().equals("COUCH")||!usuarioEntity.getRol().equals("RESPONSABLE")||!usuarioEntity.getRol().equals("PARTICIPANTE")) {
+            throw new BusinessLogicException("rol invalido");
+        }
         LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
         return newusuarioEntity;
     }
