@@ -159,7 +159,7 @@ public class SubmissionPersistenceTest {
      *
      */
     @Test
-    public void FindSubmissionByNameTest() {
+    public void findSubmissionByNameTest() {
         SubmissionEntity entity = data.get(0);
         SubmissionEntity newEntity = submissionPersistence.findByName(entity.getCodigo());
         Assert.assertNotNull(newEntity);
