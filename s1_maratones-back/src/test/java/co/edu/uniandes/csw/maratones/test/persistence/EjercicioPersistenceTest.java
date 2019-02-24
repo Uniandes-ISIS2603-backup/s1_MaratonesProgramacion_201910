@@ -174,7 +174,7 @@ public class EjercicioPersistenceTest {
      *
      */
     @Test
-    public void FindEjercicioByNameTest() {
+    public void findEjercicioByNameTest() {
         EjercicioEntity entity = data.get(0);
         EjercicioEntity newEntity = ejerPersistence.findByName(entity.getNombre());
         Assert.assertNotNull(newEntity);
