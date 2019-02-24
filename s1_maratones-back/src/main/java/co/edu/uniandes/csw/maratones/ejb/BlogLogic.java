@@ -27,16 +27,29 @@ public class BlogLogic {
     
     public BlogEntity createBlog(BlogEntity blogEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación deun Blog");
-        if(blogEntity.getNombre().equals(""))
+        //Reglas del nombre
+        if(blogEntity.getNombre()==null)
         {
-            throw new BusinessLogicException("El nombre del blog no puede estar vacio");
+            throw new BusinessLogicException("El nombre del blog invalido");
         }
-        if(blogEntity.getDescripcion().equals(""))
+        if(blogEntity.getNombre().length()>60)
         {
-            throw new BusinessLogicException("La descripcion del blog no puede estar vacia");
+            throw new BusinessLogicException("El numero de caracteres maximo es 60");
         }
+      
+        //Reglas para descripcion
+        if(blogEntity.getDescripcion()==null)
+        {
+            throw new BusinessLogicException("La descripcion del blog invalida");
+        }
+        if(blogEntity.getDescripcion().length()>500)
+        {
+            throw new BusinessLogicException("El numero de caracteres maximo es 500");
+        }
+        
         persistence.create(blogEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación deun blog");
         return blogEntity;
     }
+    
 }
