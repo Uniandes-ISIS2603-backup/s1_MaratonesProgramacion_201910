@@ -35,11 +35,11 @@ public class LenguajePersistence {
     
     public void delete(Long lenguajeId) {
         LOGGER.log(Level.INFO, "Borrando lenguaje con id = {0}", lenguajeId);
-        // Se hace uso de mismo método que esta explicado en public EditorialEntity find(Long id) para obtener la editorial a borrar.
+        // Se hace uso de mismo método que esta explicado en public LenguajeEntity find(Long id) para obtener el lenguaje a borrar.
         LenguajeEntity entity = em.find(LenguajeEntity.class, lenguajeId);
         /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
          EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
-         Es similar a "delete from EditorialEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
+         Es similar a "delete from LenguajeEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
         em.remove(entity);
         LOGGER.log(Level.INFO, "Saliendo de borrar el lenguaje con id = {0}", lenguajeId);
     }
@@ -71,6 +71,24 @@ public class LenguajePersistence {
         return result;
     }
     
+    /**
+     * 
+     * @return 
+     */
+    public List<LenguajeEntity> findAll()
+    {
+        TypedQuery<LenguajeEntity> query = em.createQuery("select u from LenguajeEntity u", LenguajeEntity.class);
+        return query.getResultList();
+    }
     
+    /**
+     * 
+     * @param id
+     * @return 
+     */
+    public LenguajeEntity find(Long id)
+    {
+        return em.find(LenguajeEntity.class, id);
+    }
     
 }

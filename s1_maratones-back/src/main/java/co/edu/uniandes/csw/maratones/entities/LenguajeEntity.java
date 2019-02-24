@@ -61,28 +61,5 @@ public class LenguajeEntity extends BaseEntity implements Serializable{
     
     
     
-    
-    
-     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final LenguajeEntity other = (LenguajeEntity) obj;
-        return Objects.equals(this.getNombre(), other.getNombre());
-    }
-
-    @Override
-    public int hashCode() {
-        if (this.getNombre() != null) {
-            return this.getNombre().hashCode();
-        }
-        return super.hashCode();
-    }
+  
 }
