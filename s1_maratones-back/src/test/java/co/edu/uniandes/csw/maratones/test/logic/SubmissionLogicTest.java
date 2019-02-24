@@ -143,6 +143,86 @@ public class SubmissionLogicTest {
         newEntity.setCodigo(data.get(0).getCodigo());
         submissionLogic.createSubmission(newEntity);
     }
+    
+    @Test(expected = BusinessLogicException.class)
+    
+    public void createSubmissionConTiempoNegativoTest() throws BusinessLogicException {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setTiempo(-1);
+        submissionLogic.createSubmission(newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    
+    public void createSubmissionConPesoDeMemoriaNegativoTest() throws BusinessLogicException {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setMemoria(-1);
+        submissionLogic.createSubmission(newEntity);
+    }
 
+    @Test(expected = BusinessLogicException.class)
+    
+    public void updateSubmissionConTiempoNegativoTest() throws BusinessLogicException {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setId(data.get(0).getId());
+        newEntity.setTiempo(-1);
+        submissionLogic.updateSubmission(newEntity.getId(), newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    
+    public void updateSubmissionConPesoDeMemoriaNegativoTest() throws BusinessLogicException {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setId(data.get(0).getId());
+        newEntity.setMemoria(-1);
+        submissionLogic.updateSubmission(newEntity.getId(), newEntity);
+    }
+
+   
+    @Test
+    public void getSubmissionTest()throws BusinessLogicException
+    {
+        SubmissionEntity entity = data.get(0);
+        SubmissionEntity result = submissionLogic.getSubmission(entity);
+        Assert.assertEquals(entity.getId(), result.getId());
+        Assert.assertEquals(entity.getCodigo(), result.getCodigo());
+        Assert.assertEquals(entity.getFecha(), result.getFecha());
+        Assert.assertEquals(entity.getVeredicto(), result.getVeredicto());
+        
+    }
+    
+    /**
+     * Prueba para consultar la lista de Lenguajes.
+     */
+    @Test
+    public void getSubmissionsTest() {
+        List<SubmissionEntity> list = submissionLogic.getSubmissions();
+        Assert.assertEquals(data.size(), list.size());
+        for (SubmissionEntity entity : list) {
+            boolean found = false;
+            for (SubmissionEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        } 
+    }
+    
+    
+    @Test
+    public void deleteSubmissionTest() throws BusinessLogicException
+    {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setId(data.get(0).getId());
+        submissionLogic.deleteSubmission(newEntity.getId());
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void deleteSubmissionQueNoExisteTest() throws BusinessLogicException
+    {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        submissionLogic.deleteSubmission(newEntity.getId());
+    }
     
 }
