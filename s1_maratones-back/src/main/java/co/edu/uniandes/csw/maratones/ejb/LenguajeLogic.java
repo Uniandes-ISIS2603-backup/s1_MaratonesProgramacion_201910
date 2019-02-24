@@ -8,6 +8,9 @@ package co.edu.uniandes.csw.maratones.ejb;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.LenguajePersistence;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -17,7 +20,9 @@ import javax.inject.Inject;
  */
 @Stateless
 public class LenguajeLogic {
-    
+  
+   private static final Logger LOGGER = Logger.getLogger(LenguajeLogic.class.getName());
+
     
   @Inject  
   private LenguajePersistence persistence;
@@ -30,6 +35,7 @@ public class LenguajeLogic {
      */
     public LenguajeEntity createLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "Inicia proceso de creación del lenguaje");
         if(persistence.findByName(lenguaje.getNombre()) != null)
         {
             throw new BusinessLogicException("Ya existe un lenguaje con el nombre: " + lenguaje.getNombre());
@@ -41,6 +47,7 @@ public class LenguajeLogic {
         }
         
         lenguaje = persistence.create(lenguaje);
+        LOGGER.log(Level.INFO, "Termina proceso de creación del lenguaje");
         
         return lenguaje;
     }
@@ -51,6 +58,7 @@ public class LenguajeLogic {
      */
     public LenguajeEntity updateLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el lenguaje con id = {0}", lenguaje.getId());
         if(persistence.find(lenguaje.getId()) == null)
         {
              throw new BusinessLogicException("No existe un lenguaje con el nombre: " + lenguaje.getNombre());
@@ -62,7 +70,42 @@ public class LenguajeLogic {
         }
         
         lenguaje = persistence.update(lenguaje);
-        
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el lenguaje con id = {0}", lenguaje.getId());
         return lenguaje;
+    }
+    
+    
+    public void deleteLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el lenguaje con id = {0}", lenguaje.getId());
+        if(persistence.find(lenguaje.getId()) == null)
+        {
+            throw new BusinessLogicException("No existe el lenguaje con el id:" + lenguaje.getId());
+        }
+        
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el lenguaje con id = {0}", lenguaje.getId());
+        persistence.delete(lenguaje.getId());
+    }
+    
+    public LenguajeEntity getLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el lenguaje con id = {0}", lenguaje.getId());
+        if(persistence.find(lenguaje.getId()) == null)
+        {
+            throw new BusinessLogicException("No existe el lenguaje con el id:" + lenguaje.getId());
+        }
+        
+        lenguaje = persistence.find(lenguaje.getId());
+        LOGGER.log(Level.INFO, "Culmina proceso de consultar el lenguaje con id = {0}", lenguaje.getId());
+        return lenguaje;
+    }
+    
+    
+    public List<LenguajeEntity> getLenguajes()
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los lenguajes");
+        List<LenguajeEntity> languages = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los lenguajes");
+        return languages;
     }
 }
