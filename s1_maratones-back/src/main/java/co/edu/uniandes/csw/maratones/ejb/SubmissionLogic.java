@@ -29,6 +29,7 @@ public class SubmissionLogic {
     
     public SubmissionEntity createSubmission(SubmissionEntity submission) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar una submission");
         if(persistence.findByName(submission.getCodigo()) != null)
         {
             throw new BusinessLogicException("Ya existe una submission enviada con el codigo: " + submission.getCodigo());
@@ -46,6 +47,7 @@ public class SubmissionLogic {
         
         submission = persistence.create(submission);
         
+        LOGGER.log(Level.INFO, "Inicia proceso de agregar una submission");
         return submission;
     }
     
