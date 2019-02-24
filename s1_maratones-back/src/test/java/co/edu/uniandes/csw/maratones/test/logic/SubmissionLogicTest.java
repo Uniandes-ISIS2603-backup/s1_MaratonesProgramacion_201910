@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.maratones.test.persistence;
+package co.edu.uniandes.csw.maratones.test.logic;
 
+import co.edu.uniandes.csw.maratones.ejb.SubmissionLogic;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.SubmissionPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,30 +31,35 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Angel Rodriguez aa.rodriguezv
  */
 @RunWith(Arquillian.class)
-public class SubmissionPersistenceTest {
+public class SubmissionLogicTest {
     
+  private PodamFactory factory = new PodamFactoryImpl();
     
-    @Inject
-    private SubmissionPersistence submissionPersistence;
-    
-    
-    @PersistenceContext
-    private EntityManager em;
-    
-    
-    /**
-     * Lista que tiene los datos de prueba.
-     */
-    private List<SubmissionEntity> data = new ArrayList<SubmissionEntity>();
-    
-    
-    /**
-     * Variable para martcar las transacciones del em anterior cuando se
+  
+  @PersistenceContext
+   private EntityManager em;
+
+  /**
+     * Variable para marcar las transacciones del em anterior cuando se
      * crean/borran datos para las pruebas.
      */
     @Inject
-    UserTransaction utx;
+    private UserTransaction utx;
 
+    
+     /**
+     * Lista que tiene los datos de prueba.
+     */
+    private List<SubmissionEntity> data = new ArrayList<SubmissionEntity>();
+
+  
+   
+    
+    @Inject 
+    private SubmissionLogic submissionLogic;
+    
+    
+    
     
      /**
      *
@@ -65,20 +72,20 @@ public class SubmissionPersistenceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(SubmissionEntity.class.getPackage())
+                .addPackage(SubmissionLogic.class.getPackage())
                 .addPackage(SubmissionPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
     
-       /**
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
     public void configTest() {
         try {
             utx.begin();
-            em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
@@ -92,98 +99,50 @@ public class SubmissionPersistenceTest {
         }
     }
     
-       /**
+      /**
      * Limpia las tablas que están implicadas en la prueba.
-     *
-     *
      */
     private void clearData() {
         em.createQuery("delete from SubmissionEntity").executeUpdate();
     }
-
+    
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
-     *
-     *
      */
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-
             SubmissionEntity entity = factory.manufacturePojo(SubmissionEntity.class);
 
             em.persist(entity);
-
             data.add(entity);
+
         }
     }
-    
-    
-    
-    /**
-     * Prueba para crear una competencia.
-     *
-     *
-     */
-    @Test
-    public void createSubmissionTest() {
-        PodamFactory factory = new PodamFactoryImpl();
-        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
-        SubmissionEntity result = submissionPersistence.create(newEntity);
 
+    
+    
+    @Test 
+    public void createSubmissionTest() throws BusinessLogicException
+    {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        SubmissionEntity result = submissionLogic.createSubmission(newEntity);
         Assert.assertNotNull(result);
-
         SubmissionEntity entity = em.find(SubmissionEntity.class, result.getId());
-
         Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getCodigo(), entity.getCodigo());
+        
     }
     
-    /**
-     * Prueba para eliminar un Competencia.
-     *
-     *
-     */
-    @Test
-    public void deleteSubmissionTest() {
-        SubmissionEntity entity = data.get(0);
-        System.out.println(entity.getId() +" El Id de entity");
-        submissionPersistence.delete(entity.getId());
-        SubmissionEntity deleted = em.find(SubmissionEntity.class, entity.getId());
-        Assert.assertNull(deleted);
-    }
     
-        /**
-     * Prueba para consultar una competencia por nombre.
-     *
-     *
-     */
-    @Test
-    public void findSubmissionByNameTest() {
-        SubmissionEntity entity = data.get(0);
-        SubmissionEntity newEntity = submissionPersistence.findByName(entity.getCodigo());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getCodigo(), newEntity.getCodigo());
-    }
     
-    @Test
-    public void updateSubmissionTest() {
-        SubmissionEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
+    @Test(expected = BusinessLogicException.class)
+    
+    public void createSubmissionConMismoCodigoTest() throws BusinessLogicException {
         SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
-
-        newEntity.setId(entity.getId());
-
-        submissionPersistence.update(newEntity);
-
-        SubmissionEntity resp = em.find(SubmissionEntity.class, entity.getId());
-
-        Assert.assertEquals(newEntity.getCodigo(), resp.getCodigo());
-        Assert.assertEquals(newEntity.getArchivo(), resp.getArchivo());
-        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
-        Assert.assertEquals(newEntity.getVeredicto(), resp.getVeredicto());
+        newEntity.setCodigo(data.get(0).getCodigo());
+        submissionLogic.createSubmission(newEntity);
     }
-            
-    
+
     
 }

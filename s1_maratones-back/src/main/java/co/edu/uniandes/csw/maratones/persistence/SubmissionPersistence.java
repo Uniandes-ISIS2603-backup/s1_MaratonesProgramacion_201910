@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.persistence;
 
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import java.util.List;
 import java.util.logging.Level;
@@ -74,5 +75,37 @@ public class SubmissionPersistence {
         return result;
     }
     
+     /**
+     * 
+     * @return 
+     */
+    public List<SubmissionEntity> findAll()
+    {
+        TypedQuery<SubmissionEntity> query = em.createQuery("select u from SubmissionEntity u", SubmissionEntity.class);
+        return query.getResultList();
+    }
+    
+    /**
+     * 
+     * @param id
+     * @return 
+     */
+    public SubmissionEntity find(Long id)
+    {
+        return em.find(SubmissionEntity.class, id);
+    }
+    
+    /**
+     * Actualiza una submission.
+     *
+     * @param submissionEntity: la submission que viene con los nuevos cambios. Por ejemplo
+     * el nombre pudo cambiar. En ese caso, se haria uso del método update.
+     * @return una submission con los cambios aplicados.
+     */
+    public SubmissionEntity update(SubmissionEntity submissionEntity) {
+        LOGGER.log(Level.INFO, "Actualizando la submision con id={0}", submissionEntity.getId());
+        return em.merge(submissionEntity);
+    }
+
     
 }
