@@ -91,4 +91,32 @@ public class LenguajePersistence {
         return em.find(LenguajeEntity.class, id);
     }
     
+    /**
+     * 
+     * @param objModificar
+     * @return 
+     */
+    public LenguajeEntity update(LenguajeEntity objModificar)
+    {
+         LOGGER.log(Level.INFO, "Consultando Lenguaje por id ", objModificar.getId());
+        // Se crea un query para buscar lenguajes con el nombre que recibe el método como argumento. ":nombre" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From LenguajeEntity e where e.id = :id", LenguajeEntity.class);
+        // Se remplaza el placeholder ":id" con el valor del argumento 
+        query = query.setParameter("id", objModificar.getId());
+        // Se invoca el query se obtiene la lista resultado
+        List<LenguajeEntity> sameID = query.getResultList();
+        LenguajeEntity result;
+        if (sameID == null) {
+            result = null;
+        } else if (sameID.isEmpty()) {
+            result = null;
+        } else {
+            result = objModificar;
+            sameID.remove(0);
+            sameID.add(result);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar lenguaje por id ",objModificar.getId());
+        return result;
+    }
+    
 }
