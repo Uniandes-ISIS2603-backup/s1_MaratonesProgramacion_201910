@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.persistence;
 
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import java.util.List;
 import java.util.logging.Level;
