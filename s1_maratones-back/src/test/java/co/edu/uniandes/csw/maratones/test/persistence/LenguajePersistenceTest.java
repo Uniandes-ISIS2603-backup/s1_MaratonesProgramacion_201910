@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.maratones.test.persistence;
 
-import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.persistence.LenguajePersistence;
 import java.util.ArrayList;
@@ -151,24 +150,39 @@ public class LenguajePersistenceTest {
         LenguajeEntity entity = data.get(0);
         System.out.println(entity.getId() +" El Id de entity");
         lenguajePersistence.delete(entity.getId());
-        CompetenciaEntity deleted = em.find(CompetenciaEntity.class, entity.getId());
+        LenguajeEntity deleted = em.find(LenguajeEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
     
         /**
-     * Prueba para consultar una competencia por nombre.
+     * Prueba para consultar un lenguaje por nombre.
      *
      *
      */
     @Test
-    public void FindLenguajeByNameTest() {
+    public void findLenguajeByNameTest() {
         LenguajeEntity entity = data.get(0);
         LenguajeEntity newEntity = lenguajePersistence.findByName(entity.getNombre());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
-
     
+    
+    @Test
+    public void updateLenguajeTest() {
+        LenguajeEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        lenguajePersistence.update(newEntity);
+
+        LenguajeEntity resp = em.find(LenguajeEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getExperiencia(), resp.getExperiencia());
+    }
             
     
 }

@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Entity;
 
 /**
@@ -30,12 +29,12 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     /*
     
     */
-    private String input;
+    private String inputt;
     
     /*
     
     */
-    private String output;
+    private String outputt;
     
     /*
     
@@ -47,6 +46,10 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     */
     private int nivel;
 
+  
+
+    
+    
     /**
      * @return the nombre
      */
@@ -78,29 +81,29 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     /**
      * @return the input
      */
-    public String getInput() {
-        return input;
+    public String getInputt() {
+        return inputt;
     }
 
     /**
-     * @param input the input to set
+     * @param inputt the input to set
      */
-    public void setInput(String input) {
-        this.input = input;
+    public void setInputt(String inputt) {
+        this.inputt = inputt;
     }
 
     /**
      * @return the output
      */
-    public String getOutput() {
-        return output;
+    public String getOutputt() {
+        return outputt;
     }
 
     /**
-     * @param output the output to set
+     * @param outputt the output to set
      */
-    public void setOutput(String output) {
-        this.output = output;
+    public void setOutputt(String outputt) {
+        this.outputt = outputt;
     }
 
     /**
@@ -133,26 +136,4 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
 
     
     
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final EjercicioEntity other = (EjercicioEntity) obj;
-        return Objects.equals(this.getNombre(), other.getNombre());
-    }
-
-    @Override
-    public int hashCode() {
-        if (this.getNombre() != null) {
-            return this.getNombre().hashCode();
-        }
-        return super.hashCode();
-    }
 }

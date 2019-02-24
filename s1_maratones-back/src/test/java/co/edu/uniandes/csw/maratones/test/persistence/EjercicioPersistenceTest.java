@@ -1,7 +1,25 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+MIT License
+
+Copyright (c) 2019 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.test.persistence;
 
@@ -30,21 +48,22 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class EjercicioPersistenceTest {
-    
+  
      
-    @Inject
-    private EjercicioPersistence ejercicioPersistence;
-    
-    
-    @PersistenceContext
-    private EntityManager em;
-    
-    
     /**
      * Lista que tiene los datos de prueba.
      */
     private List<EjercicioEntity> data = new ArrayList<EjercicioEntity>();
     
+    
+    @Inject
+    private EjercicioPersistence ejerPersistence;
+    
+    
+    @PersistenceContext
+    private EntityManager em;
+    
+   
     
     /**
      * Variable para martcar las transacciones del em anterior cuando se
@@ -53,7 +72,8 @@ public class EjercicioPersistenceTest {
     @Inject
     UserTransaction utx;
 
-    
+   
+
      /**
      *
      * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
@@ -70,8 +90,7 @@ public class EjercicioPersistenceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
-    
-       /**
+     /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -120,7 +139,8 @@ public class EjercicioPersistenceTest {
     }
     
     
-   /**
+    
+    /**
      * Prueba para crear una competencia.
      *
      *
@@ -129,25 +149,21 @@ public class EjercicioPersistenceTest {
     public void createEjercicioTest() {
         PodamFactory factory = new PodamFactoryImpl();
         EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
-        EjercicioEntity result = ejercicioPersistence.create(newEntity);
+        EjercicioEntity result = ejerPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
 
         EjercicioEntity entity = em.find(EjercicioEntity.class, result.getId());
 
-        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
     
-    /**
-     * Prueba para eliminar un Competencia.
-     *
-     *
-     */
+   
     @Test
     public void deleteEjercicioTest() {
         EjercicioEntity entity = data.get(0);
         System.out.println(entity.getId() +" El Id de entity");
-        ejercicioPersistence.delete(entity.getId());
+        ejerPersistence.delete(entity.getId());
         EjercicioEntity deleted = em.find(EjercicioEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
@@ -158,13 +174,30 @@ public class EjercicioPersistenceTest {
      *
      */
     @Test
-    public void FindEjercicioByNameTest() {
+    public void findEjercicioByNameTest() {
         EjercicioEntity entity = data.get(0);
-        EjercicioEntity newEntity = ejercicioPersistence.findByName(entity.getNombre());
+        EjercicioEntity newEntity = ejerPersistence.findByName(entity.getNombre());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
     
-            
-    
+    @Test
+    public void updateEjercicioTest() {
+        EjercicioEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        ejerPersistence.update(newEntity);
+
+        EjercicioEntity resp = em.find(EjercicioEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(newEntity.getInputt(), resp.getInputt());
+        Assert.assertEquals(newEntity.getOutputt(), resp.getOutputt());
+        Assert.assertEquals(newEntity.getNivel(), resp.getNivel());
+        Assert.assertEquals(newEntity.getPuntaje(), resp.getPuntaje());
+    }
 }
