@@ -90,4 +90,16 @@ public class EjercicioPersistence {
     {
         return em.find(EjercicioEntity.class, id);
     }
+    
+     /**
+     * Actualiza un ejercicio.
+     *
+     * @param ejercicioEntity: el ejercicio que viene con los nuevos cambios. Por ejemplo
+     * el nombre pudo cambiar. En ese caso, se haria uso del método update.
+     * @return un ejercicio con los cambios aplicados.
+     */
+    public EjercicioEntity update(EjercicioEntity ejercicioEntity) {
+        LOGGER.log(Level.INFO, "Actualizando el ejercicio con id={0}", ejercicioEntity.getId());
+        return em.merge(ejercicioEntity);
+    }
 }

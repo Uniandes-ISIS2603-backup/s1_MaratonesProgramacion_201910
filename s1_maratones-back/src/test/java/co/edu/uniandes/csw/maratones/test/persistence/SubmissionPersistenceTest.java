@@ -166,7 +166,23 @@ public class SubmissionPersistenceTest {
         Assert.assertEquals(entity.getCodigo(), newEntity.getCodigo());
     }
     
-      
+    @Test
+    public void updateSubmissionTest() {
+        SubmissionEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        submissionPersistence.update(newEntity);
+
+        SubmissionEntity resp = em.find(SubmissionEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getCodigo(), resp.getCodigo());
+        Assert.assertEquals(newEntity.getArchivo(), resp.getArchivo());
+        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
+        Assert.assertEquals(newEntity.getVeredicto(), resp.getVeredicto());
+    }
             
     
     

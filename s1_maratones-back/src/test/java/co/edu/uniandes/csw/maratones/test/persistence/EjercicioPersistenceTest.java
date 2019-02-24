@@ -181,5 +181,23 @@ public class EjercicioPersistenceTest {
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
     
-      
+    @Test
+    public void updateEjercicioTest() {
+        EjercicioEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        ejerPersistence.update(newEntity);
+
+        EjercicioEntity resp = em.find(EjercicioEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(newEntity.getInputt(), resp.getInputt());
+        Assert.assertEquals(newEntity.getOutputt(), resp.getOutputt());
+        Assert.assertEquals(newEntity.getNivel(), resp.getNivel());
+        Assert.assertEquals(newEntity.getPuntaje(), resp.getPuntaje());
+    }
 }

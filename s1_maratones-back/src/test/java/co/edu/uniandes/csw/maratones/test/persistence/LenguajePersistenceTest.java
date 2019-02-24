@@ -169,10 +169,19 @@ public class LenguajePersistenceTest {
     
     
     @Test
-    public void updateLenguajeTest(){
+    public void updateLenguajeTest() {
         LenguajeEntity entity = data.get(0);
-        LenguajeEntity newEntity = lenguajePersistence.update(entity);
-        Assert.assertNotNull(newEntity);
+        PodamFactory factory = new PodamFactoryImpl();
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        lenguajePersistence.update(newEntity);
+
+        LenguajeEntity resp = em.find(LenguajeEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getExperiencia(), resp.getExperiencia());
     }
             
     
