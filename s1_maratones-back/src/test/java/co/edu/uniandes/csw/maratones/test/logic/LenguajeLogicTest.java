@@ -170,5 +170,50 @@ public class LenguajeLogicTest {
         newEntity.setExperiencia(0);
         lenguajeLogic.createLenguaje(newEntity);
     }
+    
+    @Test
+    public void deleteLenguajeTest() throws BusinessLogicException
+    {
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        newEntity.setId(data.get(0).getId());
+        lenguajeLogic.deleteLenguaje(newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void deleteLenguajeQueNoExisteTest() throws BusinessLogicException
+    {
+        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
+        lenguajeLogic.deleteLenguaje(newEntity);
+    }
+    
+    @Test
+    public void getLenguajeTest()throws BusinessLogicException
+    {
+        LenguajeEntity entity = data.get(0);
+        LenguajeEntity result = lenguajeLogic.getLenguaje(entity);
+        Assert.assertEquals(entity.getId(), result.getId());
+        Assert.assertEquals(entity.getNombre(), result.getNombre());
+        Assert.assertEquals(entity.getExperiencia(), result.getExperiencia());
+    }
+    
+    /**
+     * Prueba para consultar la lista de Lenguajes.
+     */
+    @Test
+    public void getLenguajesTest() {
+        List<LenguajeEntity> list = lenguajeLogic.getLenguajes();
+        Assert.assertEquals(data.size(), list.size());
+        for (LenguajeEntity entity : list) {
+            boolean found = false;
+            for (LenguajeEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
+    
 
 }
