@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.persistence;
 
+
 import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,11 @@ public class PrerequisitoPersistence {
         
         em.persist(prerequisitoEntity);
         return prerequisitoEntity;
+    }
+    
+    public PrerequisitoEntity find (Long prerequisitoId)
+    {
+        return em.find(PrerequisitoEntity.class, prerequisitoId);
     }
     
     public void delete(Long prerequisitoId) {

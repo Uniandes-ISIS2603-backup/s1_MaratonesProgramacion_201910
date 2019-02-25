@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Entity;
 
@@ -15,23 +16,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class LugarCompetenciaEntity extends BaseEntity implements Serializable {
-    private Date fecha;
+    private LocalDateTime fecha;
     
     private String ubicaciones;
 
-    /**
-     * @return the fecha
-     */
-    public Date getFecha() {
-        return fecha;
-    }
-
-    /**
-     * @param fecha the fecha to set
-     */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 
     /**
      * @return the ubicaciones
@@ -45,5 +33,19 @@ public class LugarCompetenciaEntity extends BaseEntity implements Serializable {
      */
     public void setUbicaciones(String ubicaciones) {
         this.ubicaciones = ubicaciones;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 }
