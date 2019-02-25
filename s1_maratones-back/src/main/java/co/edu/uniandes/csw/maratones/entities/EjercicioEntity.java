@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 
 /**
@@ -47,7 +48,10 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     private int nivel;
 
   
-
+    /*
+    
+    */
+    private List<CompetenciaEntity> competencias;
     
     
     /**
@@ -132,6 +136,20 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
      */
     public void setNivel(int nivel) {
         this.nivel = nivel;
+    }
+
+    /**
+     * @return the competencias
+     */
+    public List<CompetenciaEntity> getCompetencias() {
+        return competencias;
+    }
+
+    /**
+     * @param competencias the competencias to set
+     */
+    public void setCompetencias(List<CompetenciaEntity> competencias) {
+        this.competencias = competencias;
     }
 
     
