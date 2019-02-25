@@ -24,6 +24,7 @@ SOFTWARE.
 package co.edu.uniandes.csw.maratones.test.persistence;
 
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
+import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
 import co.edu.uniandes.csw.maratones.persistence.EjercicioPersistence;
 import java.util.ArrayList;
 import java.util.List;

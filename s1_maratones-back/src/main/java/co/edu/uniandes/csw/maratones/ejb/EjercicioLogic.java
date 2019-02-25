@@ -22,7 +22,7 @@ import javax.inject.Inject;
 @Stateless
 public class EjercicioLogic {
     
-     private static final Logger LOGGER = Logger.getLogger(LenguajeLogic.class.getName());
+   private static final Logger LOGGER = Logger.getLogger(LenguajeLogic.class.getName());
 
     
   @Inject  
@@ -86,7 +86,7 @@ public class EjercicioLogic {
         return languages;
     }
     
-    public EjercicioEntity updateBook(Long ejerID, EjercicioEntity ejercicioEntity) throws BusinessLogicException {
+    public EjercicioEntity updateEjercicio(Long ejerID, EjercicioEntity ejercicioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el ejercicio con id = {0}", ejerID);
         if (persistence.find(ejerID) == null) {
             throw new BusinessLogicException("El ejercicio que se desea actualizar no existe");
@@ -122,13 +122,13 @@ public class EjercicioLogic {
         if (persistence.find(ejerID)== null) {
             throw new BusinessLogicException("No se puede borrar el ejercicio porque no existe");
         }
-        
+        /*
         List<CompetenciaEntity> competenciasAsociadasA = getEjercicio(ejerID).getCompetencias();
         if( competenciasAsociadasA!= null  && competenciasAsociadasA.isEmpty() )
         {
             throw new BusinessLogicException("No se puede borrar el ejercicio porque ya esta asociado a una competencia");
         }
-        
+        */
         persistence.delete(ejerID);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el ejercicio con id = {0}", ejerID);
     }

@@ -7,7 +7,11 @@ package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,6 +19,14 @@ import javax.persistence.Entity;
  */
 @Entity
 public class CompetenciaEntity extends BaseEntity implements Serializable{
+
+    @PodamExclude
+    @ManyToMany(mappedBy = "competencias", cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    private List<EjercicioEntity> ejercicioEntitys;
+    
     private boolean esVirtual;
     
     private Date fechaInicio;

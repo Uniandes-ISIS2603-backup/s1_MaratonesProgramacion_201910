@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.maratones.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -47,10 +49,8 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     */
     private int nivel;
 
-  
-    /*
-    
-    */
+    @PodamExclude
+    @ManyToMany 
     private List<CompetenciaEntity> competencias;
     
     
@@ -144,7 +144,8 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     public List<CompetenciaEntity> getCompetencias() {
         return competencias;
     }
-
+    
+    
     /**
      * @param competencias the competencias to set
      */

@@ -124,9 +124,13 @@ public class EjercicioLogicTest {
     
     
     @Test 
-    public void createLenguajeTest() throws BusinessLogicException
+    public void createEjercicioTest() throws BusinessLogicException
     {
         EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        newEntity.setDescripcion("Descripcion");
+        newEntity.setNombre("Nombre");
+        newEntity.setPuntaje(1);
+        newEntity.setNivel(1);
         EjercicioEntity result = ejercicioLogic.createEjercicio(newEntity);
         Assert.assertNotNull(result);
         EjercicioEntity entity = em.find(EjercicioEntity.class, result.getId());
@@ -139,9 +143,59 @@ public class EjercicioLogicTest {
     
     @Test(expected = BusinessLogicException.class)
     
-    public void createLenguajeConMismoNombreTest() throws BusinessLogicException {
+    public void createEjercicioConMismoNombreTest() throws BusinessLogicException {
         EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
         newEntity.setNombre(data.get(0).getNombre());
         ejercicioLogic.createEjercicio(newEntity);
     }
+    
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createEjercicioConDescripcionVaciaTest() throws BusinessLogicException
+    {
+        EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        newEntity.setDescripcion("");
+        newEntity.setNombre("Nombre");
+        newEntity.setPuntaje(1);
+        newEntity.setNivel(1);
+        ejercicioLogic.createEjercicio(newEntity);
+        
+    }
+    
+    @Test(expected = BusinessLogicException.class) 
+    public void createEjercicioConNombreVacioTest()throws BusinessLogicException
+    {
+        EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        newEntity.setNombre("");
+        newEntity.setDescripcion("Descripcion");
+        newEntity.setPuntaje(1);
+        newEntity.setNivel(1);
+        ejercicioLogic.createEjercicio(newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createEjercicioConNivelNegativoTest()throws BusinessLogicException
+    {
+        EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        newEntity.setNivel(-1);
+        newEntity.setDescripcion("Descripcion");
+        newEntity.setNombre("Nombre");
+        newEntity.setPuntaje(1);
+        ejercicioLogic.createEjercicio(newEntity);
+        
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createEjercicioConPuntajeNegativoTest()throws BusinessLogicException
+    {
+         EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        newEntity.setPuntaje(-1);
+        newEntity.setDescripcion("Descripcion");
+        newEntity.setNombre("Nombre");
+        newEntity.setNivel(1);
+        ejercicioLogic.createEjercicio(newEntity);
+        
+    }
+    
+    
 }
