@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.maratones.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -22,9 +23,9 @@ public class BlogEntity extends BaseEntity implements Serializable{
     private String nombre;
     private String descripcion;
     
-  /*  @PodamExclude
-    @OneToMany(mappedBy = "blog")
-    private List<PublicacionEntity> publicaciones = new ArrayList<PublicacionEntity>();*/
+    
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PublicacionEntity> publicaciones = new ArrayList<PublicacionEntity>();
     
     public BlogEntity(){
      
@@ -55,6 +56,20 @@ public class BlogEntity extends BaseEntity implements Serializable{
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the publicaciones
+     */
+    public List<PublicacionEntity> getPublicaciones() {
+        return publicaciones;
+    }
+
+    /**
+     * @param publicaciones the publicaciones to set
+     */
+    public void setPublicaciones(List<PublicacionEntity> publicaciones) {
+        this.publicaciones = publicaciones;
     }
     
 }
