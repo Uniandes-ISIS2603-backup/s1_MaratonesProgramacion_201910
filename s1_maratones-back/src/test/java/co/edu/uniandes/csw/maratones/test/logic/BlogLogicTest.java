@@ -146,4 +146,58 @@ public class BlogLogicTest {
         newEntity.setDescripcion("WX6:5imn.WSKvMkPh]%%SAzV,{,}@2P_bz=7L=8nRfxb9tfuA-]Z,uPA*%mh-G$2emSn6S7xu4D2Ah}F,]GUxgBRx[qJ)n-/f4uAS;wuT5FxuBXd:z/Pg)ae,YfFSL#U[r6nUq2+}+cWZPRb7Y]kB#mpgz+vePyv6n?/4fg2S*UPj,i5BrkB/ATrmkxK;ix7?8t}mG8pa@FU-p.wTj}d{-7SQG:+W6$LxdkBhH72igH7M8tHVe]bT$qXfai!;QGB!{nF]3G74Yx)%BCE8a7HDpP@jt5p8.nx[b5R6$,ubx2wLrd7)rMY[Zj}g!)V*)pJZVAphHuYicyTY#=m%Yk2TXVCRuf,gWyFH:{Snym;5c=3Vjm27YAiy4B_%hAZKwLum8(87(bY,hcA,7Gt3DFdGvCF*7J%W$rA_Ni&tvYEvCN#gUz6rzHcTWEDZeZS*@}{L.$S5H5@!vY=pTqg*gA9*]_:SL9k/k?CRH$T%Rh,YgA2PD?X%;x+Z");
         bl.createBlog(newEntity);
     }
+    
+    @Test
+    public void getBlogTest() {
+        BlogEntity entity = data.get(0);
+        BlogEntity newEntity = bl.getBlog(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+    }
+     @Test
+    public void getBlogsTest() {
+        List<BlogEntity> list = bl.getBlogs();
+        Assert.assertEquals(data.size(), list.size());
+        for (BlogEntity ent : list) {
+            boolean found = false;
+            for (BlogEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+     @Test
+    public void deleteBlogTest() {
+        BlogEntity entity = data.get(0);
+        bl.deleteBlog(entity.getId());
+        BlogEntity deleted = em.find(BlogEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+     @Test(expected = BusinessLogicException.class)
+    public void updateBlogTestIdMenor0()throws BusinessLogicException  {
+        BlogEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
+        newEntity.setId(entity.getId());
+        Long id= -2L;
+        bl.updateBlog(id,newEntity);
+        BlogEntity resp = em.find(BlogEntity.class, entity.getId());
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+    }
+     @Test(expected = BusinessLogicException.class)
+    public void updateBlogTestIdNull()throws BusinessLogicException  {
+        BlogEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
+        newEntity.setId(entity.getId());
+        bl.updateBlog(null,newEntity);
+        BlogEntity resp = em.find(BlogEntity.class, entity.getId());
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+    }
 }
