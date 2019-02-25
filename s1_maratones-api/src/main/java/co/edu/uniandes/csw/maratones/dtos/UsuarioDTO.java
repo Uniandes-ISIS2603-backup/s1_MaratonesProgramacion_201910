@@ -26,6 +26,7 @@ package co.edu.uniandes.csw.maratones.dtos;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 /**
@@ -80,7 +81,9 @@ public class UsuarioDTO implements Serializable {
     private String correo;
     private String clave;
     private int puntaje;
-    
+    private List<EquipoDTO> equipos;
+    private List<LenguajeDTO> lenguajes;
+    private List<SubmissionDTO> submission;
     /**
      * Constructor por defecto
      */
@@ -112,6 +115,30 @@ public class UsuarioDTO implements Serializable {
         this.rol = rol;
     }
 
+     public List<EquipoDTO> getEquipos() {
+        return equipos;
+    }
+
+    public void setEquipos(List<EquipoDTO> equipos) {
+        this.equipos = equipos;
+    }
+
+    public List<LenguajeDTO> getLenguajes() {
+        return lenguajes;
+    }
+
+    public void setLenguajes(List<LenguajeDTO> lenguajes) {
+        this.lenguajes = lenguajes;
+    }
+
+    public List<SubmissionDTO> getSubmission() {
+        return submission;
+    }
+
+    public void setSubmission(List<SubmissionDTO> submission) {
+        this.submission = submission;
+    }
+    
     public String getNombreUsuario() {
         return nombreUsuario;
     }

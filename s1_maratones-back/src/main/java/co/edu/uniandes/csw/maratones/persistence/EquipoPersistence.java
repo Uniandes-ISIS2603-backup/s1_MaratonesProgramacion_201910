@@ -25,10 +25,13 @@ package co.edu.uniandes.csw.maratones.persistence;
 
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  * Clase que maneja la persistencia para la Cascara. Se conecta a través del
@@ -47,5 +50,53 @@ public class EquipoPersistence {
     public EquipoEntity create(EquipoEntity e){
         em.persist(e);
         return  e;
+    }
+    
+    
+    public EquipoEntity find(Long equipoId) {
+        LOGGER.log(Level.INFO, "Consultando organizacion con id={0}", equipoId);
+        /* Note que se hace uso del metodo "find" propio del EntityManager, el cual recibe como argumento 
+        el tipo de la clase y el objeto que nos hara el filtro en la base de datos en este caso el "id"
+        Suponga que es algo similar a "select * from OrganizationEntity where id=id;" - "SELECT * FROM table_name WHERE condition;" en SQL.
+         */
+        TypedQuery<EquipoEntity> query = em.createQuery("select u from EquipoEntity u left join FETCH u.participantes p where u.id =:id", EquipoEntity.class);
+        query = query.setParameter("id", equipoId);
+        List<EquipoEntity> organizations = query.getResultList();
+        EquipoEntity result = null;
+        if (!(organizations == null || organizations.isEmpty())) {
+            result = organizations.get(0);
+        }
+        return result;
+    }
+    /**
+     * Busca si hay alguna editorial con el nombre que se envía de argumento
+     *
+     * @param name: Nombre de la equipo que se está buscando
+     * @return null si no existe ninguna editorial con el nombre del argumento.
+     * Si existe alguna devuelve la primera.
+     */
+    public EquipoEntity findByName(String name) {
+        LOGGER.log(Level.INFO, "Consultando usuario por nombre de equipo", name);
+        TypedQuery query = em.createQuery("Select e From UsuarioEntity e where e.nombreEquipo = :nombreEquipo", EquipoEntity.class);
+        query = query.setParameter("nombreEquipo", name);
+        // Se invoca el query se obtiene la lista resultado
+        List<EquipoEntity> sameName = query.getResultList();
+        EquipoEntity result;
+        if (sameName == null) {
+            result = null;
+        } else if (sameName.isEmpty()) {
+            result = null;
+        } else {
+            result = sameName.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar equipo por nombre de equipo ", name);
+        return result;
+    }
+    
+    
+    public void delete(Long equipoId) {
+        LOGGER.log(Level.INFO, "Borrando el equipo con id={0}", equipoId);
+        EquipoEntity equipoEntity = em.find(EquipoEntity.class, equipoId);
+        em.remove(equipoEntity);
     }
 }
