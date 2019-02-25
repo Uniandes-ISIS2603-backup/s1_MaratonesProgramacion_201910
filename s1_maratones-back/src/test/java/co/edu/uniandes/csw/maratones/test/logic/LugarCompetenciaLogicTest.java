@@ -5,9 +5,12 @@
  */
 package co.edu.uniandes.csw.maratones.test.logic;
 
+import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
 import co.edu.uniandes.csw.maratones.ejb.PrerequisitoLogic;
+import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
 import co.edu.uniandes.csw.maratones.persistence.PrerequisitoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,26 +34,25 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Julian David Mendoza Ruiz <jd.mendozar@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class PrerequisitoLogicTest {
-    
+public class LugarCompetenciaLogicTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(PrerequisitoEntity.class.getPackage())
-                .addPackage(PrerequisitoLogic.class.getPackage())
-                .addPackage(PrerequisitoPersistence.class.getPackage())
+                .addPackage(LugarCompetenciaEntity.class.getPackage())
+                .addPackage(LugarCompetenciaLogic.class.getPackage())
+                .addPackage(LugarCompetenciaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     @Inject
-    private PrerequisitoLogic prerequisitosLogic;
+    private LugarCompetenciaLogic lugarCompetenciaLogic;
     
    
     
     /**
      * Lista que tiene los datos de prueba.
      */
-    private List<PrerequisitoEntity> data = new ArrayList<PrerequisitoEntity>();
+    private List<LugarCompetenciaEntity> data = new ArrayList<LugarCompetenciaEntity>();
     /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
      * datos por fuera de los métodos que se están probando.
@@ -64,9 +66,7 @@ public class PrerequisitoLogicTest {
      */
     @Inject
     UserTransaction utx;
-    
 
-    
      /**
      * Configuración inicial de la prueba.
      */
@@ -94,7 +94,7 @@ public class PrerequisitoLogicTest {
      *
      */
     private void clearData() {
-        em.createQuery("delete from PrerequisitoEntity").executeUpdate();
+        em.createQuery("delete from LugarCompetenciaEntity").executeUpdate();
     }
 
      /**
@@ -107,13 +107,9 @@ public class PrerequisitoLogicTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
 
-            PrerequisitoEntity entity = factory.manufacturePojo(PrerequisitoEntity.class);
+            LugarCompetenciaEntity entity = factory.manufacturePojo(LugarCompetenciaEntity.class);
 
-            int nivel = 0;
-            
-            nivel  = 1 +(int) (Math.random() * 9);
-            
-            entity.setNivel(nivel);
+          
             em.persist(entity);
 
             data.add(entity);
@@ -126,19 +122,16 @@ public class PrerequisitoLogicTest {
      *
      */
     @Test
-    public void createPrerequisitoTest() throws BusinessLogicException {
+    public void createLugarCompetenciaTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
-        PrerequisitoEntity newEntity = factory.manufacturePojo(PrerequisitoEntity.class);
-        int nivel = 0;
-            
-            nivel  = 1+(int) (Math.random() * 9);
-            
-            newEntity.setNivel(nivel);
-        PrerequisitoEntity result = prerequisitosLogic.create(newEntity);
+        LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
+       
+        LugarCompetenciaEntity result = lugarCompetenciaLogic.create(newEntity);
 
         Assert.assertNotNull(result);
+        
+        LugarCompetenciaEntity entity = em.find(LugarCompetenciaEntity.class, result.getId());
 
-        PrerequisitoEntity entity = em.find(PrerequisitoEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
@@ -149,9 +142,9 @@ public class PrerequisitoLogicTest {
      *
      */
     @Test
-    public void deletePrerequisitoTest() {
-        PrerequisitoEntity entity = data.get(0);
-        prerequisitosLogic.delete(entity.getId());
+    public void deleteLugarCompetenciaTest() {
+        LugarCompetenciaEntity entity = data.get(0);
+        lugarCompetenciaLogic.delete(entity.getId());
         PrerequisitoEntity deleted = em.find(PrerequisitoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }

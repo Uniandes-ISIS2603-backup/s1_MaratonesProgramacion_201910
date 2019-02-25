@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.ejb;
 
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
 import java.util.Date;
@@ -24,9 +25,9 @@ public class LugarCompetenciaLogic {
     private static final Logger LOGGER = Logger.getLogger(LugarCompetenciaLogic.class.getName());
     
     @Inject
-    private LugarCompetenciaPersistence lugarCompetenciaPersistencia;
+    private LugarCompetenciaPersistence lugarCompetenciaPersistence;
     
-    public LugarCompetenciaEntity createLugarCompetencia (LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException
+    public LugarCompetenciaEntity create (LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Iniciar proceso de creación del LugarCompetencia");
         
@@ -35,9 +36,20 @@ public class LugarCompetenciaLogic {
             throw new BusinessLogicException("Ubicaciones no puede ser un String vacio");
         }
         
-        Date currentDate = new Date();
+        lugarCompetenciaPersistence.create(lugarCompetenciaEntity);
         
-      
         return lugarCompetenciaEntity;
+    }
+     public LugarCompetenciaEntity delete (Long lugarCompetenciaId)
+    {
+        LOGGER.log(Level.INFO, "Borrando prerequisito con id = {0}", lugarCompetenciaId);
+        // Se hace uso de mismo método que esta explicado en public PrerequisitoEntity find(Long id) para obtener el prerequisito a borrar.
+        LugarCompetenciaEntity entity = lugarCompetenciaPersistence.find(lugarCompetenciaId);
+        /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
+         EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
+         Es similar a "delete from PrerequisitoEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
+        lugarCompetenciaPersistence.delete(entity.getId());
+        LOGGER.log(Level.INFO, "Saliendo de borrar el prerequisito con id = {0}", lugarCompetenciaId);
+        return entity;
     }
 }

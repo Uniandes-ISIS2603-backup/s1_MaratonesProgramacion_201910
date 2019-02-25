@@ -5,10 +5,10 @@
  */
 package co.edu.uniandes.csw.maratones.test.logic;
 
-import co.edu.uniandes.csw.maratones.ejb.PrerequisitoLogic;
-import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
+import co.edu.uniandes.csw.maratones.ejb.CompetenciaLogic;
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.maratones.persistence.PrerequisitoPersistence;
+import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,26 +31,25 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Julian David Mendoza Ruiz <jd.mendozar@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class PrerequisitoLogicTest {
-    
-    @Deployment
+public class CompetenciaLogicTest {
+ @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(PrerequisitoEntity.class.getPackage())
-                .addPackage(PrerequisitoLogic.class.getPackage())
-                .addPackage(PrerequisitoPersistence.class.getPackage())
+                .addPackage(CompetenciaEntity.class.getPackage())
+                .addPackage(CompetenciaLogic.class.getPackage())
+                .addPackage(CompetenciaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     @Inject
-    private PrerequisitoLogic prerequisitosLogic;
+    private CompetenciaLogic competenciaLogic;
     
    
     
     /**
      * Lista que tiene los datos de prueba.
      */
-    private List<PrerequisitoEntity> data = new ArrayList<PrerequisitoEntity>();
+    private List<CompetenciaEntity> data = new ArrayList<CompetenciaEntity>();
     /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
      * datos por fuera de los métodos que se están probando.
@@ -64,9 +63,7 @@ public class PrerequisitoLogicTest {
      */
     @Inject
     UserTransaction utx;
-    
 
-    
      /**
      * Configuración inicial de la prueba.
      */
@@ -94,7 +91,7 @@ public class PrerequisitoLogicTest {
      *
      */
     private void clearData() {
-        em.createQuery("delete from PrerequisitoEntity").executeUpdate();
+        em.createQuery("delete from CompetenciaEntity").executeUpdate();
     }
 
      /**
@@ -107,13 +104,9 @@ public class PrerequisitoLogicTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
 
-            PrerequisitoEntity entity = factory.manufacturePojo(PrerequisitoEntity.class);
+            CompetenciaEntity entity = factory.manufacturePojo(CompetenciaEntity.class);
 
-            int nivel = 0;
-            
-            nivel  = 1 +(int) (Math.random() * 9);
-            
-            entity.setNivel(nivel);
+          
             em.persist(entity);
 
             data.add(entity);
@@ -124,21 +117,19 @@ public class PrerequisitoLogicTest {
      * Prueba para crear un Prerequisito.
      *
      *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
      */
     @Test
-    public void createPrerequisitoTest() throws BusinessLogicException {
+    public void createCompetenciaTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
-        PrerequisitoEntity newEntity = factory.manufacturePojo(PrerequisitoEntity.class);
-        int nivel = 0;
-            
-            nivel  = 1+(int) (Math.random() * 9);
-            
-            newEntity.setNivel(nivel);
-        PrerequisitoEntity result = prerequisitosLogic.create(newEntity);
+        CompetenciaEntity newEntity = factory.manufacturePojo(CompetenciaEntity.class);
+       
+        CompetenciaEntity result = competenciaLogic.create(newEntity);
 
         Assert.assertNotNull(result);
 
-        PrerequisitoEntity entity = em.find(PrerequisitoEntity.class, result.getId());
+        CompetenciaEntity entity = em.find(CompetenciaEntity.class, result.getId());
+        
 
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
@@ -149,10 +140,10 @@ public class PrerequisitoLogicTest {
      *
      */
     @Test
-    public void deletePrerequisitoTest() {
-        PrerequisitoEntity entity = data.get(0);
-        prerequisitosLogic.delete(entity.getId());
-        PrerequisitoEntity deleted = em.find(PrerequisitoEntity.class, entity.getId());
+    public void deleteCompetenciaTest() {
+        CompetenciaEntity entity = data.get(0);
+        competenciaLogic.delete(entity.getId());
+        CompetenciaEntity deleted = em.find(CompetenciaEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }
+    }   
 }

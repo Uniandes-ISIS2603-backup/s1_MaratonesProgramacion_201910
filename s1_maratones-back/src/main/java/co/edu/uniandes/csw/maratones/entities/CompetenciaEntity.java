@@ -106,14 +106,6 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     public LocalDateTime getFechaFin() {
         return fechaFin;
     }
-
-    /**
-     * @param fechaFin the fechaFin to set
-     */
-    public void setFechaFin(Date fechaFin) {
-        this.setFechaFin(fechaFin);
-    }
-
     /**
      * @return the fechaInicio
      */
