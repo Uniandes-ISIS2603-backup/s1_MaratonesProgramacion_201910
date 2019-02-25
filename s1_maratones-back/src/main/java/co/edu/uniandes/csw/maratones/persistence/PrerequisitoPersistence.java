@@ -31,6 +31,11 @@ public class PrerequisitoPersistence {
         return prerequisitoEntity;
     }
     
+    public PrerequisitoEntity find (Long prerequisitoId)
+    {
+        return em.find(PrerequisitoEntity.class, prerequisitoId);
+    }
+    
     public void delete(Long prerequisitoId) {
         LOGGER.log(Level.INFO, "Borrando prerequisito con id = {0}", prerequisitoId);
         // Se hace uso de mismo método que esta explicado en public PrerequisitoEntity find(Long id) para obtener el prerequisito a borrar.
