@@ -12,6 +12,7 @@
  
     <modules>
         <module>s1_maratones-back</module>
+        <module>s1_maratones-api</module>
     </modules>
     
     <repositories>

@@ -7,9 +7,14 @@ package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -20,7 +25,13 @@ public class EquipoEntity extends BaseEntity implements Serializable{
 
     private EquipoEntity coach;
     private String nombreEquipo;
-    private EquipoEntity[] participantes;
+    
+    @PodamExclude
+    @ManyToMany (mappedBy = "equipos", cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    private List<UsuarioEntity> participantes;
 
     public EquipoEntity getCoach() {
         return coach;
@@ -38,11 +49,11 @@ public class EquipoEntity extends BaseEntity implements Serializable{
         this.nombreEquipo = nombreEquipo;
     }
 
-    public EquipoEntity[] getParticipantes() {
+    public List<UsuarioEntity> getParticipantes() {
         return participantes;
     }
 
-    public void setParticipantes(EquipoEntity[] participantes) {
+    public void setParticipantes(List<UsuarioEntity> participantes) {
         this.participantes = participantes;
     }
     
