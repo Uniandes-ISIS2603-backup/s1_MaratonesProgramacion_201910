@@ -166,9 +166,9 @@ public class LenguajeLogicTest {
     
     public void updateLenguajeConExperienciaMenorIgualACeroTest() throws BusinessLogicException {
         LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
-        newEntity.setNombre(data.get(0).getNombre());
+        newEntity.setId(data.get(0).getId());
         newEntity.setExperiencia(0);
-        lenguajeLogic.createLenguaje(newEntity);
+        lenguajeLogic.updateLenguaje(newEntity);
     }
     
     @Test
