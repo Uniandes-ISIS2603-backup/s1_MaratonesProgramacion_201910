@@ -55,5 +55,19 @@ public class PublicacionEntity extends BaseEntity implements Serializable{
     public void setTexto(String texto) {
         this.texto = texto;
     }
+
+    /**
+     * @return the blog
+     */
+    public BlogEntity getBlog() {
+        return blog;
+    }
+
+    /**
+     * @param blog the blog to set
+     */
+    public void setBlog(BlogEntity blog) {
+        this.blog = blog;
+    }
     
 }
