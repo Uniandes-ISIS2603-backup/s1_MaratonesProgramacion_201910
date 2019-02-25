@@ -77,7 +77,7 @@ public class EjercicioPersistence {
      */
     public List<EjercicioEntity> findAll()
     {
-        TypedQuery<EjercicioEntity> query = em.createQuery("select u from EjercicioEntity u", EjercicioEntity.class);
+        TypedQuery<EjercicioEntity> query = em.createQuery("Select u from EjercicioEntity u", EjercicioEntity.class);
         return query.getResultList();
     }
     
