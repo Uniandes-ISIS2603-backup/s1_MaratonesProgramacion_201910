@@ -33,9 +33,9 @@ public class UsuarioLogic {
     public UsuarioEntity create(UsuarioEntity usuarioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del usuario");
         UsuarioEntity newusuarioEntity = persistence.create(usuarioEntity);
-        /*if (persistence.findByUsername(usuarioEntity.getNombreUsuario()) != null) {
+        if (persistence.findByUsername(usuarioEntity.getNombreUsuario()) != null) {
             throw new BusinessLogicException("ya existe un usuario con ese nombre de usuario");
-        }*/
+        }
         if (usuarioEntity.getNombreUsuario().length() > 6) {
             throw new BusinessLogicException("el nombre usuario debe tener minimo 6 caracteres");
         }
@@ -62,6 +62,11 @@ public class UsuarioLogic {
     }
     
    
-
+    public void delete(Long usuarioId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar usuario con id = {0}", usuarioId);
+        persistence.delete(usuarioId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar usuario con id = {0}", usuarioId);
+    }
+    
 }
 

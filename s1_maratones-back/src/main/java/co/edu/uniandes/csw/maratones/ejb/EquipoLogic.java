@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.maratones.ejb;
 
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.EquipoPersistence;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
 import java.util.logging.Level;
@@ -38,6 +39,16 @@ public class EquipoLogic {
         return newequipoEntity;
     }
 
+    public void delete(Long equipoId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar premio con id = {0}", equipoId);
+        if (persistence.find(equipoId).getParticipantes().size()!=0) {
+            throw new BusinessLogicException("No se puede borrar el equipo con id = " + equipoId + " porque tiene un participante asociado");
+        }
+        persistence.delete(equipoId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar equipo con id = {0}", equipoId);
+    }
+    
+    
 }
 
 

@@ -58,7 +58,7 @@ public class UsuarioPersistence {
      * @return null si no existe ninguna editorial con el nombre del argumento.
      * Si existe alguna devuelve la primera.
      */
-    public UsuarioEntity findByName(String name) {
+    public UsuarioEntity findByUsername(String name) {
         LOGGER.log(Level.INFO, "Consultando usuario por nombre de usuario", name);
         TypedQuery query = em.createQuery("Select e From UsuarioEntity e where e.nombreUsuario = :nombreUsuario", UsuarioEntity.class);
         query = query.setParameter("nombreUsuario", name);
@@ -76,4 +76,16 @@ public class UsuarioPersistence {
         return result;
     }
     
+    /**
+     *
+     * Borra un usuario de la base de datos recibiendo como argumento el id del
+     * usuario
+     *
+     * @param usuarioId: id correspondiente al usuario a borrar.
+     */
+    public void delete(Long usuarioId) {
+        LOGGER.log(Level.INFO, "Borrando el usuario con id={0}", usuarioId);
+        UsuarioEntity usuarioEntity = em.find(UsuarioEntity.class, usuarioId);
+        em.remove(usuarioEntity);
+    }
 }
