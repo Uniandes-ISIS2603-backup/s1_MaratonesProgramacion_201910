@@ -32,9 +32,18 @@ public class EquipoLogic {
      * @param usuarioEntity Objeto de UsuarioEntity con los datos nuevos
      * @return Objeto de UsuarioEntity con los datos nuevos y su ID.
      */
-    public EquipoEntity create(EquipoEntity equipo) {
+    public EquipoEntity create(EquipoEntity equipo)throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del equipo");
         EquipoEntity newequipoEntity = persistence.create(equipo);
+        if (equipo.getCoach()!= null) {
+            throw new BusinessLogicException("necesita haber un coach");
+        }
+        if (equipo.getNombreEquipo().equals("")) {
+            throw new BusinessLogicException("no puede ser vacio el nombre del equipo");
+        }
+        if (equipo.getParticipantes().size() >7) {
+            throw new BusinessLogicException("solo pueden haber 6 integrantes");
+        }
         LOGGER.log(Level.INFO, "Termina proceso de creación del equipo");
         return newequipoEntity;
     }
