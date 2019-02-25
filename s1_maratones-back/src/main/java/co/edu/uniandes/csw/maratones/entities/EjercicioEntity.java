@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -30,12 +32,12 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     /*
     
     */
-    private String input;
+    private String inputt;
     
     /*
     
     */
-    private String output;
+    private String outputt;
     
     /*
     
@@ -47,8 +49,9 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     */
     private int nivel;
 
-  
-
+    @PodamExclude
+    @ManyToMany 
+    private List<CompetenciaEntity> competencias;
     
     
     /**
@@ -82,29 +85,29 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     /**
      * @return the input
      */
-    public String getInput() {
-        return input;
+    public String getInputt() {
+        return inputt;
     }
 
     /**
-     * @param input the input to set
+     * @param inputt the input to set
      */
-    public void setInput(String input) {
-        this.input = input;
+    public void setInputt(String inputt) {
+        this.inputt = inputt;
     }
 
     /**
      * @return the output
      */
-    public String getOutput() {
-        return output;
+    public String getOutputt() {
+        return outputt;
     }
 
     /**
-     * @param output the output to set
+     * @param outputt the output to set
      */
-    public void setOutput(String output) {
-        this.output = output;
+    public void setOutputt(String outputt) {
+        this.outputt = outputt;
     }
 
     /**
@@ -133,6 +136,21 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
      */
     public void setNivel(int nivel) {
         this.nivel = nivel;
+    }
+
+    /**
+     * @return the competencias
+     */
+    public List<CompetenciaEntity> getCompetencias() {
+        return competencias;
+    }
+    
+    
+    /**
+     * @param competencias the competencias to set
+     */
+    public void setCompetencias(List<CompetenciaEntity> competencias) {
+        this.competencias = competencias;
     }
 
     

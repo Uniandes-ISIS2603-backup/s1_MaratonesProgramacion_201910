@@ -21,13 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package co.edu.uniandes.csw.maratones.test.persistence;
+package co.edu.uniandes.csw.maratones.test.logic;
 
+import co.edu.uniandes.csw.maratones.ejb.EquipoLogic;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
+import co.edu.uniandes.csw.maratones.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,19 +46,40 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- * Pruebas de persistencia para la cascara.
+ * Pruebas de logica para la cascara.
  *
- * @author Camilalonart
+ * @author camila
  */
 @RunWith(Arquillian.class)
-public class UsuarioPersistenceTest {
-    private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
+public class EquipoLogicTest {
+    private PodamFactory factory = new PodamFactoryImpl();
+
     @Inject
-    private UsuarioPersistence usuarioPersistence;
+    private EquipoLogic equipoLogic;
+
     @PersistenceContext
     private EntityManager em;
-     @Inject
-     UserTransaction utx;
+
+    @Inject
+    private UserTransaction utx;
+
+    private List<EquipoEntity> data = new ArrayList<>();
+    
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(UsuarioEntity.class.getPackage())
+                .addPackage(UsuarioLogic.class.getPackage())
+                .addPackage(UsuarioPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    }
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -64,7 +87,6 @@ public class UsuarioPersistenceTest {
     public void configTest() {
         try {
             utx.begin();
-            em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
@@ -79,51 +101,46 @@ public class UsuarioPersistenceTest {
     }
 
     /**
+     * Limpia las tablas que están implicadas en la prueba.
+     */
+    private void clearData() {
+        em.createQuery("delete from EquipoEntity").executeUpdate();
+    }
+
+    /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 5; i++) {
-            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
-            entity.setEquipos(new ArrayList<>());
+        for (int i = 0; i < 3; i++) {
+            EquipoEntity entity = factory.manufacturePojo(EquipoEntity.class);
             em.persist(entity);
+            entity.setParticipantes(new ArrayList<UsuarioEntity>());
             data.add(entity);
         }
+        UsuarioEntity participante = factory.manufacturePojo(UsuarioEntity.class);
+        EquipoEntity newEntity = data.get(0);
+        newEntity.getParticipantes().add(participante);
+        em.persist(newEntity);
+        participante.getEquipos().add(newEntity);
+
     }
-    
+
     /**
-     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
-     * El jar contiene las clases, el descriptor de la base de datos y el
-     * archivo beans.xml para resolver la inyección de dependencias.
+     * Prueba para crear un Usuario.
      */
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(UsuarioEntity.class.getPackage())
-                .addPackage(UsuarioPersistence.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-    }
-    
-    /**
-     * Limpia las tablas que están implicadas en la prueba.
-     */
-    private void clearData() {
-        em.createQuery("delete from UsuarioEnity").executeUpdate();
-    }
-    
     @Test
     public void createTest() {
-        PodamFactory factory = new PodamFactoryImpl();
-        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity result = usuarioPersistence.create(newEntity);
-        Assert.assertNotNull(result);
-
-        UsuarioEntity entity = em.find(UsuarioEntity.class, result.getId());
-
-        Assert.assertEquals(newEntity.getId(), entity.getId());
+        EquipoEntity newEntity = factory.manufacturePojo(EquipoEntity.class);
+        newEntity.setParticipantes(new ArrayList<UsuarioEntity>());
+        try{
+            EquipoEntity result = equipoLogic.create(newEntity);
+            Assert.assertNotNull(result);
+            EquipoEntity entity = em.find(EquipoEntity.class, result.getId());
+            Assert.assertEquals(newEntity.getId(), entity.getId());
+            Assert.assertEquals(newEntity.getNombreEquipo(), entity.getNombreEquipo());
+        }catch(Exception exception){
+            exception.getMessage();
+        }
     }
-    
-    
 }

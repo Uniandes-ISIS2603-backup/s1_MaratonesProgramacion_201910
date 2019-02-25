@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.BlogEntity;
 import java.io.Serializable;
 
 /**
@@ -63,4 +64,26 @@ public class BlogDTO implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public BlogEntity toEntity(){
+        BlogEntity blogEntity = new BlogEntity();
+        blogEntity.setDescripcion(this.descripcion);
+        blogEntity.setNombre(this.nombre);
+       return blogEntity;
+    }
+    /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     */
+     public BlogDTO(BlogEntity blogEntity) {
+        if (blogEntity != null) {
+            this.nombre = blogEntity.getNombre();
+            this.descripcion = blogEntity.getDescripcion();
+         
+        }
+     }
 }

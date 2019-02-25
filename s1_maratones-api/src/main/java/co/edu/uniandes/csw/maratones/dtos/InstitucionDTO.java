@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.InstitucionEntity;
 import java.io.Serializable;
 
 
@@ -98,5 +99,30 @@ public class InstitucionDTO implements Serializable{
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+    /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public InstitucionEntity toEntity(){
+        InstitucionEntity institucionEntity = new InstitucionEntity();
+        institucionEntity.setNombre(this.nombre);
+        institucionEntity.setDescripcion(this.descripcion);
+        institucionEntity.setImagen(this.imagen);
+        institucionEntity.setUbicacion(this.ubicacion);
+       return institucionEntity;
+    }
+    /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     */
+     public InstitucionDTO(InstitucionEntity institucionEntity) {
+        if (institucionEntity != null) {
+            this.nombre = institucionEntity.getNombre();
+            this.descripcion = institucionEntity.getDescripcion();
+            this.imagen = institucionEntity.getImagen();
+            this.ubicacion = institucionEntity.getUbicacion();
+         
+        }
+     }
 }
