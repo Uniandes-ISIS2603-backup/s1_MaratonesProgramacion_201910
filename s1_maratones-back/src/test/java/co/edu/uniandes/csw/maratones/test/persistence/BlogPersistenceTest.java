@@ -112,5 +112,53 @@ public class BlogPersistenceTest {
         BlogEntity entity = em.find(BlogEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+    }
+    
+    @Test
+    public void getBlogsTest() {
+        List<BlogEntity> list = bp.findall();
+        Assert.assertEquals(data.size(), list.size());
+        for (BlogEntity ent : list) {
+            boolean found = false;
+            for (BlogEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    @Test
+    public void getBlogTest() {
+        BlogEntity entity = data.get(0);
+        BlogEntity newEntity = bp.find(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+    }
+     @Test
+    public void deleteBlogTest() {
+        BlogEntity entity = data.get(0);
+        bp.delete(entity.getId());
+        BlogEntity deleted = em.find(BlogEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+     @Test
+    public void updateBlogTest() {
+        BlogEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        BlogEntity newEntity = factory.manufacturePojo(BlogEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        bp.update(newEntity);
+
+        BlogEntity resp = em.find(BlogEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
     }
 }

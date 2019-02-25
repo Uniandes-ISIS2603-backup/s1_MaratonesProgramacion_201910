@@ -108,7 +108,62 @@ public class InstitucionPersistenceTest {
         Assert.assertNotNull(result);
 
         InstitucionEntity entity = em.find(InstitucionEntity.class, result.getId());
-
+        
         Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getImagen(), entity.getImagen());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getUbicacion(), entity.getUbicacion());
+    }
+    
+    @Test
+    public void getInstitucionesTest() {
+        List<InstitucionEntity> list = ip.findall();
+        Assert.assertEquals(data.size(), list.size());
+        for (InstitucionEntity ent : list) {
+            boolean found = false;
+            for (InstitucionEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    @Test
+    public void getInstitucionTest() {
+        InstitucionEntity entity = data.get(0);
+        InstitucionEntity newEntity = ip.find(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getImagen(), entity.getImagen());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getUbicacion(), entity.getUbicacion());
+    }
+     @Test
+    public void deleteInstitucionTest() {
+        InstitucionEntity entity = data.get(0);
+        ip.delete(entity.getId());
+        InstitucionEntity deleted = em.find(InstitucionEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+     @Test
+    public void updateInstitucionTest() {
+        InstitucionEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        InstitucionEntity newEntity = factory.manufacturePojo(InstitucionEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        ip.update(newEntity);
+
+        InstitucionEntity resp = em.find(InstitucionEntity.class, entity.getId());
+
+        
+        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(newEntity.getImagen(), resp.getImagen());
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(newEntity.getUbicacion(), resp.getUbicacion());
     }
 }
