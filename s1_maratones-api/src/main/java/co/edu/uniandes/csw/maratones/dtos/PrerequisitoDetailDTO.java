@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,9 +16,9 @@ import java.util.List;
 public class PrerequisitoDetailDTO extends PrerequisitoDTO implements Serializable{
     
     private List<CompetenciaDetailDTO> competencias;
-    
-    public PrerequisitoDetailDTO () {
-        
+
+    public PrerequisitoDetailDTO(PrerequisitoEntity prerequisitoEntity) {
+        super(prerequisitoEntity);
     }
 
     /**

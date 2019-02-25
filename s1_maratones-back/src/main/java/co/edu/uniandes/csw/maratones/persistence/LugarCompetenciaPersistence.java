@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.persistence;
 
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -28,6 +29,11 @@ public class LugarCompetenciaPersistence {
         
         em.persist(lugarCompetenciaEntity);
         return lugarCompetenciaEntity;
+    }
+    
+    public LugarCompetenciaEntity find (Long lugarCompetenicaId)
+    {
+        return em.find(LugarCompetenciaEntity.class, lugarCompetenicaId);
     }
     
     public void delete(Long lugarCompetenciaId) {

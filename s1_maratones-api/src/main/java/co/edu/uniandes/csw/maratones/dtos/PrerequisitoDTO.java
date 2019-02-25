@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import java.io.Serializable;
 
 /**
@@ -15,8 +16,11 @@ public class PrerequisitoDTO implements Serializable{
  
     private int nivel;
 
-    public PrerequisitoDTO() {
-        
+    public PrerequisitoDTO(PrerequisitoEntity prerequisitoEntity) {
+        if(prerequisitoEntity != null)
+        {
+            this.nivel = prerequisitoEntity.getNivel();
+        }
     }
     /**
      * @return the puntaje
@@ -30,5 +34,12 @@ public class PrerequisitoDTO implements Serializable{
      */
     public void setNivel(int nivel) {
         this.nivel = nivel;
+    }
+    
+    public PrerequisitoEntity toEntity(){
+        PrerequisitoEntity prerequisitoEntity = new PrerequisitoEntity();
+        prerequisitoEntity.setNivel(this.nivel);
+        
+        return prerequisitoEntity;
     }
 }

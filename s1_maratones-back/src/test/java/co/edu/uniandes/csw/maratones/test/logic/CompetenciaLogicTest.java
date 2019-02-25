@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.maratones.test.persistence;
+package co.edu.uniandes.csw.maratones.test.logic;
 
+import co.edu.uniandes.csw.maratones.ejb.CompetenciaLogic;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
-import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
-import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
-import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -32,9 +31,20 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Julian David Mendoza Ruiz <jd.mendozar@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class CompetenciaTest {
+public class CompetenciaLogicTest {
+ @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(CompetenciaEntity.class.getPackage())
+                .addPackage(CompetenciaLogic.class.getPackage())
+                .addPackage(CompetenciaPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    }
     @Inject
-    private CompetenciaPersistence competenciaPersistence;
+    private CompetenciaLogic competenciaLogic;
+    
+   
     
     /**
      * Lista que tiene los datos de prueba.
@@ -45,24 +55,15 @@ public class CompetenciaTest {
      * datos por fuera de los métodos que se están probando.
      */
     @PersistenceContext
-    private EntityManager em;   
-
-/**
+    private EntityManager em;
+    
+    /**
      * Variable para martcar las transacciones del em anterior cuando se
      * crean/borran datos para las pruebas.
      */
     @Inject
     UserTransaction utx;
 
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(CompetenciaEntity.class.getPackage())
-                .addPackage(CompetenciaPersistence.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-    }
-    
      /**
      * Configuración inicial de la prueba.
      */
@@ -105,55 +106,44 @@ public class CompetenciaTest {
 
             CompetenciaEntity entity = factory.manufacturePojo(CompetenciaEntity.class);
 
+          
             em.persist(entity);
 
             data.add(entity);
         }
     }
 
-    /**
-     * Prueba para crear una competencia.
+     /**
+     * Prueba para crear un Prerequisito.
      *
      *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
      */
     @Test
-    public void createCompetenciaTest() {
+    public void createCompetenciaTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
         CompetenciaEntity newEntity = factory.manufacturePojo(CompetenciaEntity.class);
-        CompetenciaEntity result = competenciaPersistence.create(newEntity);
+       
+        CompetenciaEntity result = competenciaLogic.create(newEntity);
 
         Assert.assertNotNull(result);
 
         CompetenciaEntity entity = em.find(CompetenciaEntity.class, result.getId());
+        
 
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
     
     /**
-     * Prueba para eliminar un Competencia.
+     * Prueba para eliminar un Prerequisito.
      *
      *
      */
     @Test
     public void deleteCompetenciaTest() {
         CompetenciaEntity entity = data.get(0);
-        System.out.println(entity.getId() +" El Id de entity");
-        competenciaPersistence.delete(entity.getId());
+        competenciaLogic.delete(entity.getId());
         CompetenciaEntity deleted = em.find(CompetenciaEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }
-    
-        /**
-     * Prueba para consultar una competencia por nombre.
-     *
-     *
-     */
-    @Test
-    public void FindEditorialByNameTest() {
-        CompetenciaEntity entity = data.get(0);
-        CompetenciaEntity newEntity = competenciaPersistence.findByName(entity.getNombre());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-    }
-
+    }   
 }
