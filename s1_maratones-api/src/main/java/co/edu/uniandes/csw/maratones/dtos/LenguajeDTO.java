@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import java.io.Serializable;
 
 /**
@@ -23,11 +24,20 @@ public class LenguajeDTO implements Serializable{
     */
     private int experiencia;
     
-    public LenguajeDTO()
+    public LenguajeDTO(LenguajeEntity entity)
     {
+        if(entity != null)
+        {
+            this.nombre = entity.getNombre();
+            this.experiencia = entity.getExperiencia();
         
+        }
     }
 
+    public LenguajeDTO() {
+    }
+    
+    
     /**
      * @return the nombre
      */
