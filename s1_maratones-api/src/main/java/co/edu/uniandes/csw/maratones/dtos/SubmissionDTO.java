@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -48,6 +49,20 @@ public class SubmissionDTO implements Serializable{
     {
         
     }
+    
+    public SubmissionDTO(SubmissionEntity entity)
+    {
+        if(entity != null)
+        {
+            this.archivo = entity.getArchivo();
+            this.codigo = entity.getCodigo();
+            this.fecha = entity.getFecha();
+            this.memoria = entity.getMemoria();
+            this.tiempo = entity.getTiempo();
+            this.veredicto = entity.getVeredicto();
+        }
+    }       
+        
     
     /**
      * @return the tiempo
