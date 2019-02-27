@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.maratones.resources;
 
 import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
-import co.edu.uniandes.csw.maratones.dtos.LenguajeDetailDTO;
+
 import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import java.util.ArrayList;
@@ -49,15 +49,15 @@ public class LenguajeResource {
     
     @GET
     @Path("{lenguajesId: \\d+}")
-    public LenguajeDetailDTO getLenguaje(@PathParam("lenguajesId") Long lenguajesId) {
+    public LenguajeDTO getLenguaje(@PathParam("lenguajesId") Long lenguajesId) {
         LOGGER.log(Level.INFO, "LenguajeResource getLenguaje: input: {0}", lenguajesId);
         LenguajeEntity lenguajeEntity = lenguajeLogic.getLenguaje(lenguajesId);
         if (lenguajeEntity == null) {
             throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
         }
-        LenguajeDetailDTO lenguajeDetailDTO = new LenguajeDetailDTO(lenguajeEntity);
-        LOGGER.log(Level.INFO, "LenguajeResource getLenguaje: output: {0}", lenguajeDetailDTO);
-        return lenguajeDetailDTO;
+        LenguajeDTO lenguajeDTO = new LenguajeDTO(lenguajeEntity);
+        LOGGER.log(Level.INFO, "LenguajeResource getLenguaje: output: {0}", lenguajeDTO);
+        return lenguajeDTO;
     }
     
     
@@ -68,9 +68,9 @@ public class LenguajeResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<LenguajeDetailDTO> getLenguajes() {
+    public List<LenguajeDTO> getLenguajes() {
         LOGGER.info("LenguajeResource getLenguajes: input: void");
-        List<LenguajeDetailDTO> listaLenguajes = listEntity2DetailDTO(lenguajeLogic.getLenguajes());
+        List<LenguajeDTO> listaLenguajes = listEntity2DTO(lenguajeLogic.getLenguajes());
         LOGGER.log(Level.INFO, "LenguajeResource getLenguajes: output: {0}", listaLenguajes);
         return listaLenguajes;
     }
@@ -85,10 +85,10 @@ public class LenguajeResource {
      * vamos a convertir a DTO.
      * @return la lista de libros en forma DTO (json)
      */
-    private List<LenguajeDetailDTO> listEntity2DetailDTO(List<LenguajeEntity> entityList) {
-        List<LenguajeDetailDTO> list = new ArrayList<>();
+    private List<LenguajeDTO> listEntity2DTO(List<LenguajeEntity> entityList) {
+        List<LenguajeDTO> list = new ArrayList<>();
         for (LenguajeEntity entity : entityList) {
-            list.add(new LenguajeDetailDTO(entity));
+            list.add(new LenguajeDTO(entity));
         }
         return list;
     }
