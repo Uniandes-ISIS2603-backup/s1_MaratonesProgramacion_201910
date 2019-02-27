@@ -56,16 +56,16 @@ public class SubmissionLogic {
     
     
     
-    public SubmissionEntity getSubmission(SubmissionEntity submission) throws BusinessLogicException
+    public SubmissionEntity getSubmission(Long submissionId) 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la submission con id = {0}", submission.getId());
-        if(persistence.find(submission.getId()) == null)
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la submission con id = {0}", submissionId);
+        if(persistence.find(submissionId) == null)
         {
-            throw new BusinessLogicException("No existe la submission con el id:" + submission.getId());
+            LOGGER.log(Level.SEVERE, "La submission con el id = {0} no existe", submissionId);
         }
         
-        submission = persistence.find(submission.getId());
-        LOGGER.log(Level.INFO, "Culmina proceso de consultar la submission con id = {0}", submission.getId());
+        SubmissionEntity submission = persistence.find(submissionId);
+        LOGGER.log(Level.INFO, "Culmina proceso de consultar la submission con id = {0}", submissionId);
         return submission;
     }
     

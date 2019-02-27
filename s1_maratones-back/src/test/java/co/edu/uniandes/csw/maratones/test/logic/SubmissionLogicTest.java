@@ -183,7 +183,9 @@ public class SubmissionLogicTest {
     public void getSubmissionTest()throws BusinessLogicException
     {
         SubmissionEntity entity = data.get(0);
-        SubmissionEntity result = submissionLogic.getSubmission(entity);
+        SubmissionEntity result = submissionLogic.getSubmission(entity.getId());
+        Assert.assertNotNull(result);
+        
         Assert.assertEquals(entity.getId(), result.getId());
         Assert.assertEquals(entity.getCodigo(), result.getCodigo());
         Assert.assertEquals(entity.getFecha(), result.getFecha());
