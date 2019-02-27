@@ -13,7 +13,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
- * @author estudiante
+ * @author Juan Felipe Peña
  */
 
 @Entity
@@ -21,7 +21,9 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     
     private String mensaje;
     
-    private int votos;
+    private int votosAFavor;
+    
+    private int votosEnContra;
     
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -46,20 +48,6 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     }
 
     /**
-     * @return the votos
-     */
-    public int getVotos() {
-        return votos;
-    }
-
-    /**
-     * @param votos the votos to set
-     */
-    public void setVotos(int votos) {
-        this.votos = votos;
-    }
-
-    /**
      * @return the foro
      */
     public ForoEntity getForo() {
@@ -71,6 +59,34 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
      */
     public void setForo(ForoEntity foro) {
         this.foro = foro;
+    }
+
+    /**
+     * @return the votosAFavor
+     */
+    public int getVotosAFavor() {
+        return votosAFavor;
+    }
+
+    /**
+     * @param votosAFavor the votosAFavor to set
+     */
+    public void setVotosAFavor(int votosAFavor) {
+        this.votosAFavor = votosAFavor;
+    }
+
+    /**
+     * @return the votosEnContra
+     */
+    public int getVotosEnContra() {
+        return votosEnContra;
+    }
+
+    /**
+     * @param votosEnContra the votosEnContra to set
+     */
+    public void setVotosEnContra(int votosEnContra) {
+        this.votosEnContra = votosEnContra;
     }
 
 }

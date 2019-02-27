@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.maratones.persistence;
 
 import co.edu.uniandes.csw.maratones.entities.ComentarioEntity;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,14 +22,10 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ComentarioPersistence {
     
+    private static final Logger LOGGER = Logger.getLogger(ComentarioPersistence.class.getName());
+    
     @PersistenceContext(unitName = "maratonesPU")
     protected EntityManager em;
-    
-    public ComentarioEntity create(ComentarioEntity comentarioEntity){
-        
-        em.persist(comentarioEntity);
-        return comentarioEntity;
-    }
     
     public ComentarioEntity find(Long comentariosId){
         
@@ -39,5 +37,12 @@ public class ComentarioPersistence {
         
         TypedQuery<ComentarioEntity> query = em.createQuery("select u from ComentarioEntity u", ComentarioEntity.class);
         return query.getResultList();
+    }
+    
+    public ComentarioEntity create(ComentarioEntity comentarioEntity) {
+        LOGGER.log(Level.INFO, "Creando un libro nuevo");
+        em.persist(comentarioEntity);
+        LOGGER.log(Level.INFO, "Libro creado");
+        return comentarioEntity;
     }
 }
