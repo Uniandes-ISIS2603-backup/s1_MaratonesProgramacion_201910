@@ -1,12 +1,35 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+MIT License
+
+Copyright (c) 2017 Universidad de los Andes - ISIS2603
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.ComentarioEntity;
+import co.edu.uniandes.csw.maratones.entities.ForoEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -15,14 +38,68 @@ import java.util.List;
 public class ForoDetailDTO extends ForoDTO implements Serializable {
 
     /**
-     * Esta lista de tipo RespuestaDTO representa las respuestas de un foro.
+     * Esta lista de tipo ComentarioDTO representa las respuestas de un foro.
      */
-    private List<RespuestaDTO> respuestas;
+    private List<ComentarioDTO> comentarios;
     
+    
+    /**
+     * Constructor por defecto
+     */
+    public ForoDetailDTO() {
+    }
     
     /**
      * Constructor
      */
-    public ForoDetailDTO()
-    {}
+    public ForoDetailDTO(ForoEntity foroEntity)
+    {
+        super(foroEntity);
+        if(foroEntity != null)
+        {
+            if (foroEntity.getComentarios() != null) {
+                comentarios = new ArrayList<>();
+                for (ComentarioEntity entityComentario : foroEntity.getComentarios()) {
+                    comentarios.add(new ComentarioDTO(entityComentario));
+                }
+            }
+        }
+    }
+    
+    /**
+     * Transformar un DTO a un Entity
+     *
+     * @return El DTO de la editorial para transformar a Entity
+     */
+    @Override
+    public ForoEntity toEntity() {
+        ForoEntity foroEntity = super.toEntity();
+        if (getComentarios() != null) {
+            List<ComentarioEntity> comentariosEntity = new ArrayList<>();
+            for (ComentarioDTO dtoComentario : getComentarios()) {
+                comentariosEntity.add(dtoComentario.toEntity());
+            }
+            foroEntity.setComentarios(comentariosEntity);
+        }
+        return foroEntity;
+    }
+    
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the comentarios
+     */
+    public List<ComentarioDTO> getComentarios() {
+        return comentarios;
+    }
+
+    /**
+     * @param comentarios the comentarios to set
+     */
+    public void setComentarios(List<ComentarioDTO> comentarios) {
+        this.comentarios = comentarios;
+    }
 }
