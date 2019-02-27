@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.maratones.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -15,6 +16,9 @@ import javax.persistence.Entity;
  */
 @Entity
 public class SubmissionEntity extends BaseEntity implements Serializable{
+
+    @ManyToOne
+    private EjercicioEntity ejercicioEntity;
     
      /*
     */

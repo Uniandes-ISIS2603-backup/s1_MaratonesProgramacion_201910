@@ -5,7 +5,11 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
+import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +38,29 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     
     public EjercicioDetailDTO()
     {
-        
+        super();
+    }
+    
+    public EjercicioDetailDTO(EjercicioEntity entity)
+    {
+        super(entity);
+        if(entity.getCompetencias() != null)
+        {
+            competencias = new ArrayList<>();
+            for(CompetenciaEntity competencia: entity.getCompetencias())
+            {
+                
+            }
+            
+        }
+        if(entity.getSubmissions() != null)
+        {
+            submissions = new ArrayList<>();
+            for(SubmissionEntity submission: entity.getSubmissions())
+            {
+                submissions.add(new SubmissionDTO(submission));
+            }
+        }
     }
 
     /**

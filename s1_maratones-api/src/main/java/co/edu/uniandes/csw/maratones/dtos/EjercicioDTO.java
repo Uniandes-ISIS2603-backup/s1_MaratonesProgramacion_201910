@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
 import java.io.Serializable;
 
 /**
@@ -26,12 +27,12 @@ public class EjercicioDTO implements Serializable{
     /*
     
     */
-    private String input;
+    private String inputt;
     
     /*
     
     */
-    private String output;
+    private String outputt;
     
     /*
     
@@ -50,6 +51,18 @@ public class EjercicioDTO implements Serializable{
         
     }
     
+    public EjercicioDTO(EjercicioEntity entity)
+    {
+        if(entity != null)
+        {
+            this.nombre = entity.getNombre();
+            this.inputt = entity.getInputt();
+            this.outputt = entity.getOutputt();
+            this.nivel = entity.getNivel();
+            this.puntaje = entity.getPuntaje();
+            this.descripcion = entity.getDescripcion();
+        }
+    }
     
     
     
@@ -84,29 +97,29 @@ public class EjercicioDTO implements Serializable{
     /**
      * @return the input
      */
-    public String getInput() {
-        return input;
+    public String getInputt() {
+        return inputt;
     }
 
     /**
      * @param input the input to set
      */
-    public void setInput(String input) {
-        this.input = input;
+    public void setInputt(String input) {
+        this.inputt = input;
     }
 
     /**
      * @return the output
      */
-    public String getOutput() {
-        return output;
+    public String getOutputt() {
+        return outputt;
     }
 
     /**
      * @param output the output to set
      */
-    public void setOutput(String output) {
-        this.output = output;
+    public void setOutputt(String output) {
+        this.outputt = output;
     }
 
     /**
