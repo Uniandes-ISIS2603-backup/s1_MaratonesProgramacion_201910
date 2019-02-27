@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class SubmissionEntity extends BaseEntity implements Serializable{
 
+    @PodamExclude
     @ManyToOne
     private EjercicioEntity ejercicioEntity;
     
@@ -127,6 +129,20 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
      */
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    /**
+     * @return the ejercicioEntity
+     */
+    public EjercicioEntity getEjercicioEntity() {
+        return ejercicioEntity;
+    }
+
+    /**
+     * @param ejercicioEntity the ejercicioEntity to set
+     */
+    public void setEjercicioEntity(EjercicioEntity ejercicioEntity) {
+        this.ejercicioEntity = ejercicioEntity;
     }
     
     

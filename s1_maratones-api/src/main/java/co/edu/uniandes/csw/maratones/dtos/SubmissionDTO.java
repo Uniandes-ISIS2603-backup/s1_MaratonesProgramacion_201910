@@ -44,6 +44,8 @@ public class SubmissionDTO implements Serializable{
     
     */
     private String codigo;
+    
+    
 
     public SubmissionDTO()
     {
@@ -149,4 +151,19 @@ public class SubmissionDTO implements Serializable{
     }
     
     
+    
+    public SubmissionEntity toEntity()
+    {
+        SubmissionEntity submission = new SubmissionEntity();
+        
+        submission.setArchivo(archivo);
+        submission.setCodigo(codigo);
+        submission.setFecha(fecha);
+        submission.setMemoria(memoria);
+        submission.setVeredicto(veredicto);
+        submission.setTiempo(tiempo);
+        
+        
+        return submission;
+    }
 }

@@ -149,6 +149,21 @@ public class EjercicioDTO implements Serializable{
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
+
+    public EjercicioEntity toEntity() {
+        
+        EjercicioEntity entity = new EjercicioEntity();
+       
+        entity.setDescripcion(descripcion);
+        entity.setInputt(inputt);
+        entity.setOutputt(outputt);
+        entity.setPuntaje(puntaje);
+        entity.setNivel(nivel);
+        entity.setNombre(nombre);
+        
+        
+        return entity;
+    }
     
     
     

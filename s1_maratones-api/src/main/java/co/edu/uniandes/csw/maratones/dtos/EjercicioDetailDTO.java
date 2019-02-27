@@ -84,5 +84,31 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
         this.submissions = submissions;
     }
     
-    
+    public EjercicioEntity toEntity()
+    {
+        EjercicioEntity entity = super.toEntity();
+        
+        if(competencias != null)
+        {
+            List<CompetenciaEntity> competenciasEntity = new ArrayList<>();
+            for(CompetenciaDTO competencia : getCompetencias())
+            {
+                competenciasEntity.add(new CompetenciaEntity());
+            }
+            entity.setCompetencias(competenciasEntity);
+        }
+        
+        if(submissions != null)
+        {
+            List<SubmissionEntity> subEntity = new ArrayList<>();
+            for(SubmissionDTO sub : getSubmissions())
+            {
+                subEntity.add(sub.toEntity());
+            }
+            entity.setSubmissions(subEntity);
+        }
+        
+        
+        return entity;
+    }
 }

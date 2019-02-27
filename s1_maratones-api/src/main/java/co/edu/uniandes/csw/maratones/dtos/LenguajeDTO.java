@@ -24,6 +24,11 @@ public class LenguajeDTO implements Serializable{
     */
     private int experiencia;
     
+    /*
+    
+    */
+    private UsuarioDTO programador;
+    
     public LenguajeDTO(LenguajeEntity entity)
     {
         if(entity != null)
@@ -65,7 +70,33 @@ public class LenguajeDTO implements Serializable{
     public void setExperiencia(int experiencia) {
         this.experiencia = experiencia;
     }
+
+    /**
+     * @return the programador
+     */
+    public UsuarioDTO getProgramador() {
+        return programador;
+    }
+
+    /**
+     * @param programador the programador to set
+     */
+    public void setProgramador(UsuarioDTO programador) {
+        this.programador = programador;
+    }
     
-    
+    public LenguajeEntity toEntity()
+    {
+        LenguajeEntity entity = new LenguajeEntity();
+        
+        entity.setNombre(this.nombre);
+        entity.setExperiencia(this.experiencia);
+        if(this.programador != null)
+        {
+            
+        }
+        
+        return entity;
+    }
     
 }
