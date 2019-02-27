@@ -87,15 +87,15 @@ public class LenguajeLogic {
         persistence.delete(lenguaje.getId());
     }
     
-    public LenguajeEntity getLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
+    public LenguajeEntity getLenguaje(Long lenguajeId)
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el lenguaje con id = {0}", lenguaje.getId());
-        if(persistence.find(lenguaje.getId()) == null)
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el lenguaje con id = {0}", lenguajeId);
+        if(persistence.find(lenguajeId) == null)
         {
-            throw new BusinessLogicException("No existe el lenguaje con el id:" + lenguaje.getId());
+            LOGGER.log(Level.SEVERE, "El lenguaje con el id = {0} no existe", lenguajeId);
         }
         
-        lenguaje = persistence.find(lenguaje.getId());
+        LenguajeEntity lenguaje = persistence.find(lenguajeId);
         LOGGER.log(Level.INFO, "Culmina proceso de consultar el lenguaje con id = {0}", lenguaje.getId());
         return lenguaje;
     }
