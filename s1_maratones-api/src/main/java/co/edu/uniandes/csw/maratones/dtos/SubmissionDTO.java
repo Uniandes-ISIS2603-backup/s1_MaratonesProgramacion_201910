@@ -5,9 +5,11 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.adapters.DateAdapter;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import java.io.Serializable;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -18,7 +20,7 @@ public class SubmissionDTO implements Serializable{
     /*
     
     */
-    private double tiempo;
+    private Double tiempo;
     
     /*
     
@@ -33,17 +35,20 @@ public class SubmissionDTO implements Serializable{
     /*
     
     */
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fecha;
     
     /*
     
     */
-    private double memoria;
+    private Double memoria;
     
     /*
     
     */
     private String codigo;
+    
+    
 
     public SubmissionDTO()
     {
@@ -149,4 +154,19 @@ public class SubmissionDTO implements Serializable{
     }
     
     
+    
+    public SubmissionEntity toEntity()
+    {
+        SubmissionEntity submission = new SubmissionEntity();
+        
+        submission.setArchivo(archivo);
+        submission.setCodigo(codigo);
+        submission.setFecha(fecha);
+        submission.setMemoria(memoria);
+        submission.setVeredicto(veredicto);
+        submission.setTiempo(tiempo);
+        
+        
+        return submission;
+    }
 }
