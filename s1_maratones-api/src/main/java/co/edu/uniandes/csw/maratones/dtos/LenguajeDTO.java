@@ -22,7 +22,7 @@ public class LenguajeDTO implements Serializable{
     /*
     
     */
-    private int experiencia;
+    private Integer experiencia;
     
     /*
     

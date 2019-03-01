@@ -37,12 +37,12 @@ public class EjercicioDTO implements Serializable{
     /*
     
     */
-    private int puntaje;
+    private Integer puntaje;
     
     /*
     
     */
-    private int nivel;
+    private Integer nivel;
 
     
     
