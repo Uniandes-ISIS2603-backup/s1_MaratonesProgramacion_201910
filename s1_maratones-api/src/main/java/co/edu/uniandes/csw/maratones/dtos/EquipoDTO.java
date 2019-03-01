@@ -23,7 +23,9 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import java.io.Serializable;
+import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -38,8 +40,22 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class EquipoDTO implements Serializable {
     private UsuarioDTO coach;
     private String nombreEquipo;
-    private UsuarioDTO[] participantes;
+    
+    private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public EquipoDTO(EquipoEntity equipoEntity) {
+        if (equipoEntity != null) {
+            this.nombreEquipo = equipoEntity.getNombreEquipo();
+        }
+    }
+    
     public UsuarioDTO getCoach() {
         return coach;
     }
@@ -56,12 +72,10 @@ public class EquipoDTO implements Serializable {
         this.nombreEquipo = nombreEquipo;
     }
 
-    public UsuarioDTO[] getParticipantes() {
-        return participantes;
-    }
-
-    public void setParticipantes(UsuarioDTO[] participantes) {
-        this.participantes = participantes;
+    public EquipoEntity toEntity() {
+        EquipoEntity equipoEntity = new EquipoEntity();
+        equipoEntity.setNombreEquipo(this.nombreEquipo);
+        return equipoEntity;
     }
     
     @Override

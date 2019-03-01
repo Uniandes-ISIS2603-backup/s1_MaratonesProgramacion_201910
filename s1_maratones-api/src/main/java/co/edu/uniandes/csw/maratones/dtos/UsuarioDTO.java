@@ -23,6 +23,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -80,13 +81,9 @@ public class UsuarioDTO implements Serializable {
     private String imagen;
     private String correo;
     private String clave;
-    private int puntaje;
-    private List<EquipoDTO> equipos;
-    private List<LenguajeDTO> lenguajes;
-    private List<SubmissionDTO> submission;
-    /**
-     * Constructor por defecto
-     */
+    private Integer puntaje;
+    private Long id;
+    
     public UsuarioDTO() {
     }
 
@@ -115,29 +112,14 @@ public class UsuarioDTO implements Serializable {
         this.rol = rol;
     }
 
-     public List<EquipoDTO> getEquipos() {
-        return equipos;
+    public Long getId() {
+        return id;
     }
 
-    public void setEquipos(List<EquipoDTO> equipos) {
-        this.equipos = equipos;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public List<LenguajeDTO> getLenguajes() {
-        return lenguajes;
-    }
-
-    public void setLenguajes(List<LenguajeDTO> lenguajes) {
-        this.lenguajes = lenguajes;
-    }
-
-    public List<SubmissionDTO> getSubmission() {
-        return submission;
-    }
-
-    public void setSubmission(List<SubmissionDTO> submission) {
-        this.submission = submission;
-    }
     
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -187,7 +169,17 @@ public class UsuarioDTO implements Serializable {
         this.puntaje = puntaje;
     }
 
-    
+    public UsuarioEntity toEntity() {
+        UsuarioEntity usuario = new UsuarioEntity();
+        usuario.setNombre(this.nombre);
+        usuario.setClave(this.clave);
+        usuario.setNombreUsuario(this.nombreUsuario);
+        usuario.setCorreo(this.correo);
+        usuario.setImagen(this.imagen);
+        usuario.setRol(this.rol);
+        usuario.setPuntaje(this.puntaje);
+        return usuario;
+    }
     
    
 }

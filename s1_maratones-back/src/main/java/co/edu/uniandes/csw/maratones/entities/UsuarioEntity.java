@@ -36,6 +36,15 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @ManyToMany
     private List<EquipoEntity> equipos = new ArrayList<>();
+    private List<LenguajeEntity> lenguajes = new ArrayList<>();
+
+    public List<LenguajeEntity> getLenguajes() {
+        return lenguajes;
+    }
+
+    public void setLenguajes(List<LenguajeEntity> lenguajes) {
+        this.lenguajes = lenguajes;
+    }
 
     public List<EquipoEntity> getEquipos() {
         return equipos;

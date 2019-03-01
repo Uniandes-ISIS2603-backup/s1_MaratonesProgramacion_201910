@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -68,6 +69,13 @@ public class EquipoPersistence {
         }
         return result;
     }
+    
+    public List<EquipoEntity> findAll() {
+        LOGGER.log(Level.INFO, "Consultando todos los equipos");
+        Query q = em.createQuery("select u from EquipoEntity u");
+        return q.getResultList();
+    }
+    
     /**
      * Busca si hay alguna editorial con el nombre que se envía de argumento
      *
@@ -93,6 +101,10 @@ public class EquipoPersistence {
         return result;
     }
     
+    public EquipoEntity update(EquipoEntity laEntity) {
+        LOGGER.log(Level.INFO, "Actualizando el equipo con id={0}", laEntity.getId());
+        return em.merge(laEntity);
+    }
     
     public void delete(Long equipoId) {
         LOGGER.log(Level.INFO, "Borrando el equipo con id={0}", equipoId);

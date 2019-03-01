@@ -24,7 +24,6 @@ SOFTWARE.
 package co.edu.uniandes.csw.maratones.dtos;
 
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
-import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -71,79 +70,63 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * @author camilalonart
  */
-public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
+public class EquipoDetailDTO extends EquipoDTO implements Serializable {
 
-    private List<EquipoDTO> equipos;
-    private List<LenguajeDTO> lenguajes;
+    private List<UsuarioDTO> participantes;
+    
     
     /**
      * Constructor por defecto
      */
-    public UsuarioDetailDTO() {
+    public EquipoDetailDTO(EquipoEntity equipoEntity) {
+        
+        super(equipoEntity);
+        if (equipoEntity != null) {
+            if (equipoEntity.getParticipantes() != null) {
+                participantes = new ArrayList<>();
+                for (UsuarioEntity entityBook : equipoEntity.getParticipantes()) {
+                    participantes.add(new UsuarioDTO(entityBook));
+                }
+            }
+        }
+    
+    }
+    
+    @Override
+    public EquipoEntity toEntity() {
+        EquipoEntity equipoEntity = super.toEntity();
+        if (participantes != null) {
+            List<UsuarioEntity> entity = new ArrayList<>();
+            for (UsuarioDTO eldto : participantes) {
+                entity.add(eldto.toEntity());
+            }
+            equipoEntity.setParticipantes(entity);
+        }
+        return equipoEntity;
     }
 
     /**
-     * Constructor a partir de la entidad
+     * Devuelve la lista de participantes.
      *
-     * @param usuarioEntity La entidad del libro
+     * @return the participantes
      */
-    public UsuarioDetailDTO(UsuarioEntity usuarioEntity) {
-        super(usuarioEntity);
-        /*if (usuarioEntity.getLenguajes()!= null) {
-            lenguajes = new ArrayList<>();
-            for (LenguajeEntity entity : usuarioEntity.getLenguajes()) {
-                lenguajes.add(new LenguajeDTO(entity));
-            }
-        }*/
-        if (usuarioEntity.getEquipos()!= null) {
-            equipos = new ArrayList<>();
-            for (EquipoEntity entity : usuarioEntity.getEquipos()) {
-                equipos.add(new EquipoDTO(entity));
-            }
-        }
-    }
-    public List<EquipoDTO> getEquipos() {
-        return equipos;
+    public List<UsuarioDTO> getBooks() {
+        return participantes;
     }
 
-    public void setEquipos(List<EquipoDTO> equipos) {
-        this.equipos = equipos;
+    /**
+     * Modifica la lista de participantes 
+     *
+     * @param participantes the books to set
+     */
+    public void setParticipantes(List<UsuarioDTO> participantes) {
+        this.participantes = participantes;
     }
 
-    public List<LenguajeDTO> getLenguajes() {
-        return lenguajes;
-    }
-
-    public void setLenguajes(List<LenguajeDTO> lenguajes) {
-        this.lenguajes = lenguajes;
-    }
-
-    @Override
-    public UsuarioEntity toEntity() {
-        UsuarioEntity usuarioEntity = super.toEntity();
-        /*if (lenguajes != null) {
-            List<LenguajeEntity> entity = new ArrayList<>();
-            for (LenguajeDTO eldto : lenguajes) {
-                entity.add(eldto.toEntity());
-            }
-            usuarioEntity.setLenguajes(entity);
-        }
-        */
-        //FALTA QUE EL ENCARGADO DE LENGUAJES IMPLEMENTE SU TOENTTY
-        if (equipos != null) {
-            List<EquipoEntity> entity = new ArrayList<>();
-            for (EquipoDTO eldto : equipos) {
-                entity.add(eldto.toEntity());
-            }
-            usuarioEntity.setEquipos(entity);
-        }
-        return usuarioEntity;
-    }
-    
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-   
-    
 }
+
+   
