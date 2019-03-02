@@ -7,8 +7,10 @@ package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -53,6 +55,12 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     @ManyToMany 
     private List<CompetenciaEntity> competencias;
     
+    @PodamExclude
+    @OneToMany(mappedBy = "ejercicioEntity",cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    private List<SubmissionEntity> submissions;
     
     /**
      * @return the nombre
@@ -151,6 +159,20 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
      */
     public void setCompetencias(List<CompetenciaEntity> competencias) {
         this.competencias = competencias;
+    }
+
+    /**
+     * @return the submissions
+     */
+    public List<SubmissionEntity> getSubmissions() {
+        return submissions;
+    }
+
+    /**
+     * @param submissions the submissions to set
+     */
+    public void setSubmissions(List<SubmissionEntity> submissions) {
+        this.submissions = submissions;
     }
 
     

@@ -190,7 +190,7 @@ public class LenguajeLogicTest {
     public void getLenguajeTest()throws BusinessLogicException
     {
         LenguajeEntity entity = data.get(0);
-        LenguajeEntity result = lenguajeLogic.getLenguaje(entity);
+        LenguajeEntity result = lenguajeLogic.getLenguaje(data.get(0).getId());
         Assert.assertEquals(entity.getId(), result.getId());
         Assert.assertEquals(entity.getNombre(), result.getNombre());
         Assert.assertEquals(entity.getExperiencia(), result.getExperiencia());

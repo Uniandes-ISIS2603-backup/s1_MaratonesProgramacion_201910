@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -29,7 +30,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     
     private boolean esVirtual;
     
-    private Date fechaInicio;
+    private LocalDateTime fechaInicio;
     
     private String nombre;
     
@@ -39,7 +40,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     
     private String condiciones;
     
-    private Date fechaFin;
+    private LocalDateTime fechaFin;
 
     /**
      * @return the esVirtual
@@ -53,20 +54,6 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
      */
     public void setEsVirtual(boolean esVirtual) {
         this.esVirtual = esVirtual;
-    }
-
-    /**
-     * @return the fechaInicio
-     */
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    /**
-     * @param fechaInicio the fechaInicio to set
-     */
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
     }
 
     /**
@@ -128,14 +115,27 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     /**
      * @return the fechaFin
      */
-    public Date getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
+    }
+    /**
+     * @return the fechaInicio
+     */
+    public LocalDateTime getFechaInicio() {
+        return fechaInicio;
+    }
+
+    /**
+     * @param fechaInicio the fechaInicio to set
+     */
+    public void setFechaInicio(LocalDateTime fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
     /**
      * @param fechaFin the fechaFin to set
      */
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
     

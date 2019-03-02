@@ -28,7 +28,7 @@ public class LenguajeEntity extends BaseEntity implements Serializable{
     private int experiencia;
     
     
-
+    
     /**
      * @return the nombre
      */

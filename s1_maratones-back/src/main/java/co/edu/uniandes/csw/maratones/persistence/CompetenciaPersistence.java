@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.maratones.persistence;
 
+
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +32,11 @@ public class CompetenciaPersistence {
         
         em.persist(competenciaEntity);
         return competenciaEntity;
+    }
+    
+     public CompetenciaEntity find (Long competenciaId)
+    {
+        return em.find(CompetenciaEntity.class, competenciaId);
     }
     
     public void delete(Long competenciaId) {

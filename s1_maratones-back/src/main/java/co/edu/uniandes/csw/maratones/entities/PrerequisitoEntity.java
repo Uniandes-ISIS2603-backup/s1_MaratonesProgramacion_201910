@@ -16,6 +16,9 @@ import javax.persistence.Entity;
 public class PrerequisitoEntity extends BaseEntity implements Serializable{
     
     private int nivel;
+    
+    
+//    private LenguajeEntity lenguaje;
 
     /**
      * @return the nivel
@@ -30,4 +33,18 @@ public class PrerequisitoEntity extends BaseEntity implements Serializable{
     public void setNivel(int nivel) {
         this.nivel = nivel;
     }
+
+//    /**
+//     * @return the lenguaje
+//     */
+//    public LenguajeEntity getLenguaje() {
+//        return lenguaje;
+//    }
+//
+//    /**
+//     * @param lenguaje the lenguaje to set
+//     */
+//    public void setLenguaje(LenguajeEntity lenguaje) {
+//        this.lenguaje = lenguaje;
+//    }
 }
