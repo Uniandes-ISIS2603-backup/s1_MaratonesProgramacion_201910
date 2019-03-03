@@ -1,18 +1,14 @@
 /*
 MIT License
-
 Copyright (c) 2019 Universidad de los Andes - ISIS2603
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,6 +19,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.persistence;
 
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,6 +27,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -88,4 +86,34 @@ public class UsuarioPersistence {
         UsuarioEntity usuarioEntity = em.find(UsuarioEntity.class, usuarioId);
         em.remove(usuarioEntity);
     }
+    
+    public UsuarioEntity update(UsuarioEntity laEntity) {
+        LOGGER.log(Level.INFO, "Actualizando el usuario con id={0}", laEntity.getId());
+        return em.merge(laEntity);
+    }
+    
+    /**
+     * Devuelve todos loslibros de la base de datos.
+     *
+     * @return una lista con todos los usuarios que encuentre en la base de datos,
+     * "select u from UsuarioEntity u" es como un "select * from UsuarioEntity;" -
+     * "SELECT * FROM table_name" en SQL.
+     */
+    public List<UsuarioEntity> findAll() {
+        LOGGER.log(Level.INFO, "Consultando todos los usuarios");
+        Query q = em.createQuery("select u from UsuarioEntity u");
+        return q.getResultList();
+    }
+    
+    /**
+     * Busca si hay algun usuario con el id que se envía de argumento
+     *
+     * @param usuarioId: id correspondiente al libro buscado.
+     * @return un usuario.
+     */
+    public UsuarioEntity find(Long usuarioId) {
+        LOGGER.log(Level.INFO, "Consultando el usuario con id={0}", usuarioId);
+        return em.find(UsuarioEntity.class, usuarioId);
+    }
+
 }

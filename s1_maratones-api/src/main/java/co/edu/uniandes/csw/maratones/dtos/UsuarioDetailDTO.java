@@ -1,18 +1,14 @@
 /*
 MIT License
-
 Copyright (c) 2019 Universidad de los Andes - ISIS2603
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,8 +19,11 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -35,36 +34,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * servidor.
  *
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
- * <pre>
- *   {
-
- *       "rol": string, 
- *       "nombre": string,
- *       "apellido": string, 
- *       "nombreUsuario": string, 
- *       "clave": string, 
- *       "correo": string,
- *       "imagen": string,
- *       "institucion": string
  * 
- * 
- *   }
- * </pre> Por ejemplo un usuario se representa asi:<br>
- *
- * <pre>
- *
- *   {
- *       "rol": “PARTICIPANTE”, 
- *       "nombre": "Maria Camila",
- *       "apellido": "Londono", 
- *       "nombreUsuario": “camilalonart”, 
- *       "clave": “blablabla”, 
- *       "correo": “mc.londono@uniandes.edu.co”,
- *       "imagen": “www.blablabla.com/bla.jpg”,
- *       "institucion": “Universidad de los Andes”
- *   }
- *
- * </pre>
 /**
  * @author camilalonart
  */
@@ -72,14 +42,6 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
 
     private List<EquipoDTO> equipos;
     private List<LenguajeDTO> lenguajes;
-    private List<SubmissionDTO> submission;
-    private String rol;
-    private String nombreUsuario;
-    private String nombre;
-    private String imagen;
-    private String correo;
-    private String clave;
-    private int puntaje;
     
     /**
      * Constructor por defecto
@@ -93,73 +55,20 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
      * @param usuarioEntity La entidad del libro
      */
     public UsuarioDetailDTO(UsuarioEntity usuarioEntity) {
-        if (usuarioEntity != null) {
-            this.nombre = usuarioEntity.getNombre();
-            this.nombreUsuario = usuarioEntity.getNombreUsuario();
-            this.clave = usuarioEntity.getClave();
-            this.correo = usuarioEntity.getCorreo();
-            this.imagen = usuarioEntity.getImagen();
-            this.rol = usuarioEntity.getRol();
-            this.puntaje = usuarioEntity.getPuntaje();
+        super(usuarioEntity);
+        /*if (usuarioEntity.getLenguajes()!= null) {
+            lenguajes = new ArrayList<>();
+            for (LenguajeEntity entity : usuarioEntity.getLenguajes()) {
+                lenguajes.add(new LenguajeDTO(entity));
+            }
+        }*/
+        if (usuarioEntity.getEquipos()!= null) {
+            equipos = new ArrayList<>();
+            for (EquipoEntity entity : usuarioEntity.getEquipos()) {
+                equipos.add(new EquipoDTO(entity));
+            }
         }
     }
-    
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public int getPuntaje() {
-        return puntaje;
-    }
-
-    public void setPuntaje(int puntaje) {
-        this.puntaje = puntaje;
-    }
-    
     public List<EquipoDTO> getEquipos() {
         return equipos;
     }
@@ -176,15 +85,27 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         this.lenguajes = lenguajes;
     }
 
-    public List<SubmissionDTO> getSubmission() {
-        return submission;
+    @Override
+    public UsuarioEntity toEntity() {
+        UsuarioEntity usuarioEntity = super.toEntity();
+        /*if (lenguajes != null) {
+            List<LenguajeEntity> entity = new ArrayList<>();
+            for (LenguajeDTO eldto : lenguajes) {
+                entity.add(eldto.toEntity());
+            }
+            usuarioEntity.setLenguajes(entity);
+        }
+        */
+        //FALTA QUE EL ENCARGADO DE LENGUAJES IMPLEMENTE SU TOENTTY
+        if (equipos != null) {
+            List<EquipoEntity> entity = new ArrayList<>();
+            for (EquipoDTO eldto : equipos) {
+                entity.add(eldto.toEntity());
+            }
+            usuarioEntity.setEquipos(entity);
+        }
+        return usuarioEntity;
     }
-
-    public void setSubmission(List<SubmissionDTO> submission) {
-        this.submission = submission;
-    }
-
-    
     
     @Override
     public String toString() {

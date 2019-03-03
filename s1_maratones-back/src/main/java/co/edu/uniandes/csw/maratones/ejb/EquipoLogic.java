@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.EquipoPersistence;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -57,7 +58,29 @@ public class EquipoLogic {
         LOGGER.log(Level.INFO, "Termina proceso de borrar equipo con id = {0}", equipoId);
     }
     
+    public List<EquipoEntity> gets() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los equipos");
+        List<EquipoEntity> books = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los equipos");
+        return books;
+    }
     
+    public EquipoEntity getEquipo(Long equiposId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el equipo con id = {0}", equiposId);
+        EquipoEntity entity = persistence.find(equiposId);
+        if (entity == null) {
+            LOGGER.log(Level.SEVERE, "El equipo con el id = {0} no existe", equiposId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el equipo con id = {0}", equiposId);
+        return entity;
+    }
+    
+    public EquipoEntity update(Long equipoId, EquipoEntity equipoEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el equipo con id = {0}", equipoId);
+        EquipoEntity newEntity = persistence.update(equipoEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el equipo con id = {0}", equipoEntity.getId());
+        return newEntity;
+    }
+    
+
 }
-
-
