@@ -33,6 +33,7 @@ import java.util.Date;
 public class PublicacionDTO {
     private Date fecha;
     private String texto;
+    private BlogDTO blog;
     
     public PublicacionDTO(){
         
@@ -73,6 +74,10 @@ public class PublicacionDTO {
         PublicacionEntity publicacionEntity = new PublicacionEntity();
         publicacionEntity.setFecha(this.fecha);
         publicacionEntity.setTexto(this.texto);
+        if(this.blog!=null)
+        {
+            publicacionEntity.setBlog(this.blog.toEntity());
+        }
        return publicacionEntity;
     }
     /**
@@ -83,7 +88,25 @@ public class PublicacionDTO {
         if (publicacionEntity != null) {
             this.fecha = publicacionEntity.getFecha();
             this.texto = publicacionEntity.getTexto();
-         
+         if (publicacionEntity.getBlog() != null) {
+                this.blog = new BlogDTO(publicacionEntity.getBlog());
+            } else {
+                this.blog = null;
+            }
         }
      }
+
+    /**
+     * @return the blog
+     */
+    public BlogDTO getBlog() {
+        return blog;
+    }
+
+    /**
+     * @param blogDto the blogD to set
+     */
+    public void setBlog(BlogDTO blogDto) {
+        this.blog = blogDto;
+    }
 }

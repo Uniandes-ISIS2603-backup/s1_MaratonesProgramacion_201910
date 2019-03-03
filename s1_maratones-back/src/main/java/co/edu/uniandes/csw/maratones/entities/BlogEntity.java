@@ -23,7 +23,7 @@ public class BlogEntity extends BaseEntity implements Serializable{
     private String nombre;
     private String descripcion;
     
-    
+    @PodamExclude
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PublicacionEntity> publicaciones = new ArrayList<PublicacionEntity>();
     
