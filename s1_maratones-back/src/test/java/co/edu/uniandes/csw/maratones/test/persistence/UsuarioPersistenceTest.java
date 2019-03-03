@@ -125,5 +125,30 @@ public class UsuarioPersistenceTest {
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
     
+    /**
+     * Prueba para eliminar un usuario.
+     *
+     *
+     */
+    @Test
+    public void deleteTest() {
+        UsuarioEntity entity = data.get(0);
+        System.out.println(entity.getId() +" El Id de entity");
+        usuarioPersistence.delete(entity.getId());
+        UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
     
+    /**
+     * Prueba para consultar un usuario por nombre.
+     *
+     *
+     */
+    @Test
+    public void FindByUsernameTest() {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity newEntity = usuarioPersistence.findByUsername(entity.getNombreUsuario());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNombreUsuario(), newEntity.getNombreUsuario());
+    }
 }

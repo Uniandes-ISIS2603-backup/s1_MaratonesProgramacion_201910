@@ -1,18 +1,14 @@
 /*
 MIT License
-
 Copyright (c) 2019 Universidad de los Andes - ISIS2603
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,6 +27,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -68,6 +65,13 @@ public class EquipoPersistence {
         }
         return result;
     }
+    
+    public List<EquipoEntity> findAll() {
+        LOGGER.log(Level.INFO, "Consultando todos los equipos");
+        Query q = em.createQuery("select u from EquipoEntity u");
+        return q.getResultList();
+    }
+    
     /**
      * Busca si hay alguna editorial con el nombre que se envía de argumento
      *
@@ -93,10 +97,16 @@ public class EquipoPersistence {
         return result;
     }
     
+    public EquipoEntity update(EquipoEntity laEntity) {
+        LOGGER.log(Level.INFO, "Actualizando el equipo con id={0}", laEntity.getId());
+        return em.merge(laEntity);
+    }
     
     public void delete(Long equipoId) {
         LOGGER.log(Level.INFO, "Borrando el equipo con id={0}", equipoId);
         EquipoEntity equipoEntity = em.find(EquipoEntity.class, equipoId);
         em.remove(equipoEntity);
     }
+    
+    
 }

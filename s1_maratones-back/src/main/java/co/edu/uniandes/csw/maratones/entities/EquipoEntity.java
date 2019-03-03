@@ -25,7 +25,16 @@ public class EquipoEntity extends BaseEntity implements Serializable{
 
     private EquipoEntity coach;
     private String nombreEquipo;
-    
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @PodamExclude
     @ManyToMany (mappedBy = "equipos", cascade = {
         CascadeType.PERSIST,
@@ -57,8 +66,7 @@ public class EquipoEntity extends BaseEntity implements Serializable{
         this.participantes = participantes;
     }
     
-    public EquipoEntity(){
-        }
+    
    
     
 }
