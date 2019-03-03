@@ -52,10 +52,10 @@ public class ForoLogic {
         if (persistence.findByName(foroEntity.getNombre()) != null) {
             throw new BusinessLogicException("Ya existe una foro con el nombre \"" + foroEntity.getNombre() + "\"");
         }
-        if(foroEntity.getVotosAFavor()<0|| foroEntity.getVotosEnContra()<0)
-        {
-            throw new BusinessLogicException("Los votos no pueden ser números negativos.");
-        }
+//        if(foroEntity.getVotosAFavor()<0|| foroEntity.getVotosEnContra()<0)
+//        {
+//            throw new BusinessLogicException("Los votos no pueden ser números negativos.");
+//        }
         if("".equals(foroEntity.getNombre()))
         {
             throw new BusinessLogicException("El nombre del foro no puede ser vacío.");
