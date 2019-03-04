@@ -1,18 +1,14 @@
 /*
 MIT License
-
 Copyright (c) 2019 Universidad de los Andes - ISIS2603
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,7 +19,9 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import java.io.Serializable;
+import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -38,8 +36,22 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class EquipoDTO implements Serializable {
     private UsuarioDTO coach;
     private String nombreEquipo;
-    private UsuarioDTO[] participantes;
+    
+    private Long id;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public EquipoDTO(EquipoEntity equipoEntity) {
+        if (equipoEntity != null) {
+            this.nombreEquipo = equipoEntity.getNombreEquipo();
+        }
+    }
+    
     public UsuarioDTO getCoach() {
         return coach;
     }
@@ -56,12 +68,10 @@ public class EquipoDTO implements Serializable {
         this.nombreEquipo = nombreEquipo;
     }
 
-    public UsuarioDTO[] getParticipantes() {
-        return participantes;
-    }
-
-    public void setParticipantes(UsuarioDTO[] participantes) {
-        this.participantes = participantes;
+    public EquipoEntity toEntity() {
+        EquipoEntity equipoEntity = new EquipoEntity();
+        equipoEntity.setNombreEquipo(this.nombreEquipo);
+        return equipoEntity;
     }
     
     @Override
