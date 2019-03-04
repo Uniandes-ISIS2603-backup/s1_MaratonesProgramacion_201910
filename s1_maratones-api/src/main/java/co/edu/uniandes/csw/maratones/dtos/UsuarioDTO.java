@@ -1,18 +1,14 @@
 /*
 MIT License
-
 Copyright (c) 2019 Universidad de los Andes - ISIS2603
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,6 +19,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -37,7 +34,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
  *   {
-
  *       "rol": string, 
  *       "nombre": string,
  *       "apellido": string, 
@@ -80,13 +76,9 @@ public class UsuarioDTO implements Serializable {
     private String imagen;
     private String correo;
     private String clave;
-    private int puntaje;
-    private List<EquipoDTO> equipos;
-    private List<LenguajeDTO> lenguajes;
-    private List<SubmissionDTO> submission;
-    /**
-     * Constructor por defecto
-     */
+    private Integer puntaje;
+    private Long id;
+    
     public UsuarioDTO() {
     }
 
@@ -115,29 +107,14 @@ public class UsuarioDTO implements Serializable {
         this.rol = rol;
     }
 
-     public List<EquipoDTO> getEquipos() {
-        return equipos;
+    public Long getId() {
+        return id;
     }
 
-    public void setEquipos(List<EquipoDTO> equipos) {
-        this.equipos = equipos;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public List<LenguajeDTO> getLenguajes() {
-        return lenguajes;
-    }
-
-    public void setLenguajes(List<LenguajeDTO> lenguajes) {
-        this.lenguajes = lenguajes;
-    }
-
-    public List<SubmissionDTO> getSubmission() {
-        return submission;
-    }
-
-    public void setSubmission(List<SubmissionDTO> submission) {
-        this.submission = submission;
-    }
     
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -187,7 +164,17 @@ public class UsuarioDTO implements Serializable {
         this.puntaje = puntaje;
     }
 
-    
+    public UsuarioEntity toEntity() {
+        UsuarioEntity usuario = new UsuarioEntity();
+        usuario.setNombre(this.nombre);
+        usuario.setClave(this.clave);
+        usuario.setNombreUsuario(this.nombreUsuario);
+        usuario.setCorreo(this.correo);
+        usuario.setImagen(this.imagen);
+        usuario.setRol(this.rol);
+        usuario.setPuntaje(this.puntaje);
+        return usuario;
+    }
     
    
 }
