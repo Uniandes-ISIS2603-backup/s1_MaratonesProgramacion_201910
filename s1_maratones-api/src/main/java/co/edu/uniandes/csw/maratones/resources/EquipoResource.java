@@ -34,8 +34,8 @@ import javax.ws.rs.WebApplicationException;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class EquipoResources {
-    private static final Logger LOGGER = Logger.getLogger(EquipoResources.class.getName());
+public class EquipoResource {
+    private static final Logger LOGGER = Logger.getLogger(EquipoResource.class.getName());
     @Inject
     EquipoLogic equipoLogic;
             
