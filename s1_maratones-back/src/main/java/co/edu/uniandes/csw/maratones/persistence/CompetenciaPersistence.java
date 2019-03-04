@@ -34,9 +34,34 @@ public class CompetenciaPersistence {
         return competenciaEntity;
     }
     
-     public CompetenciaEntity find (Long competenciaId)
-    {
-        return em.find(CompetenciaEntity.class, competenciaId);
+     /**
+     * Busca si hay alguna competencia con el id que se envía de argumento
+     *
+     * @param competenciasId: id correspondiente a la editorial buscada.
+     * @return una competencia.
+     */
+    public CompetenciaEntity find(Long competenciasId) {
+        LOGGER.log(Level.INFO, "Consultando competencia con id={0}", competenciasId);
+        /* Note que se hace uso del metodo "find" propio del EntityManager, el cual recibe como argumento 
+        el tipo de la clase y el objeto que nos hara el filtro en la base de datos en este caso el "id"
+        Suponga que es algo similar a "select * from EditorialEntity where id=id;" - "SELECT * FROM table_name WHERE condition;" en SQL.
+         */
+        return em.find(CompetenciaEntity.class, competenciasId);
+    }
+    
+	/**
+     * Devuelve todas las competencias de la base de datos.
+     *
+     * @return una lista con todas las competencias que encuentre en la base de
+     * datos, "select u from CompetenciaEntity u" es como un "select * from
+     * CompetneciaEntity;" - "SELECT * FROM table_name" en SQL.
+     */
+    public List<CompetenciaEntity> findAll() {
+        LOGGER.log(Level.INFO, "Consultando todas las competencias");
+        // Se crea un query para buscar todas las editoriales en la base de datos.
+        TypedQuery query = em.createQuery("select u from CompetenciaEntity u", CompetenciaEntity.class);
+        // Note que en el query se hace uso del método getResultList() que obtiene una lista de editoriales.
+        return query.getResultList();
     }
     
     public void delete(Long competenciaId) {
