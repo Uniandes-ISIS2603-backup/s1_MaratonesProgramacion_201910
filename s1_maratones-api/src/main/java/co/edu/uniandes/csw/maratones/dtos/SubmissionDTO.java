@@ -49,6 +49,26 @@ public class SubmissionDTO implements Serializable{
     private String codigo;
     
     
+    /**
+     * 
+     */
+    public static final String EN_REVISION = "En revision";
+    
+        /**
+     * 
+     */
+    public static final String APROBADA = "Aprobada";
+    
+        /**
+     * 
+     */
+    public static final String ERROR_COMPILACION = "Error de compilacion";
+    
+        /**
+     * 
+     */
+    public static final String ERROR_TIEMPO= "Error de tiempo limite excedido";
+    
 
     public SubmissionDTO()
     {

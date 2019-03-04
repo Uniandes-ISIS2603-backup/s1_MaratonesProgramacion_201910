@@ -37,7 +37,7 @@ public class ComentarioResource {
     private ComentarioLogic comentarioLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     
     @POST
-    public ComentarioDTO createBook(ComentarioDTO comentario) throws BusinessLogicException {
+    public ComentarioDTO createComentario(ComentarioDTO comentario) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ComentarioResource createComentario: input: {0}", comentario.toString());
         ComentarioDTO nuevoComentarioDTO = new ComentarioDTO(comentarioLogic.createComentario(comentario.toEntity()));
         LOGGER.log(Level.INFO, "ComentarioResource createComentario: output: {0}", nuevoComentarioDTO.toString());

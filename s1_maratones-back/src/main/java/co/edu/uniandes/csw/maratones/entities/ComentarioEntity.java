@@ -21,9 +21,9 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     
     private String mensaje;
     
-    private int votosAFavor;
+    private Integer votosAFavor;
     
-    private int votosEnContra;
+    private Integer votosEnContra;
     
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -64,28 +64,28 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     /**
      * @return the votosAFavor
      */
-    public int getVotosAFavor() {
+    public Integer getVotosAFavor() {
         return votosAFavor;
     }
 
     /**
      * @param votosAFavor the votosAFavor to set
      */
-    public void setVotosAFavor(int votosAFavor) {
+    public void setVotosAFavor(Integer votosAFavor) {
         this.votosAFavor = votosAFavor;
     }
 
     /**
      * @return the votosEnContra
      */
-    public int getVotosEnContra() {
+    public Integer getVotosEnContra() {
         return votosEnContra;
     }
 
     /**
      * @param votosEnContra the votosEnContra to set
      */
-    public void setVotosEnContra(int votosEnContra) {
+    public void setVotosEnContra(Integer votosEnContra) {
         this.votosEnContra = votosEnContra;
     }
 
