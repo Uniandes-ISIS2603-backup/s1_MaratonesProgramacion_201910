@@ -27,4 +27,29 @@ public class LugarCompetenciaDetailDTO extends LugarCompetenciaDTO implements Se
             }
         }
     }
+    
+    public LugarCompetenciaEntity toEntity(){
+        LugarCompetenciaEntity lugarCompetenciaEntity = super.toEntity();
+        
+        if(competencia!=null)
+        {
+            lugarCompetenciaEntity.setCompetencia(competencia.toEntity());
+        }
+        
+        return  lugarCompetenciaEntity;
+    }
+
+    /**
+     * @return the competencia
+     */
+    public CompetenciaDTO getCompetencia() {
+        return competencia;
+    }
+
+    /**
+     * @param competencia the competencia to set
+     */
+    public void setCompetencia(CompetenciaDTO competencia) {
+        this.competencia = competencia;
+    }
 }
