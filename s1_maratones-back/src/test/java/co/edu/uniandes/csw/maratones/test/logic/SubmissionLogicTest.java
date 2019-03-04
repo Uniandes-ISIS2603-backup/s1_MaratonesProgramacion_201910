@@ -126,6 +126,7 @@ public class SubmissionLogicTest {
     public void createSubmissionTest() throws BusinessLogicException
     {
         SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setVeredicto(SubmissionEntity.EN_REVISION);
         SubmissionEntity result = submissionLogic.createSubmission(newEntity);
         Assert.assertNotNull(result);
         SubmissionEntity entity = em.find(SubmissionEntity.class, result.getId());
@@ -159,6 +160,14 @@ public class SubmissionLogicTest {
         newEntity.setMemoria(-1);
         submissionLogic.createSubmission(newEntity);
     }
+    
+    @Test(expected = BusinessLogicException.class)
+    
+    public void createSubmissionConEstadoDiferenteAEnRevision() throws BusinessLogicException {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setVeredicto(SubmissionEntity.APROBADA);
+        submissionLogic.createSubmission(newEntity);
+    }
 
     @Test(expected = BusinessLogicException.class)
     
@@ -175,6 +184,15 @@ public class SubmissionLogicTest {
         SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
         newEntity.setId(data.get(0).getId());
         newEntity.setMemoria(-1);
+        submissionLogic.updateSubmission(newEntity.getId(), newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    
+    public void updateSubmissionConEstadoDistintoAPredeterminados() throws BusinessLogicException {
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        newEntity.setId(data.get(0).getId());
+        newEntity.setVeredicto("EstadoDiferente");
         submissionLogic.updateSubmission(newEntity.getId(), newEntity);
     }
 

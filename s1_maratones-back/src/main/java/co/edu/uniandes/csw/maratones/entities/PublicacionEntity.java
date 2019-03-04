@@ -7,9 +7,12 @@ package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -21,6 +24,10 @@ public class PublicacionEntity extends BaseEntity implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date fecha;
     private String texto;
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private BlogEntity blog;
+    
     public PublicacionEntity(){
         
     }
@@ -50,6 +57,20 @@ public class PublicacionEntity extends BaseEntity implements Serializable{
      */
     public void setTexto(String texto) {
         this.texto = texto;
+    }
+
+    /**
+     * @return the blog
+     */
+    public BlogEntity getBlog() {
+        return blog;
+    }
+
+    /**
+     * @param blog the blog to set
+     */
+    public void setBlog(BlogEntity blog) {
+        this.blog = blog;
     }
     
 }

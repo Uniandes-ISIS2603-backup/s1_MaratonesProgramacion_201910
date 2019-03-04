@@ -45,6 +45,11 @@ public class SubmissionLogic {
             throw new BusinessLogicException("El peso de una submission no puede ser negativo");
         }
         
+        if(!submission.getVeredicto().equals(SubmissionEntity.EN_REVISION))
+        {
+            throw new BusinessLogicException("El estado inicial de una submission debe ser 'En Revision'");
+        }
+        
         submission = persistence.create(submission);
         
         LOGGER.log(Level.INFO, "Inicia proceso de agregar una submission");
@@ -121,6 +126,11 @@ public class SubmissionLogic {
         if(sub.getMemoria() <= 0)
         {
             throw new BusinessLogicException("No se puede configurar una submission  con un peso menor o igual a 0");
+        }
+        
+        if(!sub.getVeredicto().equals(SubmissionEntity.EN_REVISION) && !sub.getVeredicto().equals(SubmissionEntity.APROBADA) && !sub.getVeredicto().equals(SubmissionEntity.ERROR_COMPILACION) && !sub.getVeredicto().equals(SubmissionEntity.ERROR_TIEMPO))
+        {
+            throw new BusinessLogicException("El estado de una submission no puede ser distinto a los predeterminados; En revision, Error de Compilacion, Error de Tiempo o Aprobada");
         }
         
         sub = persistence.update(sub);
