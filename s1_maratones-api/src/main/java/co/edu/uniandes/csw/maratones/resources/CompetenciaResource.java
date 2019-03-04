@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.maratones.dtos.CompetenciaDetailDTO;
 import co.edu.uniandes.csw.maratones.ejb.CompetenciaLogic;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,8 +19,11 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -60,5 +64,84 @@ public class CompetenciaResource {
         LOGGER.log(Level.INFO, "EditorialResource createCompetencia: output: {0}", nuevoCompetenciaDTO);
         return nuevoCompetenciaDTO;
     }
+    
+    /**
+     * Busca y devuelve todas las competencias que existen en la aplicacion.
+     *
+     * @return JSONArray {@link CompetenciaDetailDTO} - Las competencias
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<CompetenciaDetailDTO> getCompetencias() {
+        LOGGER.info("EditorialResource getEditorials: input: void");
+        List<CompetenciaDetailDTO> listaCompetencias = listEntity2DetailDTO(logic.getCompetencias());
+        LOGGER.log(Level.INFO, "CompetenciaResource getCompetencias: output: {0}", listaCompetencias);
+        return listaCompetencias;
+    }
+    
+    /**
+     * Busca la editorial con el id asociado recibido en la URL y la devuelve.
+     *
+     * @param competenciasId Identificador de la editorial que se esta buscando.
+     * Este debe ser una cadena de dígitos.
+     * @return JSON {@link EditorialDetailDTO} - La editorial buscada
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la editorial.
+     */
+    @GET
+    @Path("{competenciasId: \\d+}")
+    public CompetenciaDetailDTO getCompetencia(@PathParam("competenciasId") Long competenciasId) throws WebApplicationException {
+        LOGGER.log(Level.INFO, "EditorialResource getCompetencia: input: {0}", competenciasId);
+        CompetenciaEntity competenciaEntity = logic.getCompetencia(competenciasId);
+        if (competenciaEntity == null) {
+            throw new WebApplicationException("El recurso /editorials/" + competenciasId + " no existe.", 404);
+        }
+        CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(competenciaEntity);
+        LOGGER.log(Level.INFO, "EditorialResource getEditorial: output: {0}", detailDTO);
+        return detailDTO;
+    }
   
+    /**
+     * Actualiza la editorial con el id recibido en la URL con la informacion
+     * que se recibe en el cuerpo de la petición.
+     *
+     * @param competenciasId Identificador de la editorial que se desea
+     * actualizar. Este debe ser una cadena de dígitos.
+     * @param competencia {@link EditorialDetailDTO} La editorial que se desea
+     * guardar.
+     * @return JSON {@link EditorialDetailDTO} - La editorial guardada.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la editorial a
+     * actualizar.
+     */
+    @PUT
+    @Path("{editorialsId: \\d+}")
+    public CompetenciaDetailDTO updateCompetencia(@PathParam("competenciasId") Long competenciasId, CompetenciaDetailDTO competencia) throws WebApplicationException {
+        LOGGER.log(Level.INFO, "CompetenciaResource updateCompetencia: input: id:{0} , competencia: {1}", new Object[]{competenciasId, competencia});
+        competencia.setId(competenciasId);
+        if (logic.getCompetencia(competenciasId) == null) {
+            throw new WebApplicationException("El recurso /editorials/" + competenciasId + " no existe.", 404);
+        }
+        CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(logic.updateEditorial(competenciasId, competencia.toEntity()));
+        LOGGER.log(Level.INFO, "EditorialResource updateEditorial: output: {0}", detailDTO);
+        return detailDTO;
+
+    }
+    /**
+     * Convierte una lista de entidades a DTO.
+     *
+     * Este método convierte una lista de objetos EditorialEntity a una lista de
+     * objetos EditorialDetailDTO (json)
+     *
+     * @param entityList corresponde a la lista de editoriales de tipo Entity
+     * que vamos a convertir a DTO.
+     * @return la lista de editoriales en forma DTO (json)
+     */
+    private List<CompetenciaDetailDTO> listEntity2DetailDTO(List<CompetenciaEntity> entityList) {
+        List<CompetenciaDetailDTO> list = new ArrayList<>();
+        for (CompetenciaEntity entity : entityList) {
+            list.add(new CompetenciaDetailDTO(entity));
+        }
+        return list;
+    }
 }

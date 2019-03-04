@@ -8,13 +8,15 @@ package co.edu.uniandes.csw.maratones.dtos;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 /**
  *
  * @author Julian David Mendoza Ruiz
  */
 public class CompetenciaDTO implements Serializable{
+    private Long id;
+
     private Boolean esVirtual;
     
     private LocalDateTime fechaInicio;
@@ -40,6 +42,7 @@ public class CompetenciaDTO implements Serializable{
     {
       if(entity!= null)
       {
+          this.id= entity.getId();
           this.esVirtual= entity.isEsVirtual();
           this.fechaInicio = entity.getFechaInicio();
           this.nombre= entity.getNombre();
@@ -55,7 +58,7 @@ public class CompetenciaDTO implements Serializable{
     public CompetenciaEntity toEntity()
     {
         CompetenciaEntity entity = new CompetenciaEntity();
-        
+        entity.setId(this.id);
         entity.setEsVirtual(this.esVirtual);
         entity.setFechaInicio(this.fechaInicio);
         entity.setNombre(this.nombre);
@@ -179,6 +182,20 @@ public class CompetenciaDTO implements Serializable{
      */
     public void setNivel(Integer nivel) {
         this.nivel = nivel;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
     
     

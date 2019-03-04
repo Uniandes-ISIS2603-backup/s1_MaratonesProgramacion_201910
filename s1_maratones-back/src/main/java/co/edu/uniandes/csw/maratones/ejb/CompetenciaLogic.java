@@ -61,6 +61,41 @@ public class CompetenciaLogic {
         return competencias;
     }
     
+    /**
+     *
+     * Obtener una editorial por medio de su id.
+     *
+     * @param competenciasId: id de la editorial para ser buscada.
+     * @return la editorial solicitada por medio de su id.
+     */
+    public CompetenciaEntity getCompetencia(Long competenciasId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la editorial con id = {0}", competenciasId);
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        CompetenciaEntity competenciaEntity = persistence.find(competenciasId);
+        if (competenciaEntity == null) {
+            LOGGER.log(Level.SEVERE, "La competencia con el id = {0} no existe", competenciasId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la competencia con id = {0}", competenciasId);
+        return competenciaEntity;
+    }
+    
+    /**
+     *
+     * Actualizar una editorial.
+     *
+     * @param competenciasId: id de la editorial para buscarla en la base de
+     * datos.
+     * @param competenciaEntity: editorial con los cambios para ser actualizada,
+     * por ejemplo el nombre.
+     * @return la editorial con los cambios actualizados en la base de datos.
+     */
+    public CompetenciaEntity updateEditorial(Long competenciasId, CompetenciaEntity competenciaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la competencia con id = {0}", competenciasId);
+        // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
+        CompetenciaEntity newEntity = persistence.update(competenciaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la competencia con id = {0}", competenciaEntity.getId());
+        return newEntity;
+    }
     public CompetenciaEntity delete (Long competenciaId)
     {
         LOGGER.log(Level.INFO, "Borrando prerequisito con id = {0}", competenciaId);
