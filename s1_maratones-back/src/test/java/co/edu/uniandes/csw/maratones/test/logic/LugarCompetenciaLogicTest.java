@@ -6,12 +6,9 @@
 package co.edu.uniandes.csw.maratones.test.logic;
 
 import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
-import co.edu.uniandes.csw.maratones.ejb.PrerequisitoLogic;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
-import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
-import co.edu.uniandes.csw.maratones.persistence.PrerequisitoPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -145,7 +142,7 @@ public class LugarCompetenciaLogicTest {
     public void deleteLugarCompetenciaTest() {
         LugarCompetenciaEntity entity = data.get(0);
         lugarCompetenciaLogic.delete(entity.getId());
-        PrerequisitoEntity deleted = em.find(PrerequisitoEntity.class, entity.getId());
+        LugarCompetenciaEntity deleted = em.find(LugarCompetenciaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 }
