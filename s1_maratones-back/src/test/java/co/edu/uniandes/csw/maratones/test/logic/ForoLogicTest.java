@@ -97,29 +97,27 @@ public class ForoLogicTest {
      * pruebas.
      */
     private void insertData() {
-//        for (int i = 0; i < 3; i++) {
-//            ForoEntity foro = factory.manufacturePojo(ForoEntity.class);
-//            em.persist(foro);
-//            data.add(foro);
-//        }
-//        for (int i = 0; i < 3; i++) {
-//            ComentarioEntity entity = factory.manufacturePojo(ComentarioEntity.class);
-//            entity.setForo(data.get(0));
-//
-//            em.persist(entity);
-//            comentariosData.add(entity);
+        for (int i = 0; i < 3; i++) {
+            ForoEntity foro = factory.manufacturePojo(ForoEntity.class);
+            em.persist(foro);
+            data.add(foro);
         }
-    
+        for (int i = 0; i < 3; i++) {
+            ComentarioEntity entity = factory.manufacturePojo(ComentarioEntity.class);
+            entity.setForo(data.get(0));
+
+            em.persist(entity);
+            comentariosData.add(entity);
+        }
+    }
     
     @Test
-    public void createForoTest()
-{
-
-//throws BusinessLogicException
-//        ForoEntity newEntity = factory.manufacturePojo(ForoEntity.class);
-//        ForoEntity result = foroLogic.createForo(newEntity);
-//        Assert.assertNotNull(result);
-//        ForoEntity entity = em.find(ForoEntity.class, result.getId());
-//        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+    public void createForoTest() throws BusinessLogicException
+    {
+        ForoEntity newEntity = factory.manufacturePojo(ForoEntity.class);
+        ForoEntity result = foroLogic.createForo(newEntity);
+        Assert.assertNotNull(result);
+        ForoEntity entity = em.find(ForoEntity.class, result.getId());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
 }
