@@ -76,4 +76,22 @@ public class CompetenciaPersistence {
         LOGGER.log(Level.INFO, "Saliendo de consultar competencia por nombre ", nombre);
         return result;
     }
+    
+     /**
+     * Actualiza una editorial.
+     *
+     * @param competencialEntity: la editorial que viene con los nuevos cambios.
+     * Por ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
+     * update.
+     * @return una editorial con los cambios aplicados.
+     */
+    public CompetenciaEntity update(CompetenciaEntity competencialEntity) {
+        LOGGER.log(Level.INFO, "Actualizando competencia con id = {0}", competencialEntity.getId());
+        /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
+        la editorial con los cambios, esto es similar a 
+        "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
+         */
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la competencia con id = {0}", competencialEntity.getId());
+        return em.merge(competencialEntity);
+    }
 }

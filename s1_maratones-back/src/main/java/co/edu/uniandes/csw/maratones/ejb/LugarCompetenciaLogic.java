@@ -6,9 +6,11 @@
 package co.edu.uniandes.csw.maratones.ejb;
 
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -51,4 +53,12 @@ public class LugarCompetenciaLogic {
         LOGGER.log(Level.INFO, "Saliendo de borrar el prerequisito con id = {0}", lugarCompetenciaId);
         return entity;
     }
+     
+     public List<LugarCompetenciaEntity> getAllLugarCompetencia ()
+     {
+         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros");
+        List<LugarCompetenciaEntity> ubicaciones = lugarCompetenciaPersistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los libros");
+        return ubicaciones;
+     }
 }

@@ -6,8 +6,13 @@
 package co.edu.uniandes.csw.maratones.resources;
 
 import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDTO;
+import co.edu.uniandes.csw.maratones.dtos.UsuarioDTO;
+import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,10 +30,23 @@ import javax.ws.rs.core.MediaType;
 public class LugarCompetenciaResource {
     private static final Logger LOGGER = Logger.getLogger(LugarCompetenciaResource.class.getName());
     
+    @Inject
+    private LugarCompetenciaLogic lugarCompetenciaLogic;
+    
     @POST
     public LugarCompetenciaDTO createLugarCompetencia (LugarCompetenciaDTO lugarCompetencia)
     {
         return lugarCompetencia;
     }
+    
+    @POST
+    public LugarCompetenciaDTO create(LugarCompetenciaDTO ubicacion) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "UsuarioResource create: input: {0}", ubicacion);
+        LugarCompetenciaDTO nuevoDTO = new LugarCompetenciaDTO(lugarCompetenciaLogic.create(ubicacion.toEntity()));
+        LOGGER.log(Level.INFO, "UsuarioResource create: output: {0}", nuevoDTO);
+        return nuevoDTO;
+    }
+    
+    
         
 }
