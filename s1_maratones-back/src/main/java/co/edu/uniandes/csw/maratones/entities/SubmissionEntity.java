@@ -58,7 +58,7 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
      */
     public static final String APROBADA = "Aprobada";
     
-        /**
+     /**
      * 
      */
     public static final String ERROR_COMPILACION = "Error de compilacion";

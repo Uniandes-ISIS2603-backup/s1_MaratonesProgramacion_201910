@@ -9,6 +9,40 @@ import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
 import java.io.Serializable;
 
 /**
+ * EjercicioDTO Objeto de transferencia de datos de Ejercicio. Los DTO contienen las
+ * representaciones de los JSON que se transfieren entre el cliente y el
+ * servidor.
+ *
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+
+ *       "nombre": string,  
+ *       "descripcion": string,
+ *       "inputt" : string,
+ *       "outputt" : string,
+ *       "puntaje" : number,
+ *       "nivel" : number,
+ *       "id": number
+ * 
+ * 
+ *   }
+ * </pre> Por ejemplo un ejercicio se representa asi:<br>
+ *
+ * <pre>
+ *
+ *   {
+ *       "nombre": "Prediccion de Terremotos",  
+ *       "descripcion": "blablablabla",
+ *       "inputt" : "inputdelejercicio",
+ *       "outputt" : "putputdelejercicio",
+ *       "puntaje" : 12345,
+ *       "nivel" : 12345,
+ *       "id": 123456
+ *   }
+ *
+ * </pre>
+/**
  *
  * @author aa.rodriguezv
  */
@@ -43,6 +77,12 @@ public class EjercicioDTO implements Serializable{
     
     */
     private Integer nivel;
+    
+    /**
+     * 
+     */
+    private Long id;
+    
 
     
     
@@ -55,6 +95,7 @@ public class EjercicioDTO implements Serializable{
     {
         if(entity != null)
         {
+            this.id = entity.getId();
             this.nombre = entity.getNombre();
             this.inputt = entity.getInputt();
             this.outputt = entity.getOutputt();
@@ -165,7 +206,25 @@ public class EjercicioDTO implements Serializable{
         return entity;
     }
     
-    
+          /**
+     * Obtiene el atributo id.
+     *
+     * @return atributo id.
+     *
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Establece el valor del atributo id.
+     *
+     * @param id nuevo valor del atributo
+     *
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     
 }
