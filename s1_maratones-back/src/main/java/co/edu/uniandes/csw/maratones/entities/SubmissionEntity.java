@@ -38,7 +38,7 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     
     /*
     */
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
     /*
