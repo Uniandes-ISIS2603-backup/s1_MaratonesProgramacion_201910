@@ -5,7 +5,14 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
+import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,30 +20,59 @@ import java.util.List;
  * @author Julian David Mendoza Ruiz
  */
 public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable {
-    private List<PrerequisitoDetailDTO> prerequisitos;
     
     private List<LugarCompetenciaDTO> ubicaciones;
     
-    private List<UsuarioDetailDTO> inscritos;
-    
     private List<UsuarioDetailDTO> jueces;
     
-    public CompetenciaDetailDTO () {
+    private List<EquipoDTO> equipos;
+    
+    private UsuarioDTO patrocinadores;
+    
+    private List<LenguajeDTO> lenguajes;
+    
+    public CompetenciaDetailDTO (CompetenciaEntity entity) {
+        super(entity);
         
-    }
-
-    /**
-     * @return the prerequisitos
-     */
-    public List<PrerequisitoDetailDTO> getPrerequisitos() {
-        return prerequisitos;
-    }
-
-    /**
-     * @param prerequisitos the prerequisitos to set
-     */
-    public void setPrerequisitos(List<PrerequisitoDetailDTO> prerequisitos) {
-        this.prerequisitos = prerequisitos;
+        if(entity!= null)
+        {
+            if(entity.getUbicaciones()!= null)
+            {
+                ubicaciones = new ArrayList<>();
+                for(LugarCompetenciaEntity entityLugarCompetencia: entity.getUbicaciones())
+                {
+                    ubicaciones.add(new LugarCompetenciaDTO(entityLugarCompetencia));
+                }
+            }
+            if(entity.getJueces()!=null)
+            {
+                jueces = new ArrayList<>();
+                for(UsuarioEntity entityUsuario: entity.getJueces())
+                {
+                    jueces.add(new UsuarioDetailDTO(entityUsuario));
+                }
+            }
+            if(entity.getEquipos()!= null){
+                equipos = new ArrayList<>();
+                for(EquipoEntity entityEquipo: entity.getEquipos())
+                {
+                    equipos.add(new EquipoDTO(entityEquipo));
+                }
+            }
+            if(entity.getPatrocinadores()!=null)
+            {
+                patrocinadores = new UsuarioDTO(entity.getPatrocinadores());
+            }
+            if(entity.getLenguajes()!=null)
+            {
+                lenguajes = new ArrayList<>();
+                for(LenguajeEntity entityLenguaje: entity.getLenguajes())
+                {
+                    lenguajes.add(new LenguajeDTO(entityLenguaje));
+                }
+            }
+            
+        }
     }
 
     /**
@@ -54,20 +90,6 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     }
 
     /**
-     * @return the inscritos
-     */
-    public List<UsuarioDetailDTO> getInscritos() {
-        return inscritos;
-    }
-
-    /**
-     * @param inscritos the inscritos to set
-     */
-    public void setInscritos(List<UsuarioDetailDTO> inscritos) {
-        this.inscritos = inscritos;
-    }
-
-    /**
      * @return the jueces
      */
     public List<UsuarioDetailDTO> getJueces() {
@@ -80,4 +102,47 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     public void setJueces(List<UsuarioDetailDTO> jueces) {
         this.jueces = jueces;
     }
+
+    /**
+     * @return the equipos
+     */
+    public List<EquipoDTO> getEquipos() {
+        return equipos;
+    }
+
+    /**
+     * @param equipos the equipos to set
+     */
+    public void setEquipos(List<EquipoDTO> equipos) {
+        this.equipos = equipos;
+    }
+
+    /**
+     * @return the patrocinadores
+     */
+    public UsuarioDTO getPatrocinadores() {
+        return patrocinadores;
+    }
+
+    /**
+     * @param patrocinadores the patrocinadores to set
+     */
+    public void setPatrocinadores(UsuarioDTO patrocinadores) {
+        this.patrocinadores = patrocinadores;
+    }
+
+    /**
+     * @return the lenguajes
+     */
+    public List<LenguajeDTO> getLenguajes() {
+        return lenguajes;
+    }
+
+    /**
+     * @param lenguajes the lenguajes to set
+     */
+    public void setLenguajes(List<LenguajeDTO> lenguajes) {
+        this.lenguajes = lenguajes;
+    }
+
 }
