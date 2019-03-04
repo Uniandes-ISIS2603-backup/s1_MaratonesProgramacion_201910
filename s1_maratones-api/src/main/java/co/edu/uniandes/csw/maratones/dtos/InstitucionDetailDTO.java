@@ -31,17 +31,31 @@ public class InstitucionDetailDTO extends InstitucionDTO implements Serializable
             }
         }
     }
+    @Override
+       public InstitucionEntity toEntity()
+       {
+           InstitucionEntity institucionEntity= super.toEntity();
+           if(usuarios!=null)
+           {
+               List<UsuarioEntity> usuariosEntity = new ArrayList<>();
+            for (UsuarioDTO usuarioDto : getUsuarios()) {
+                usuariosEntity.add(usuarioDto.toEntity());
+            }
+            institucionEntity.setUsuarios(usuariosEntity);
+           }
+           return institucionEntity;
+       }
     /**
      * @return the usuarios
      */
-    public List<UsuarioDTO> getMiembros() {
+    public List<UsuarioDTO> getUsuarios() {
         return usuarios;
     }
 
     /**
      * @param usuarios the usuarios to set
      */
-    public void setMiembros(List<UsuarioDTO> usuarios) {
+    public void setUsuarios(List<UsuarioDTO> usuarios) {
         this.usuarios = usuarios;
     }
 }

@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.dtos;
 
 import co.edu.uniandes.csw.maratones.entities.PublicacionEntity;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ import java.util.Date;
 /**
  * @author c.mendez11
  */
-public class PublicacionDTO {
+public class PublicacionDTO implements Serializable{
     private Long id;
     private Date fecha;
     private String texto;
