@@ -31,6 +31,7 @@ import java.io.Serializable;
  * @author c.mendez11
  */
 public class BlogDTO implements Serializable{
+    private Long id;
     private String nombre;
     private String descripcion;
 
@@ -73,6 +74,7 @@ public class BlogDTO implements Serializable{
         BlogEntity blogEntity = new BlogEntity();
         blogEntity.setDescripcion(this.descripcion);
         blogEntity.setNombre(this.nombre);
+        blogEntity.setId(this.id);
        return blogEntity;
     }
     /**
@@ -81,9 +83,24 @@ public class BlogDTO implements Serializable{
      */
      public BlogDTO(BlogEntity blogEntity) {
         if (blogEntity != null) {
+            this.id=blogEntity.getId();
             this.nombre = blogEntity.getNombre();
             this.descripcion = blogEntity.getDescripcion();
          
         }
      }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -23,7 +23,7 @@ public class BlogPersistence {
     
     private static final Logger LOGGER = Logger.getLogger(BlogPersistence.class.getName());
     
-     @PersistenceContext(unitName = "maratonesPU")
+    @PersistenceContext(unitName = "maratonesPU")
     protected EntityManager em;
      
      public BlogEntity create(BlogEntity blogEntity){

@@ -31,6 +31,7 @@ import java.util.Date;
  * @author c.mendez11
  */
 public class PublicacionDTO {
+    private Long id;
     private Date fecha;
     private String texto;
     private BlogDTO blog;
@@ -108,5 +109,19 @@ public class PublicacionDTO {
      */
     public void setBlog(BlogDTO blogDto) {
         this.blog = blogDto;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }

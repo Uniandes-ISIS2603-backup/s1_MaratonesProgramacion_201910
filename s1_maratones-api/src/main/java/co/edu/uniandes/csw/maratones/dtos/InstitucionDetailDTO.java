@@ -5,45 +5,43 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.InstitucionEntity;
+import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author estudiante
+ * @author c.mendez11
  */
 public class InstitucionDetailDTO extends InstitucionDTO implements Serializable{
-    private List<UsuarioDTO> miembros;
-    private List<EquipoDTO> equipos;
-
+    private List<UsuarioDTO> usuarios;
+    
     public InstitucionDetailDTO(){
-        
+        super();
+    }
+    public InstitucionDetailDTO(InstitucionEntity institucionEntity){
+        super(institucionEntity);
+        if(institucionEntity.getUsuarios()!=null)
+        {
+            usuarios= new ArrayList<>();
+            for(UsuarioEntity usuarioEntity:institucionEntity.getUsuarios()){
+                usuarios.add(new UsuarioDTO(usuarioEntity));
+            }
+        }
     }
     /**
-     * @return the miembros
+     * @return the usuarios
      */
     public List<UsuarioDTO> getMiembros() {
-        return miembros;
+        return usuarios;
     }
 
     /**
-     * @param miembros the miembros to set
+     * @param usuarios the usuarios to set
      */
-    public void setMiembros(List<UsuarioDTO> miembros) {
-        this.miembros = miembros;
-    }
-
-    /**
-     * @return the equipos
-     */
-    public List<EquipoDTO> getEquipos() {
-        return equipos;
-    }
-
-    /**
-     * @param equipos the equipos to set
-     */
-    public void setEquipos(List<EquipoDTO> equipos) {
-        this.equipos = equipos;
+    public void setMiembros(List<UsuarioDTO> usuarios) {
+        this.usuarios = usuarios;
     }
 }

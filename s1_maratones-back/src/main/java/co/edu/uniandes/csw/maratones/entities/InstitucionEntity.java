@@ -24,9 +24,9 @@ public class InstitucionEntity extends BaseEntity implements Serializable{
     private String ubicacion;
     private String descripcion;
     
-    /*@PodamExclude
-    @OneToMany(mappedBy = "institucion")
-    private List<UsuarioEntity> usuarios = new ArrayList<UsuarioEntity>();*/
+   /*@PodamExclude
+    @OneToMany(mappedBy = "institucion")*/
+    private List<UsuarioEntity> usuarios = new ArrayList<UsuarioEntity>();
      
     public InstitucionEntity(){
         
@@ -85,6 +85,20 @@ public class InstitucionEntity extends BaseEntity implements Serializable{
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    /**
+     * @return the usuarios
+     */
+    public List<UsuarioEntity> getUsuarios() {
+        return usuarios;
+    }
+
+    /**
+     * @param usuarios the usuarios to set
+     */
+    public void setUsuarios(List<UsuarioEntity> usuarios) {
+        this.usuarios = usuarios;
     }
     
 }
