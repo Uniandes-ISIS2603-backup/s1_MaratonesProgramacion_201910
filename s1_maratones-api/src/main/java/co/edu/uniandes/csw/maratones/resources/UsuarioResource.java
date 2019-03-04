@@ -42,10 +42,11 @@ public class UsuarioResource {
     
     @Inject
     private UsuarioLogic usuarioLogic;
-    @POST
+    //doble post genera problemas en el despliege
+   /* @POST
     public UsuarioDTO crearUsuario(UsuarioDTO pusuario) {
         return pusuario;
-    }
+    }*/
     
     
 

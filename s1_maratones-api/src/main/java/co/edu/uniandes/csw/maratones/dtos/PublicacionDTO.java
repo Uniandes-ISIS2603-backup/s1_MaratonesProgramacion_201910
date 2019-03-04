@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.dtos;
 
 import co.edu.uniandes.csw.maratones.entities.PublicacionEntity;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -30,9 +31,11 @@ import java.util.Date;
 /**
  * @author c.mendez11
  */
-public class PublicacionDTO {
+public class PublicacionDTO implements Serializable{
+    private Long id;
     private Date fecha;
     private String texto;
+    private BlogDTO blog;
     
     public PublicacionDTO(){
         
@@ -73,6 +76,10 @@ public class PublicacionDTO {
         PublicacionEntity publicacionEntity = new PublicacionEntity();
         publicacionEntity.setFecha(this.fecha);
         publicacionEntity.setTexto(this.texto);
+        if(this.blog!=null)
+        {
+            publicacionEntity.setBlog(this.blog.toEntity());
+        }
        return publicacionEntity;
     }
     /**
@@ -83,7 +90,39 @@ public class PublicacionDTO {
         if (publicacionEntity != null) {
             this.fecha = publicacionEntity.getFecha();
             this.texto = publicacionEntity.getTexto();
-         
+         if (publicacionEntity.getBlog() != null) {
+                this.blog = new BlogDTO(publicacionEntity.getBlog());
+            } else {
+                this.blog = null;
+            }
         }
      }
+
+    /**
+     * @return the blog
+     */
+    public BlogDTO getBlog() {
+        return blog;
+    }
+
+    /**
+     * @param blogDto the blogD to set
+     */
+    public void setBlog(BlogDTO blogDto) {
+        this.blog = blogDto;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

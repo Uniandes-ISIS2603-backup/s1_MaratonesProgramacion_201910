@@ -32,6 +32,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     private String correo;
     private String clave;
     private int puntaje;
+    // atributto nque represeta la institucion a la que pertenec el usuario
+    private InstitucionEntity institucion;
     
     @PodamExclude
     @ManyToMany
