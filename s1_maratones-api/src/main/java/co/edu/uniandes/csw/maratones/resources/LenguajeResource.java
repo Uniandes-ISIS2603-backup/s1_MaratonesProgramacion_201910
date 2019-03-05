@@ -44,8 +44,13 @@ public class LenguajeResource {
 
     
     @POST
-    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje)
+    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: input: {0}", lenguaje);
+        LenguajeDTO nuevoEjercicio = new LenguajeDTO(lenguajeLogic.createLenguaje(lenguaje.toEntity()));
+        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: output: {0}", nuevoEjercicio);
+        
+        
         return lenguaje;
     }
     
