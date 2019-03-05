@@ -138,7 +138,6 @@ public class EquipoLogicTest {
             Assert.assertNotNull(result);
             EquipoEntity entity = em.find(EquipoEntity.class, result.getId());
             Assert.assertEquals(newEntity.getId(), entity.getId());
-            Assert.assertEquals(newEntity.getNombreEquipo(), entity.getNombreEquipo());
         }catch(Exception exception){
             exception.getMessage();
         }

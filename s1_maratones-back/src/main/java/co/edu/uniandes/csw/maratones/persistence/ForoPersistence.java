@@ -89,17 +89,17 @@ public class ForoPersistence {
     }
     
     /**
-     * Busca si hay alguna editorial con el nombre que se envía de argumento
+     * Busca si hay algún foro con el nombre que se envía de argumento
      *
-     * @param name: Nombre de la editorial que se está buscando
-     * @return null si no existe ninguna editorial con el nombre del argumento.
-     * Si existe alguna devuelve la primera.
+     * @param name: Nombre del foro que se está buscando
+     * @return null si no existe ningún foro con el nombre del argumento.
+     * Si existe alguna devuelve el primero.
      */
     public ForoEntity findByName(String name)
     {
-        LOGGER.log(Level.INFO, "Consultando editorial por nombre ", name);
-        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From EditorialEntity e where e.name = :name", ForoEntity.class);
+        LOGGER.log(Level.INFO, "Consultando foro por nombre ", name);
+        // Se crea un query para buscar foros con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From ForoEntity e where e.nombre = :name", ForoEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
         query = query.setParameter("name", name);
         // Se invoca el query se obtiene la lista resultado

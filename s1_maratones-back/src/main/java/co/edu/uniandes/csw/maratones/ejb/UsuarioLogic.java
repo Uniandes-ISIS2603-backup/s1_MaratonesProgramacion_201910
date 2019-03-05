@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.maratones.ejb;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -36,8 +37,8 @@ public class UsuarioLogic {
         if (persistence.findByUsername(usuarioEntity.getNombreUsuario()) != null) {
             throw new BusinessLogicException("ya existe un usuario con ese nombre de usuario");
         }
-        if (usuarioEntity.getNombreUsuario().length() > 6) {
-            throw new BusinessLogicException("el nombre usuario debe tener minimo 6 caracteres");
+        if (usuarioEntity.getNombreUsuario().length() < 8) {
+            throw new BusinessLogicException("el nombre usuario debe tener minimo 8 caracteres");
         }
         if (usuarioEntity.getNombreUsuario().equals("")) {
             throw new BusinessLogicException("el nombre usuario no puede estar vacio");
@@ -45,20 +46,49 @@ public class UsuarioLogic {
         if (usuarioEntity.getNombre().equals("")) {
             throw new BusinessLogicException("el nombre no puede estar vacio");
         }
-        if (!usuarioEntity.getCorreo().contains("@losalpes.edu.co")) {
-            throw new BusinessLogicException("el correo debe ser de la institucion, es decir, incluir @losalpes.edu.co");
+        if (!usuarioEntity.getCorreo().matches("\"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$\"")) {
+            throw new BusinessLogicException("el correo no es valido");
         }
         if (usuarioEntity.getClave().length()> 7) {
             throw new BusinessLogicException("la clave debe tener un minimo de 8 caracteres");
         }
-        if (usuarioEntity.getClave().matches("[a-zA-Z ]*\\d+.*")) {
-            throw new BusinessLogicException("la clave debe incluir numeros");
+        if (usuarioEntity.getClave().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
+            throw new BusinessLogicException("la clave debe contener al menos: un digito una letra en minuscula y otro mayuscula y un caracter");
+        }
+        if (usuarioEntity.getClave().contains(usuarioEntity.getNombreUsuario())) {
+            throw new BusinessLogicException("la clave no debe incluir el nombre de usuario");
         }
         if (!usuarioEntity.getRol().equals("COUCH")||!usuarioEntity.getRol().equals("RESPONSABLE")||!usuarioEntity.getRol().equals("PARTICIPANTE")) {
             throw new BusinessLogicException("rol invalido");
         }
         LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
         return newusuarioEntity;
+    }
+    
+    /**
+     * Devuelve todos los usuarios que hay en la base de datos.
+     *
+     * @return Lista de entidades de tipo usuario.
+     */
+    public List<UsuarioEntity> getTodosLosUsuarios() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros");
+        List<UsuarioEntity> books = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los libros");
+        return books;
+    }
+    
+    /**
+     * Actualiza la información de una instancia de usuario.
+     *
+     * @param usuarioId Identificador de la instancia a actualizar
+     * @param authorEntity Instancia de UsuarioEntity con los nuevos datos.
+     * @return Instancia de AuthorEntity con los datos actualizados.
+     */
+    public UsuarioEntity update(Long usuarioId, UsuarioEntity usuarioEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el usuario con id = {0}", usuarioId);
+        UsuarioEntity newAuthorEntity = persistence.update(usuarioEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el usuario con id = {0}", usuarioId);
+        return newAuthorEntity;
     }
     
    
@@ -68,5 +98,38 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO, "Termina proceso de borrar usuario con id = {0}", usuarioId);
     }
     
-}
+    /**
+     * Busca un usuario por nombreUsuario
+     *
+     * @param nombreUsuario El nombreUsuario del usuario a buscar
+     * @return El usuario encontrado, null si no lo encuentra.
+     */
+    public UsuarioEntity getPorNombreDeUsuario(String nombreUsuario) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el usuario con el nombre de usuario  = {0}", nombreUsuario);
+        UsuarioEntity usuarioEntity = persistence.findByUsername(nombreUsuario);
+        if (usuarioEntity == null) {
+            LOGGER.log(Level.SEVERE, "El usuario con el nombreUsuario = {0} no existe", nombreUsuario);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el usuario con nombreUsuario = {0}", nombreUsuario);
+        return usuarioEntity;
+    }
+    
+    /**
+     * Busca un usuario por usuarioId
+     *
+     * @param usuarioId El usuarioId del usuario a buscar
+     * @return El usuario encontrado, null si no lo encuentra.
+     */
+    public UsuarioEntity getUsuarioPorId(Long usuarioId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el usuario con el nombre de usuario  = {0}", usuarioId);
+        UsuarioEntity usuarioEntity = persistence.find(usuarioId);
+        if (usuarioEntity == null) {
+            LOGGER.log(Level.SEVERE, "El usuario con el usuarioId = {0} no existe", usuarioId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el usuario con usuarioId = {0}", usuarioId);
+        return usuarioEntity;
+    }
 
+    
+    
+}
