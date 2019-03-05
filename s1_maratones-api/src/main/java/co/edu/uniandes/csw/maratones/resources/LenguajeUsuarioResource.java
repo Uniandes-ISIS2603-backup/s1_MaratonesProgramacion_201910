@@ -21,6 +21,7 @@ package co.edu.uniandes.csw.maratones.resources;
 
 import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
 import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
+import co.edu.uniandes.csw.maratones.ejb.UsuarioLenguajesLogic;
 //import co.edu.uniandes.csw.maratones.ejb.LenguajeUsuarioLogic;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
@@ -48,11 +49,11 @@ import javax.ws.rs.WebApplicationException;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class LenguajeUsuarioResource {
-    /*
+    
     private static final Logger LOGGER = Logger.getLogger(LenguajeUsuarioResource.class.getName());
 
     @Inject
-   private LenguajeUsuarioLogic lenguajeUsuarioLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+   private UsuarioLenguajesLogic lenguajeUsuarioLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
     @Inject
     private LenguajeLogic lenguajeLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
@@ -69,7 +70,7 @@ public class LenguajeUsuarioResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el lenguaje.
      */
-    /*@POST
+    @POST
     @Path("{lenguajeId: \\d+}")
     public LenguajeDTO addLenguaje(@PathParam("usuarioid") Long usuarioid, @PathParam("lenguajeId") Long lenguajeId) {
         LOGGER.log(Level.INFO, "LenguajeUsuarioResource addLenguaje: input: prizesID: {0} , lenguajeId: {1}", new Object[]{usuarioid, lenguajeId});
@@ -90,10 +91,10 @@ public class LenguajeUsuarioResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando el usuario no tiene lenguaje.
      */
-    /*@GET
-    public LenguajeDTO getLenguaje(@PathParam("usuarioid") Long usuarioid) {
+    @GET
+    public LenguajeDTO getLenguaje(@PathParam("usuarioid") Long usuarioid, @PathParam("lenguajeid") Long lenguajeid) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "LenguajeUsuarioResource getLenguaje: input: {0}", usuarioid);
-        LenguajeEntity lenguajeEntity = lenguajeUsuarioLogic.getLenguaje(usuarioid);
+        LenguajeEntity lenguajeEntity = lenguajeUsuarioLogic.getLenguaje(usuarioid, lenguajeid);
         if (lenguajeEntity == null) {
             throw new WebApplicationException("El recurso /usuarios/" + usuarioid + "/lenguaje no existe.", 404);
         }
@@ -108,14 +109,15 @@ public class LenguajeUsuarioResource {
      * Elimina la conexión entre el lenguaje y el usuario recibido en la URL.
      *
      * @param usuarioid El ID del usuario al cual se le va a desasociar el lenguaje
+     * @param lenguajeId
      * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
      * Error de lógica que se genera cuando el usuario no tiene lenguaje.
      */
-    /*@DELETE
-    public void removeLenguaje(@PathParam("usuarioid") Long usuarioid) throws BusinessLogicException {
+    @DELETE
+    public void removeLenguaje(@PathParam("usuarioid") Long usuarioid, @PathParam("lenguajeId") Long lenguajeId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "LenguajeUsuarioResource removeLenguaje: input: {0}", usuarioid);
-        lenguajeUsuarioLogic.removeLenguaje(usuarioid);
+        lenguajeUsuarioLogic.removeLenguaje(usuarioid, lenguajeId);
         LOGGER.info("LenguajeUsuarioResource removeLenguaje: output: void");
     }
-*/
+
 }
