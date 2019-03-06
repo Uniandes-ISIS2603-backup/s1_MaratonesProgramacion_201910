@@ -44,10 +44,14 @@ public class SubmissionResource {
     
     @Inject
     private SubmissionLogic submissionLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
-
+    
     @POST
-    public SubmissionDTO createSubmission(SubmissionDTO submission)
+    public SubmissionDTO createSubmission(SubmissionDTO submission) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "SubmissionResource createSubmission: input: {0}", submission);
+        SubmissionDTO nuevoSubmission = new SubmissionDTO(submissionLogic.createSubmission(submission.toEntity()));
+        LOGGER.log(Level.INFO, "SubmissionResource createSubmission: output: {0}", nuevoSubmission);
+        
         return submission;
     }
     

@@ -71,13 +71,13 @@ public class UsuarioLenguajesLogic {
      */
     public LenguajeEntity getLenguaje(Long usuarioId, Long lenguajeId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el lenguaje con id = {0} del usuario con id = " + usuarioId, lenguajeId);
-       // List<LenguajeEntity> lenguajes = usuarioPersistence.find(usuarioId).getLeguajes();
+       //List<LenguajeEntity> lenguajes = usuarioPersistence.find(usuarioId).getLeguajes();
         LenguajeEntity lenguajeEntity = lenguajePersistence.find(lenguajeId);
-        //int index = lenguajes.indexOf(lenguajeEntity);
+      // int index = lenguajes.indexOf(lenguajeEntity);
         LOGGER.log(Level.INFO, "Termina proceso de consultar el lenguaje con id = {0} del usuario con id = " + usuarioId, lenguajeId);
         //if (index >= 0) {
            // return lenguajes.get(index);
-        //}
+        
         throw new BusinessLogicException("El lenguaje no esta asociado al usuario");
     }
     
@@ -88,11 +88,11 @@ public class UsuarioLenguajesLogic {
      * @param usuarioId Identificador de la instancia de Author
      * @param lenguajeId Identificador de la instancia de Book
      */
-    public void removeLenguaje(Long usuarioId, Long lenguajeId) {
+    public void removeLenguaje(Long usuarioId, Long lenguajeId){
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un libro del author con id = {0}", usuarioId);
-       // UsuarioEntity usuarioEntity = usuarioPersistence.find(usuarioId);
+        //UsuarioEntity usuarioEntity = usuarioPersistence.find(usuarioId);
         LenguajeEntity lenguajeEntity = lenguajePersistence.find(lenguajeId);
-       // usuarioEntity.getLeguajes().remove(lenguajeEntity);
+        //usuarioEntity.getLeguajes().remove(lenguajeEntity);
         LOGGER.log(Level.INFO, "Termina proceso de borrar un libro del author con id = {0}", usuarioId);
     }
     
