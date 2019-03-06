@@ -35,10 +35,14 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -78,6 +82,29 @@ public class ForoResource {
         return listaForos;
     }
     
+    @DELETE
+    @Path("{foroId: \\d+}")
+    public void deleteForo(@PathParam("foroId") Long forosId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "ForoResource deleteForo: input: {0}", forosId);
+        if (foroLogic.getForo(forosId) == null) {
+            throw new WebApplicationException("El recurso /foros/" + forosId + " no existe.", 404);
+        }
+        foroLogic.deleteForo(forosId);
+        LOGGER.info("EditorialResource deleteForo: output: void");
+    }
+    
+    @PUT
+    @Path("{forosId: \\d+}")
+    public ForoDetailDTO updateEditorial(@PathParam("forosId") Long forosId, ForoDTO foro) throws WebApplicationException {
+        LOGGER.log(Level.INFO, "ForoResource updateForo: input: id:{0} , foro: {1}", new Object[]{forosId, foro.toString()});
+        foro.setId(forosId);
+        if (foroLogic.getForo(forosId) == null) {
+            throw new WebApplicationException("El recurso /foros/" + forosId + " no existe.", 404);
+        }
+        ForoDetailDTO detailDTO = new ForoDetailDTO(foroLogic.updateForo(forosId, foro.toEntity()));
+        LOGGER.log(Level.INFO, "EditorialResource updateEditorial: output: {0}", detailDTO.toString());
+        return detailDTO;
+    }
     /**
      * Convierte una lista de entidades a DTO.
      *
