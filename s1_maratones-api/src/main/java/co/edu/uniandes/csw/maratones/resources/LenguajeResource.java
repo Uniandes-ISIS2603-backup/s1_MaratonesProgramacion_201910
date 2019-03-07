@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
 
 import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
+import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -118,14 +120,27 @@ public class LenguajeResource {
     @PUT
     @Path("{lenguajesId: \\d+}")
     public LenguajeDTO updateLenguaje(@PathParam("lenguajesId") Long lenguajesId, LenguajeDTO lenguaje) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "BookResource updateBook: input: id: {0} , book: {1}", new Object[]{lenguajesId, lenguaje});
+        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: input: id: {0} , book: {1}", new Object[]{lenguajesId, lenguaje});
         lenguaje.setId(lenguajesId);
         if (lenguajeLogic.getLenguaje(lenguajesId) == null) {
             throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
         }
        
         LenguajeDTO delDTO = new LenguajeDTO(lenguajeLogic.updateLenguaje(lenguaje.toEntity()));
-        LOGGER.log(Level.INFO, "LenguajeResource updateBook: output: {0}", delDTO);
+        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: output: {0}", delDTO);
         return delDTO;
+    }
+    
+    @DELETE
+    @Path("{lenguajesId: \\d+}")
+    public void deletLenguaje(@PathParam("lenguajesId") Long lenguajesId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "LenguajeResource deleteLenguaje: input: {0}", lenguajesId);
+        LenguajeEntity entity = lenguajeLogic.getLenguaje(lenguajesId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
+        }
+        
+        lenguajeLogic.deleteLenguaje(lenguajesId);
+        LOGGER.info("SubmissionResource deleteLenguaje: output: void");
     }
 }

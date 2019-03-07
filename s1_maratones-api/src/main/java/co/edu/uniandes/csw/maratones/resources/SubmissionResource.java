@@ -116,7 +116,7 @@ public class SubmissionResource {
      * Error de lógica que se genera cuando no se puede actualizar la submission.
      */
     @PUT
-    @Path("{booksId: \\d+}")
+    @Path("{submissionsId: \\d+}")
     public SubmissionDTO updateSubmission(@PathParam("submissionsId") Long submissionsId, SubmissionDTO submission) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "SubmissionResource updateSubmission: input: id: {0} , lenguaje: {1}", new Object[]{submissionsId, submission});
         submission.setId(submissionsId);
@@ -138,12 +138,12 @@ public class SubmissionResource {
      * Error de lógica que se genera cuando no se encuentra el libro.
      */
     @DELETE
-    @Path("{booksId: \\d+}")
+    @Path("{submissionsId: \\d+}")
     public void deletSubmission(@PathParam("submissionsId") Long submissionsId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "SubmissionResource deleteSubmission: input: {0}", submissionsId);
         SubmissionEntity entity = submissionLogic.getSubmission(submissionsId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /books/" + submissionsId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /submissions/" + submissionsId + " no existe.", 404);
         }
         
         submissionLogic.deleteSubmission(submissionsId);
