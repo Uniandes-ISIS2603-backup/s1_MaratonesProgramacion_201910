@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -80,7 +81,7 @@ public class CompetenciaResource {
     }
     
     /**
-     * Busca la editorial con el id asociado recibido en la URL y la devuelve.
+     * Busca la competencia con el id asociado recibido en la URL y la devuelve.
      *
      * @param competenciasId Identificador de la editorial que se esta buscando.
      * Este debe ser una cadena de dígitos.
@@ -91,27 +92,27 @@ public class CompetenciaResource {
     @GET
     @Path("{competenciasId: \\d+}")
     public CompetenciaDetailDTO getCompetencia(@PathParam("competenciasId") Long competenciasId) throws WebApplicationException {
-        LOGGER.log(Level.INFO, "EditorialResource getCompetencia: input: {0}", competenciasId);
+        LOGGER.log(Level.INFO, "CompetenciaResource getCompetencia: input: {0}", competenciasId);
         CompetenciaEntity competenciaEntity = logic.getCompetencia(competenciasId);
         if (competenciaEntity == null) {
-            throw new WebApplicationException("El recurso /editorials/" + competenciasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /competencia/" + competenciasId + " no existe.", 404);
         }
         CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(competenciaEntity);
-        LOGGER.log(Level.INFO, "EditorialResource getEditorial: output: {0}", detailDTO);
+        LOGGER.log(Level.INFO, "CompetenciaResource getCompetencia: output: {0}", detailDTO);
         return detailDTO;
     }
   
     /**
-     * Actualiza la editorial con el id recibido en la URL con la informacion
+     * Actualiza la competencia con el id recibido en la URL con la informacion
      * que se recibe en el cuerpo de la petición.
      *
      * @param competenciasId Identificador de la editorial que se desea
      * actualizar. Este debe ser una cadena de dígitos.
-     * @param competencia {@link EditorialDetailDTO} La editorial que se desea
+     * @param competencia {@link CompetenciaDetailDTO} La competencia que se desea
      * guardar.
-     * @return JSON {@link EditorialDetailDTO} - La editorial guardada.
+     * @return JSON {@link CompetenciaDetailDTO} - La competencia guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la editorial a
+     * Error de lógica que se genera cuando no se encuentra la competencia a
      * actualizar.
      */
     @PUT
@@ -123,10 +124,32 @@ public class CompetenciaResource {
             throw new WebApplicationException("El recurso /editorials/" + competenciasId + " no existe.", 404);
         }
         CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(logic.updateEditorial(competenciasId, competencia.toEntity()));
-        LOGGER.log(Level.INFO, "EditorialResource updateEditorial: output: {0}", detailDTO);
+        LOGGER.log(Level.INFO, "CompetenciaResource updateCompetencia: output: {0}", detailDTO);
         return detailDTO;
-
     }
+         /**
+     * Borra la competencia con el id asociado recibido en la URL.
+     *
+     * @param competenciasId Identificador de la competencia que se desea borrar.
+     * Este debe ser una cadena de dígitos.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede eliminar la competencia.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la competencia.
+     */
+    @DELETE
+    @Path("{competenciasId: \\d+}")
+    public void deleteCompetencia(@PathParam("competenciasId") Long competenciasId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "CompetenciaResource deleteCompetencia: input: {0}", 0);
+        if (logic.getCompetencia(competenciasId) == null) {
+            throw new WebApplicationException("El recurso /competencias/" + competenciasId + " no existe.", 404);
+        }
+        logic.delete(competenciasId);
+        LOGGER.info("CompetenciaResource deleteCompetencia: output: void");
+    }
+
+   
+    
     /**
      * Convierte una lista de entidades a DTO.
      *

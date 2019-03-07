@@ -16,6 +16,8 @@ import java.util.Date;
  */
 public class LugarCompetenciaDTO implements Serializable{
  
+    private Long id;
+    
     private LocalDateTime fecha;
     
     private String ubicacion;
@@ -69,6 +71,20 @@ public class LugarCompetenciaDTO implements Serializable{
      */
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

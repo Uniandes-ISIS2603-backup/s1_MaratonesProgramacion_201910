@@ -5,10 +5,12 @@
  */
 package co.edu.uniandes.csw.maratones.ejb;
 
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,38 +29,106 @@ public class LugarCompetenciaLogic {
     
     @Inject
     private LugarCompetenciaPersistence lugarCompetenciaPersistence;
-    
-    public LugarCompetenciaEntity create (LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException
-    {
-        LOGGER.log(Level.INFO, "Iniciar proceso de creación del LugarCompetencia");
-        
+   
+    /**
+     * Crea un lugarCompetencia en la persistencia.
+     *
+     * @param lugarCompetenciaEntity La entidad que representa la lugarCompetencia a
+     * persistir.
+     * @return La entiddad de el LugarCompetencia luego de persistirla.
+     * @throws BusinessLogicException Si la lugarCompetencia a persistir ya existe.
+     */
+    public LugarCompetenciaEntity createLugarCompetencia(LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de creación del lugarCompetencia");
+        // Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con el mismo id
+        if (lugarCompetenciaPersistence.find(lugarCompetenciaEntity.getId())!=null) {
+            throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
+        }
         if(lugarCompetenciaEntity.getUbicaciones().equals(""))
         {
-            throw new BusinessLogicException("Ubicaciones no puede ser un String vacio");
+            throw new BusinessLogicException("El lugarCompetencia tiene una ubicación no valida");
         }
+        CompetenciaEntity competencia =lugarCompetenciaEntity.getCompetencia();
         
+        LocalDateTime date = lugarCompetenciaEntity.getFecha();
+        if(competencia!= null)
+        {
+            LocalDateTime tomorrow = competencia.getFechaInicio().plusDays(1);
+            if(date.isAfter(competencia.getFechaFin())||date.isBefore(competencia.getFechaInicio())|| date.isAfter(tomorrow))
+            {
+                throw new BusinessLogicException("El lugarCompetencia tiene una fecha no valida");
+            }
+        }
+        // Invoca la persistencia para crear la editorial
         lugarCompetenciaPersistence.create(lugarCompetenciaEntity);
-        
+        LOGGER.log(Level.INFO, "Termina proceso de creación del lugarCompetencia");
         return lugarCompetenciaEntity;
     }
-     public LugarCompetenciaEntity delete (Long lugarCompetenciaId)
-    {
-        LOGGER.log(Level.INFO, "Borrando prerequisito con id = {0}", lugarCompetenciaId);
-        // Se hace uso de mismo método que esta explicado en public PrerequisitoEntity find(Long id) para obtener el prerequisito a borrar.
-        LugarCompetenciaEntity entity = lugarCompetenciaPersistence.find(lugarCompetenciaId);
-        /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
-         EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
-         Es similar a "delete from PrerequisitoEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
-        lugarCompetenciaPersistence.delete(entity.getId());
-        LOGGER.log(Level.INFO, "Saliendo de borrar el prerequisito con id = {0}", lugarCompetenciaId);
-        return entity;
-    }
-     
-     public List<LugarCompetenciaEntity> getAllLugarCompetencia ()
-     {
-         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros");
+    
+    /**
+     *
+     * Obtener todas los lugarCompetencia existentes en la base de datos.
+     *
+     * @return una lista de editoriales.
+     */
+    public List<LugarCompetenciaEntity> getLugarCompetencias() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas los LugarCompetencia");
+        // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
         List<LugarCompetenciaEntity> ubicaciones = lugarCompetenciaPersistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los libros");
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas los lugarCompetencia");
         return ubicaciones;
-     }
+    }
+    
+    
+    /**
+     *
+     * Obtener un lugarCompetencia por medio de su id.
+     *
+     * @param lugarCompetenciaId: id de la editorial para ser buscada.
+     * @return la editorial solicitada por medio de su id.
+     */
+    public LugarCompetenciaEntity getLugarCompetencia(Long lugarCompetenciaId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el lugarCompetencia con id = {0}", lugarCompetenciaId);
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        LugarCompetenciaEntity lugarCompetenciaEntity = lugarCompetenciaPersistence.find(lugarCompetenciaId);
+        if (lugarCompetenciaEntity == null) {
+            LOGGER.log(Level.SEVERE, "El lugarCompetencia con el id = {0} no existe", lugarCompetenciaId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el LugarCompetencia con id = {0}", lugarCompetenciaId);
+        return lugarCompetenciaEntity;
+    }
+    
+    /**
+     *
+     * Actualizar un lugarCompetencia.
+     *
+     * @param lugarCompetenciaId: id de la editorial para buscarla en la base de
+     * datos.
+     * @param lugarCompetenciaEntity: editorial con los cambios para ser actualizada,
+     * por ejemplo el nombre.
+     * @return la editorial con los cambios actualizados en la base de datos.
+     */
+    public LugarCompetenciaEntity updateLugarCompetencia(Long lugarCompetenciaId, LugarCompetenciaEntity lugarCompetenciaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el lugarCompetencia con id = {0}", lugarCompetenciaId);
+        // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
+        LugarCompetenciaEntity newEntity = lugarCompetenciaPersistence.update(lugarCompetenciaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el lugarCompetencia con id = {0}", lugarCompetenciaEntity.getId());
+        return newEntity;
+    }
+    
+    
+    /**
+     * Borrar un lugarCompetencia
+     *
+     * @param lugarCompetenciaId: id del lugarCompetencia a borrar
+     * @throws BusinessLogicException Si el lugarCompetencia .
+     */
+    public void deleteLugarCompetencia(Long lugarCompetenciaId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el lugarCompetencia con id = {0}", lugarCompetenciaId);
+        // Note que, por medio de la inyección de dependencias se llama al método "delete(id)" que se encuentra en la persistencia.
+      
+        lugarCompetenciaPersistence.delete(lugarCompetenciaId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el lugarCompetencia con id = {0}", lugarCompetenciaId);
+    }
+
 }
