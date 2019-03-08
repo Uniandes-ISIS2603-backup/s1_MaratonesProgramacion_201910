@@ -11,7 +11,48 @@ import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Clase que extiende de {@link EjercicioDTO} para manejar las relaciones entre los
+ * EjercicioDTO y otros DTOs. Para conocer el contenido de un Ejericio vaya a la
+ * documentacion de {@link EjercicioDTO}
+ *
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
 
+ *       "nombre": string,  
+ *       "descripcion": string,
+ *       "inputt" : string,
+ *       "outputt" : string,
+ *       "puntaje" : number,
+ *       "nivel" : number,
+ *       "id": number
+ *       "competencias" : [{@link CompetenciaDTO}],
+ *       "submissions" : [{@link SubmissionDTO}]
+ * 
+ * 
+ *   }
+ * </pre> Por ejemplo un ejercicio se representa asi:<br>
+ *
+ * <pre>
+ *
+ *   {
+ *       "nombre": "Prediccion de Terremotos",  
+ *       "descripcion": "blablablabla",
+ *       "inputt" : "inputdelejercicio",
+ *       "outputt" : "putputdelejercicio",
+ *       "puntaje" : 12345,
+ *       "nivel" : 12345,
+ *       "id": 123456
+ *       "competencias":
+ *        {
+ *         }
+ *       "submissions":
+ *        {
+ *         }
+ *   }
+ *
+ * </pre>
 /**
  *
  * @author aa.rodriguezv

@@ -27,6 +27,7 @@ import co.edu.uniandes.csw.maratones.ejb.EquipoLogic;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,5 +144,109 @@ public class UsuarioLogicTest {
         }catch(Exception exception){
             exception.getMessage();
         }
+    }
+    
+    /**
+     * Prueba para crear un Usuario con el mismo nombre de un Usuario que ya
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConMismoNombreTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setNombre(data.get(0).getNombre());
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con el mismo nombre d eusuario de un Usuario que ya
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConMismoUsuarioTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setNombreUsuario(data.get(0).getNombreUsuario());
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con clave muy corta
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConClaveMuyCortaTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setClave("a");
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con clave solo letras
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConClaveSoloLetrasTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setClave("aasdfhgj");
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con clave sin simbolo
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConClaveSinSimboloTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setClave("aasd44d224gj");
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con clave sin numero
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConClaveSinNumeroTest() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setClave("aa$$$$$$$sss");
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con correo
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConCorreoInvalido() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setCorreo("blablabla");
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para crear un Usuario con correo sin final como .com
+     * existe.
+     *
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioConCorreoSinFinal() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setCorreo("blablabla@uniandes");
+        usuarioLogic.create(newEntity);
     }
 }

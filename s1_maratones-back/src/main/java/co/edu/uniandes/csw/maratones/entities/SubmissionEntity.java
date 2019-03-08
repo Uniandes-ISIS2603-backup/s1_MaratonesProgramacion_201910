@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -36,6 +38,7 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     
     /*
     */
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
     /*
@@ -58,7 +61,7 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
      */
     public static final String APROBADA = "Aprobada";
     
-        /**
+     /**
      * 
      */
     public static final String ERROR_COMPILACION = "Error de compilacion";
