@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable {
     
-    private List<LugarCompetenciaDTO> ubicaciones;
+    private List<LugarCompetenciaDTO> lugarCompetencias;
     
     private List<UsuarioDetailDTO> jueces;
     
@@ -36,12 +36,12 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
         
         if(entity!= null)
         {
-            if(entity.getUbicaciones()!= null)
+            if(entity.getlugarCompetencias()!= null)
             {
-                ubicaciones = new ArrayList<>();
-                for(LugarCompetenciaEntity entityLugarCompetencia: entity.getUbicaciones())
+                lugarCompetencias = new ArrayList<>();
+                for(LugarCompetenciaEntity entityLugarCompetencia: entity.getlugarCompetencias())
                 {
-                    ubicaciones.add(new LugarCompetenciaDTO(entityLugarCompetencia));
+                    lugarCompetencias.add(new LugarCompetenciaDTO(entityLugarCompetencia));
                 }
             }
             if(entity.getJueces()!=null)
@@ -82,13 +82,13 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     public CompetenciaEntity toEntity ()
     {
         CompetenciaEntity competenciaEntity= super.toEntity();
-        if(ubicaciones!= null)
+        if(lugarCompetencias!= null)
         {
             List<LugarCompetenciaEntity> ubicacionesEntity = new ArrayList<>();
-            for (LugarCompetenciaDTO dtoLugarCompetencia : ubicaciones) {
+            for (LugarCompetenciaDTO dtoLugarCompetencia : lugarCompetencias) {
                 ubicacionesEntity.add(dtoLugarCompetencia.toEntity());
             }
-            competenciaEntity.setUbicaciones(ubicacionesEntity);
+            competenciaEntity.setLugarCompetencias(ubicacionesEntity);
         }
        if(jueces!= null)
        {
@@ -125,17 +125,17 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     }
 
     /**
-     * @return the ubicaciones
+     * @return the lugarCompetencias
      */
-    public List<LugarCompetenciaDTO> getUbicaciones() {
-        return ubicaciones;
+    public List<LugarCompetenciaDTO> getLugarCompetencias() {
+        return lugarCompetencias;
     }
 
     /**
-     * @param ubicaciones the ubicaciones to set
+     * @param lugarCompetencias the lugarCompetencias to set
      */
-    public void setUbicaciones(List<LugarCompetenciaDTO> ubicaciones) {
-        this.ubicaciones = ubicaciones;
+    public void setLugarCompetencias(List<LugarCompetenciaDTO> lugarCompetencias) {
+        this.lugarCompetencias = lugarCompetencias;
     }
 
     /**

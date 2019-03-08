@@ -36,7 +36,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "competencias",fetch = FetchType.LAZY,cascade = {
         CascadeType.PERSIST
     })
-    private List<LugarCompetenciaEntity> ubicaciones;
+    private List<LugarCompetenciaEntity> lugarCompetencias;
     
     @PodamExclude
     @OneToOne(fetch = FetchType.EAGER)
@@ -84,17 +84,17 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     }
 
     /**
-     * @return the ubicaciones
+     * @return the lugarCompetencias
      */
-    public List<LugarCompetenciaEntity> getUbicaciones() {
-        return ubicaciones;
+    public List<LugarCompetenciaEntity> getlugarCompetencias() {
+        return lugarCompetencias;
     }
 
     /**
-     * @param ubicaciones the ubicaciones to set
+     * @param lugarCompetencias the lugarCompetencias to set
      */
-    public void setUbicaciones(List<LugarCompetenciaEntity> ubicaciones) {
-        this.ubicaciones = ubicaciones;
+    public void setLugarCompetencias(List<LugarCompetenciaEntity> lugarCompetencias) {
+        this.lugarCompetencias = lugarCompetencias;
     }
 
     /**
