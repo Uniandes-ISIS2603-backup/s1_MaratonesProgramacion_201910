@@ -27,6 +27,7 @@ import co.edu.uniandes.csw.maratones.ejb.EquipoLogic;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,4 +143,7 @@ public class EquipoLogicTest {
             exception.getMessage();
         }
     }
+    
+    
+    
 }
