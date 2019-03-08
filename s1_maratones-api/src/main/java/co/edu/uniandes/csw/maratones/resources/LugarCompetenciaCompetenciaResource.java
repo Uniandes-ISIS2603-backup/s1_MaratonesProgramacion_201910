@@ -5,13 +5,20 @@
  */
 package co.edu.uniandes.csw.maratones.resources;
 
+import co.edu.uniandes.csw.maratones.dtos.CompetenciaDTO;
+import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDetailDTO;
 import co.edu.uniandes.csw.maratones.ejb.CompetenciaLogic;
+import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaCompetenciaLogic;
 import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -30,8 +37,34 @@ public class LugarCompetenciaCompetenciaResource {
     private LugarCompetenciaLogic lugarCompetenciaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
     @Inject
-    private LugarCompetenciaLogic lugarCompetenciaCompetenciaLogic ;// Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+    private LugarCompetenciaCompetenciaLogic lugarCompetenciaCompetenciaLogic ;// Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
     @Inject
     private CompetenciaLogic competenciaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+    
+    /**
+     * Remplaza la instancia de Competencia asociada a un LugarCompetencia.
+     *
+     * @param lugarCompetenciasId Identificador del lugarCompetencia que se esta actualizando. Este
+     * debe ser una cadena de dígitos.
+     * @param competencia La competencia que se será del lugarCompetencia.
+     * @return JSON {@link LugarCompetenciaDetailDTO} - El arreglo de lugarCompetencias guardado en la
+     * competencia.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la competencia o el
+     * lugarCompetencia.
+     */
+    @PUT
+    public LugarCompetenciaDetailDTO replaceCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId, CompetenciaDTO competencia) {
+        LOGGER.log(Level.INFO, "LugarCompetenciaCompetenciaResource replaceCompetencia: input: lugarCompetenciasId{0} , Competencia:{1}", new Object[]{lugarCompetenciasId, competencia});
+        if (lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId) == null) {
+            throw new WebApplicationException("El recurso /lugarCompetencias/" + lugarCompetenciasId + " no existe.", 404);
+        }
+        if (competenciaLogic.getCompetencia(competencia.getId()) == null) {
+            throw new WebApplicationException("El recurso /competencias/" + competencia.getId() + " no existe.", 404);
+        }
+        LugarCompetenciaDetailDTO lugarCompetenciaDetailDTO = new LugarCompetenciaDetailDTO(lugarCompetenciaCompetenciaLogic.replaceCompetencia(lugarCompetenciasId, competencia.getId()));
+        LOGGER.log(Level.INFO, "LugarCompetenciaCompetenciaResource replaceCompetencia: output: {0}", lugarCompetenciaDetailDTO);
+        return lugarCompetenciaDetailDTO;
+    }
 }

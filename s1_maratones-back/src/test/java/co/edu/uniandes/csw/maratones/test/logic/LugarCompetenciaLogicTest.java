@@ -123,7 +123,7 @@ public class LugarCompetenciaLogicTest {
         PodamFactory factory = new PodamFactoryImpl();
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
        
-        LugarCompetenciaEntity result = lugarCompetenciaLogic.create(newEntity);
+        LugarCompetenciaEntity result = lugarCompetenciaLogic.createLugarCompetencia(newEntity);
 
         Assert.assertNotNull(result);
         
@@ -139,9 +139,9 @@ public class LugarCompetenciaLogicTest {
      *
      */
     @Test
-    public void deleteLugarCompetenciaTest() {
+    public void deleteLugarCompetenciaTest() throws BusinessLogicException {
         LugarCompetenciaEntity entity = data.get(0);
-        lugarCompetenciaLogic.delete(entity.getId());
+        lugarCompetenciaLogic.deleteLugarCompetencia(entity.getId());
         LugarCompetenciaEntity deleted = em.find(LugarCompetenciaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
