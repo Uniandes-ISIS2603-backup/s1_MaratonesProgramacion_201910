@@ -59,7 +59,19 @@ public class ForoResource {
      
      @Inject
     private ForoLogic foroLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
-     
+    
+     /**
+     * Crea una nueva editorial con la informacion que se recibe en el cuerpo de
+     * la petición y se regresa un objeto identico con un id auto-generado por
+     * la base de datos.
+     *
+     * @param foro {@link ForoDTO} - el foro que se desea
+     * guardar.
+     * @return JSON {@link ForoDTO} - el foro guardado con el atributo
+     * id autogenerado.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando ya existe el foro foro
+     */
      @POST
     public ForoDTO createForo(ForoDTO foro) throws BusinessLogicException
     {
@@ -74,6 +86,28 @@ public class ForoResource {
         return foro;
     }
     
+     /**
+     * Busca el foro con el id asociado recibido en la URL y la devuelve.
+     *
+     * @param forosId Identificador de el foro que se esta buscando.
+     * Este debe ser una cadena de dígitos.
+     * @return JSON {@link ForoDetailDTO} - el foro buscado
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el foro.
+     */
+    @GET
+    @Path("{forosId: \\d+}")
+    public ForoDetailDTO getEditorial(@PathParam("forosId") Long forosId) throws WebApplicationException {
+        LOGGER.log(Level.INFO, "ForoResource getForo: input: {0}", forosId);
+        ForoEntity foroEntity = foroLogic.getForo(forosId);
+        if (foroEntity == null) {
+            throw new WebApplicationException("El recurso /foros/" + forosId + " no existe.", 404);
+        }
+        ForoDetailDTO detailDTO = new ForoDetailDTO(foroEntity);
+        LOGGER.log(Level.INFO, "ForoResource getForo: output: {0}", detailDTO);
+        return detailDTO;
+    }
+    
     @GET
     public List<ForoDetailDTO> getForos() {
         LOGGER.info("ForoResource getForos: input: void");
@@ -81,7 +115,7 @@ public class ForoResource {
         LOGGER.log(Level.INFO, "ForoResource getForo: output: {0}", listaForos.toString());
         return listaForos;
     }
-    
+ 
     @DELETE
     @Path("{foroId: \\d+}")
     public void deleteForo(@PathParam("foroId") Long forosId) throws BusinessLogicException {
