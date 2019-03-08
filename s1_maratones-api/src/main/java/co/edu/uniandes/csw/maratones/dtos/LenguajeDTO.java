@@ -9,6 +9,40 @@ import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import java.io.Serializable;
 
 /**
+ * LenguajeDTO Objeto de transferencia de datos de Lenguaje. Los DTO contienen las
+ * representaciones de los JSON que se transfieren entre el cliente y el
+ * servidor.
+ *
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "nombre": string,
+ *      "experiencia": number,
+ *      "programador": {@link: UsuarioDTO},
+ *      "id" : number
+ *      
+ * 
+ *   }
+ * </pre> Por ejemplo un lenguaje se representa asi:<br>
+ *
+ * <pre>
+ *  {
+ *      "nombre": "Python",
+ *      "experiencia": 10,
+ *      "programador": {
+ *        "rol": “PARTICIPANTE”, 
+ *       "nombre": "Maria Camila",
+ *       "apellido": "Londono", 
+ *       "nombreUsuario": “camilalonart”, 
+ *       "clave": “blablabla”, 
+ *       "correo": “mc.londono@uniandes.edu.co”,
+ *       "imagen": “www.blablabla.com/bla.jpg”,
+ *       "institucion": “Universidad de los Andes”
+ *       }
+ *      "id" : 123456
+ *  }
+ * </pre>
+/**
  *
  * @author aa.rodriguezv
  */
@@ -29,10 +63,16 @@ public class LenguajeDTO implements Serializable{
     */
     private UsuarioDTO programador;
     
+    /**
+     * 
+     */
+    private Long id;
+    
     public LenguajeDTO(LenguajeEntity entity)
     {
         if(entity != null)
         {
+            this.id = entity.getId();
             this.nombre = entity.getNombre();
             this.experiencia = entity.getExperiencia();
         
@@ -97,6 +137,26 @@ public class LenguajeDTO implements Serializable{
         }
         
         return entity;
+    }
+    
+       /**
+     * Obtiene el atributo id.
+     *
+     * @return atributo id.
+     *
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Establece el valor del atributo id.
+     *
+     * @param id nuevo valor del atributo
+     *
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
     
 }
