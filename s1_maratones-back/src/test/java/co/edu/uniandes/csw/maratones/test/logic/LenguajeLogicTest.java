@@ -176,14 +176,14 @@ public class LenguajeLogicTest {
     {
         LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
         newEntity.setId(data.get(0).getId());
-        lenguajeLogic.deleteLenguaje(newEntity);
+        lenguajeLogic.deleteLenguaje(newEntity.getId());
     }
     
     @Test(expected = BusinessLogicException.class)
     public void deleteLenguajeQueNoExisteTest() throws BusinessLogicException
     {
         LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
-        lenguajeLogic.deleteLenguaje(newEntity);
+        lenguajeLogic.deleteLenguaje(newEntity.getId());
     }
     
     @Test

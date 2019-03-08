@@ -99,26 +99,15 @@ public class EjercicioResource {
             throw new WebApplicationException("El recurso /ejercicios/" + ejerciciosId + " no existe.", 404);
         }
         ejercicioLogic.deleteEjercicio(ejerciciosId);
-        LOGGER.info("BookResource deleteBook: output: void");
+        LOGGER.info("EjercicioResource deleteEjercicio: output: void");
     }
+    
     
     /**
-     * Conexión con el servicio de competencias de un ejercicio. {@link SubmissionResource}
-     * @param ejerciciosId El ID del ejercicio con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de Competenciass para ese ejercicio en paricular.\
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el ejercicio.
+     * 
+     * @param entityList
+     * @return 
      */
-    @Path("{ejerciciosId: \\d+}/competencias")
-    public Class<SubmissionResource> getSubmissionResource(@PathParam("ejerciciosId") Long ejerciciosId) {
-        if (ejercicioLogic.getEjercicio(ejerciciosId) == null) {
-            throw new WebApplicationException("El recurso /ejercicios/" + ejerciciosId + "/submissions no existe.", 404);
-        }
-        return SubmissionResource.class;
-    }
-    
-    
     private List<EjercicioDetailDTO> listEntity2DetailDTO(List<EjercicioEntity> entityList) {
         List<EjercicioDetailDTO> list = new ArrayList<>();
         for (EjercicioEntity entity : entityList) {
