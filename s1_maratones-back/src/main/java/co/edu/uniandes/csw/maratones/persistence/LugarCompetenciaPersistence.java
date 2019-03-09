@@ -6,12 +6,13 @@
 package co.edu.uniandes.csw.maratones.persistence;
 
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
-import co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -34,6 +35,39 @@ public class LugarCompetenciaPersistence {
     public LugarCompetenciaEntity find (Long lugarCompetenicaId)
     {
         return em.find(LugarCompetenciaEntity.class, lugarCompetenicaId);
+    }
+    
+   /**
+     * Devuelve todas las ubicaciones de la base de datos.
+     *
+     * @return una lista con todas las ubicaciones que encuentre en la base de
+     * datos, "select u from LugarCompetenciaEntity u" es como un "select * from
+     * LugarCompetenciaEntity;" - "SELECT * FROM table_name" en SQL.
+     */
+    public List<LugarCompetenciaEntity> findAll() {
+        LOGGER.log(Level.INFO, "Consultando todas las ubicaciones");
+        // Se crea un query para buscar todas las ubicaciones en la base de datos.
+        TypedQuery query = em.createQuery("select u from LugarCompetenciaEntity u", LugarCompetenciaEntity.class);
+        // Note que en el query se hace uso del método getResultList() que obtiene una lista de editoriales.
+        return query.getResultList();
+    }
+    
+     /**
+     * Actualiza una ubicacion.
+     *
+     * @param LugarCompetenciaEntity: la editorial que viene con los nuevos cambios.
+     * Por ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
+     * update.
+     * @return una ubicacion con los cambios aplicados.
+     */
+    public LugarCompetenciaEntity update(LugarCompetenciaEntity lugarCompetenciaEntity) {
+        LOGGER.log(Level.INFO, "Actualizando ubicacion con id = {0}", lugarCompetenciaEntity.getId());
+        /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
+        la ubicacion con los cambios, esto es similar a 
+        "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
+         */
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la ubicacion con id = {0}", lugarCompetenciaEntity.getId());
+        return em.merge(lugarCompetenciaEntity);
     }
     
     public void delete(Long lugarCompetenciaId) {

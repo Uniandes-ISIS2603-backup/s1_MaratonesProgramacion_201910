@@ -28,41 +28,101 @@ public class CompetenciaPersistence {
     @PersistenceContext(unitName = "maratonesPU")
     protected EntityManager em;
     
-    public CompetenciaEntity create (CompetenciaEntity competenciaEntity){
-        
+   /**
+     * Método para persisitir la entidad en la base de datos.
+     *
+     * @param competenciaEntity objeto editorial que se creará en la base de datos
+     * @return devuelve la entidad creada con un id dado por la base de datos.
+     */
+    public CompetenciaEntity create(CompetenciaEntity competenciaEntity) {
+        LOGGER.log(Level.INFO, "Creando una editorial nueva");
+        /* Note que hacemos uso de un método propio de EntityManager para persistir la editorial en la base de datos.
+        Es similar a "INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);" en SQL.
+         */
         em.persist(competenciaEntity);
+        LOGGER.log(Level.INFO, "Saliendo de crear una editorial nueva");
         return competenciaEntity;
     }
-    
-     public CompetenciaEntity find (Long competenciaId)
-    {
-        return em.find(CompetenciaEntity.class, competenciaId);
+	
+	/**
+     * Devuelve todas las editoriales de la base de datos.
+     *
+     * @return una lista con todas las editoriales que encuentre en la base de
+     * datos, "select u from EditorialEntity u" es como un "select * from
+     * EditorialEntity;" - "SELECT * FROM table_name" en SQL.
+     */
+    public List<CompetenciaEntity> findAll() {
+        LOGGER.log(Level.INFO, "Consultando todas las editoriales");
+        // Se crea un query para buscar todas las editoriales en la base de datos.
+        TypedQuery query = em.createQuery("select u from CompetenciaEntity u", CompetenciaEntity.class);
+        // Note que en el query se hace uso del método getResultList() que obtiene una lista de editoriales.
+        return query.getResultList();
     }
-    
-    public void delete(Long competenciaId) {
-        LOGGER.log(Level.INFO, "Borrando competencia con id = {0}", competenciaId);
+	
+    /**
+     * Busca si hay alguna editorial con el id que se envía de argumento
+     *
+     * @param competenciasId: id correspondiente a la editorial buscada.
+     * @return una editorial.
+     */
+    public CompetenciaEntity find(Long competenciasId) {
+        LOGGER.log(Level.INFO, "Consultando competencia con id={0}", competenciasId);
+        /* Note que se hace uso del metodo "find" propio del EntityManager, el cual recibe como argumento 
+        el tipo de la clase y el objeto que nos hara el filtro en la base de datos en este caso el "id"
+        Suponga que es algo similar a "select * from EditorialEntity where id=id;" - "SELECT * FROM table_name WHERE condition;" en SQL.
+         */
+        return em.find(CompetenciaEntity.class, competenciasId);
+    }
+
+	 /**
+     * Actualiza una editorial.
+     *
+     * @param competenciaEntity: la editorial que viene con los nuevos cambios.
+     * Por ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
+     * update.
+     * @return una editorial con los cambios aplicados.
+     */
+    public CompetenciaEntity update(CompetenciaEntity competenciaEntity) {
+        LOGGER.log(Level.INFO, "Actualizando competencia con id = {0}", competenciaEntity.getId());
+        /* Note que hacemos uso de un método propio del EntityManager llamado merge() que recibe como argumento
+        la editorial con los cambios, esto es similar a 
+        "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" en SQL.
+         */
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la competencia con id = {0}", competenciaEntity.getId());
+        return em.merge(competenciaEntity);
+    }
+	
+    /**
+     *
+     * Borra una editorial de la base de datos recibiendo como argumento el id
+     * de la editorial
+     *
+     * @param competenciasId: id correspondiente a la editorial a borrar.
+     */
+    public void delete(Long competenciasId) {
+        LOGGER.log(Level.INFO, "Borrando editorial con id = {0}", competenciasId);
         // Se hace uso de mismo método que esta explicado en public EditorialEntity find(Long id) para obtener la editorial a borrar.
-        CompetenciaEntity entity = em.find(CompetenciaEntity.class, competenciaId);
+        CompetenciaEntity entity = em.find(CompetenciaEntity.class, competenciasId);
         /* Note que una vez obtenido el objeto desde la base de datos llamado "entity", volvemos hacer uso de un método propio del
          EntityManager para eliminar de la base de datos el objeto que encontramos y queremos borrar.
          Es similar a "delete from EditorialEntity where id=id;" - "DELETE FROM table_name WHERE condition;" en SQL.*/
         em.remove(entity);
-        LOGGER.log(Level.INFO, "Saliendo de borrar la competencia con id = {0}", competenciaId);
+        LOGGER.log(Level.INFO, "Saliendo de borrar la competencia con id = {0}", competenciasId);
     }
-    
+	
     /**
-     * Busca si hay alguna competencia con el nombre que se envía de argumento
+     * Busca si hay alguna editorial con el nombre que se envía de argumento
      *
-     * @param name: Nombre de la competencia que se está buscando
-     * @return null si no existe ninguna competenica con el nombre del argumento.
+     * @param name: Nombre de la editorial que se está buscando
+     * @return null si no existe ninguna editorial con el nombre del argumento.
      * Si existe alguna devuelve la primera.
      */
-    public CompetenciaEntity findByName(String nombre) {
-        LOGGER.log(Level.INFO, "Consultando competencia por nombre ", nombre);
-        // Se crea un query para buscar competencias con el nombre que recibe el método como argumento. ":nombre" es un placeholder que debe ser remplazado
+    public CompetenciaEntity findByName(String name) {
+        LOGGER.log(Level.INFO, "Consultando editorial por nombre ", name);
+        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
         TypedQuery query = em.createQuery("Select e From CompetenciaEntity e where e.nombre = :nombre", CompetenciaEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
-        query = query.setParameter("nombre", nombre);
+        query = query.setParameter("nombre", name);
         // Se invoca el query se obtiene la lista resultado
         List<CompetenciaEntity> sameName = query.getResultList();
         CompetenciaEntity result;
@@ -73,7 +133,7 @@ public class CompetenciaPersistence {
         } else {
             result = sameName.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar competencia por nombre ", nombre);
+        LOGGER.log(Level.INFO, "Saliendo de consultar competencia por nombre ", name);
         return result;
     }
 }
