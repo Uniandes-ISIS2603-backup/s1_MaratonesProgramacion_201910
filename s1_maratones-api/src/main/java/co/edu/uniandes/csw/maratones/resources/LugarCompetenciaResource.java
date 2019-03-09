@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.maratones.resources;
 
 import co.edu.uniandes.csw.maratones.dtos.CompetenciaDetailDTO;
 import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDTO;
-import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDetailDTO;
 import co.edu.uniandes.csw.maratones.dtos.UsuarioDTO;
 import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
@@ -34,7 +33,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Julian David Mendoza Ruiz
  */
-@Path("/Lugarcompetencias")
+@Path("/lugarCompetencias")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -76,9 +75,9 @@ public class LugarCompetenciaResource {
      * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<LugarCompetenciaDetailDTO> getLugarCompetencias() {
+    public List<LugarCompetenciaDTO> getLugarCompetencias() {
         LOGGER.info("LugarCompetenciaResource getLugarCompetencias: input: void");
-        List<LugarCompetenciaDetailDTO> listaLugarCompetencias = listEntity2DetailDTO(lugarCompetenciaLogic.getLugarCompetencias());
+        List<LugarCompetenciaDTO> listaLugarCompetencias = listEntity2DTO(lugarCompetenciaLogic.getLugarCompetencias());
         LOGGER.log(Level.INFO, "LugarCompetenciaResource getLugarCompetencias: output: {0}", listaLugarCompetencias);
         return listaLugarCompetencias;
     }
@@ -94,13 +93,13 @@ public class LugarCompetenciaResource {
      */
     @GET
     @Path("{lugarCompetenciasId: \\d+}")
-    public LugarCompetenciaDetailDTO getLugarCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId) throws WebApplicationException {
+    public LugarCompetenciaDTO getLugarCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId) throws WebApplicationException {
         LOGGER.log(Level.INFO, "LugarCompetenciaResource getLugarCompetencia: input: {0}", lugarCompetenciasId);
         LugarCompetenciaEntity lugarCompetenciaEntity = lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId);
         if (lugarCompetenciaEntity == null) {
             throw new WebApplicationException("El recurso /lugarCompetencias/" + lugarCompetenciasId + " no existe.", 404);
         }
-        LugarCompetenciaDetailDTO detailDTO = new LugarCompetenciaDetailDTO(lugarCompetenciaEntity);
+        LugarCompetenciaDTO detailDTO = new LugarCompetenciaDTO(lugarCompetenciaEntity);
         LOGGER.log(Level.INFO, "LugarCompetenciaResource getLugarCompetencia: output: {0}", detailDTO);
         return detailDTO;
     }
@@ -111,7 +110,7 @@ public class LugarCompetenciaResource {
      *
      * @param lugarCompetenciasId Identificador del lugarCompetencia que se desea
      * actualizar. Este debe ser una cadena de dígitos.
-     * @param lugarCompetencia {@link LugarCompetenciaDetailDTO} El lugarCompetencia que se desea
+     * @param lugarCompetencia {@link LugarCompetenciaDTO} El lugarCompetencia que se desea
      * guardar.
      * @return JSON {@link EditorialDetailDTO} - El lugarCompetencia guardado.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -120,13 +119,13 @@ public class LugarCompetenciaResource {
      */
     @PUT
     @Path("{lugarCompetenciasId: \\d+}")
-    public LugarCompetenciaDetailDTO updateLugarCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId, LugarCompetenciaDetailDTO lugarCompetencia) throws WebApplicationException {
+    public LugarCompetenciaDTO updateLugarCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId, LugarCompetenciaDTO lugarCompetencia) throws WebApplicationException {
         LOGGER.log(Level.INFO, "LugarCompetenciaResource updateLugarCompetencia: input: id:{0} , lugarCompetencia: {1}", new Object[]{lugarCompetenciasId, lugarCompetencia});
         lugarCompetencia.setId(lugarCompetenciasId);
         if (lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId) == null) {
             throw new WebApplicationException("El recurso /lugarCompetencias/" + lugarCompetenciasId + " no existe.", 404);
         }
-        LugarCompetenciaDetailDTO detailDTO = new LugarCompetenciaDetailDTO(lugarCompetenciaLogic.updateLugarCompetencia(lugarCompetenciasId, lugarCompetencia.toEntity()));
+        LugarCompetenciaDTO detailDTO = new LugarCompetenciaDTO(lugarCompetenciaLogic.updateLugarCompetencia(lugarCompetenciasId, lugarCompetencia.toEntity()));
         LOGGER.log(Level.INFO, ":LugarCompetenciaResource updateLugarCompetencia: output: {0}", detailDTO);
         return detailDTO;
 
@@ -165,10 +164,10 @@ public class LugarCompetenciaResource {
      * que vamos a convertir a DTO.
      * @return la lista de lugarCompetencias en forma DTO (json)
      */
-    private List<LugarCompetenciaDetailDTO> listEntity2DetailDTO(List<LugarCompetenciaEntity> entityList) {
-        List<LugarCompetenciaDetailDTO> list = new ArrayList<>();
+    private List<LugarCompetenciaDTO> listEntity2DTO(List<LugarCompetenciaEntity> entityList) {
+        List<LugarCompetenciaDTO> list = new ArrayList<>();
         for (LugarCompetenciaEntity entity : entityList) {
-            list.add(new LugarCompetenciaDetailDTO(entity));
+            list.add(new LugarCompetenciaDTO(entity));
         }
         return list;
     }

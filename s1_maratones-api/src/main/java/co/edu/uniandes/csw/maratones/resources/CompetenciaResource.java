@@ -74,7 +74,7 @@ public class CompetenciaResource {
      */
     @GET
     public List<CompetenciaDetailDTO> getCompetencias() {
-        LOGGER.info("EditorialResource getEditorials: input: void");
+        LOGGER.info("CompetenciaResource getCompetencias: input: void");
         List<CompetenciaDetailDTO> listaCompetencias = listEntity2DetailDTO(logic.getCompetencias());
         LOGGER.log(Level.INFO, "CompetenciaResource getCompetencias: output: {0}", listaCompetencias);
         return listaCompetencias;
@@ -95,7 +95,7 @@ public class CompetenciaResource {
         LOGGER.log(Level.INFO, "CompetenciaResource getCompetencia: input: {0}", competenciasId);
         CompetenciaEntity competenciaEntity = logic.getCompetencia(competenciasId);
         if (competenciaEntity == null) {
-            throw new WebApplicationException("El recurso /competencia/" + competenciasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /competencias/" + competenciasId + " no existe.", 404);
         }
         CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(competenciaEntity);
         LOGGER.log(Level.INFO, "CompetenciaResource getCompetencia: output: {0}", detailDTO);
@@ -116,12 +116,12 @@ public class CompetenciaResource {
      * actualizar.
      */
     @PUT
-    @Path("{editorialsId: \\d+}")
+    @Path("{competenciasId: \\d+}")
     public CompetenciaDetailDTO updateCompetencia(@PathParam("competenciasId") Long competenciasId, CompetenciaDetailDTO competencia) throws WebApplicationException {
         LOGGER.log(Level.INFO, "CompetenciaResource updateCompetencia: input: id:{0} , competencia: {1}", new Object[]{competenciasId, competencia});
         competencia.setId(competenciasId);
         if (logic.getCompetencia(competenciasId) == null) {
-            throw new WebApplicationException("El recurso /editorials/" + competenciasId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /competencias/" + competenciasId + " no existe.", 404);
         }
         CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(logic.updateEditorial(competenciasId, competencia.toEntity()));
         LOGGER.log(Level.INFO, "CompetenciaResource updateCompetencia: output: {0}", detailDTO);

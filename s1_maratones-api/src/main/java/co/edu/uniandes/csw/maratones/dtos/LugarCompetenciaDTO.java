@@ -22,6 +22,11 @@ public class LugarCompetenciaDTO implements Serializable{
     
     private String ubicacion;
 
+    /*
+    * Relación a una editorial  
+    * dado que esta tiene cardinalidad 1.
+     */
+    private CompetenciaDTO competencia;
     
     public LugarCompetenciaDTO () {
         
@@ -33,6 +38,14 @@ public class LugarCompetenciaDTO implements Serializable{
         {
            this.fecha = entity.getFecha();
            this.ubicacion = entity.getUbicaciones();
+           
+           if(entity.getCompetencia()!= null)
+           {
+               this.competencia= new CompetenciaDTO(entity.getCompetencia());
+           }else
+           {
+               this.competencia= null;
+           }
         }
     }
     
@@ -45,6 +58,20 @@ public class LugarCompetenciaDTO implements Serializable{
         return entity;
     }
 
+    
+    /**
+     * @return the competencia
+     */
+    public CompetenciaDTO getCompetencia() {
+        return competencia;
+    }
+
+    /**
+     * @param competencia the competencia to set
+     */
+    public void setCompetencia(CompetenciaDTO competencia) {
+        this.competencia = competencia;
+    }
     /**
      * @return the fecha
      */

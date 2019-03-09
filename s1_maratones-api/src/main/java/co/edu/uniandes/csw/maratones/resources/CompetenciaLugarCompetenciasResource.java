@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.maratones.resources;
 
 import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDTO;
-import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDetailDTO;
 import co.edu.uniandes.csw.maratones.ejb.CompetenciaLugarCompetenciasLogic;
 import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
@@ -74,9 +73,9 @@ public class CompetenciaLugarCompetenciasResource {
      * competencia. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<LugarCompetenciaDetailDTO> getLugarCompetencias(@PathParam("competenciasId") Long competenciasId) {
+    public List<LugarCompetenciaDTO> getLugarCompetencias(@PathParam("competenciasId") Long competenciasId) {
         LOGGER.log(Level.INFO, "CompetenciaLugarCompetenciaResource getLugarCompetencias: input: {0}", competenciasId);
-        List<LugarCompetenciaDetailDTO> listaDetailDTOs = lugarCompetenciasListEntity2DTO(competenciaLugarCompetenciasLogic.getLugarCompetencias(competenciasId));
+        List<LugarCompetenciaDTO> listaDetailDTOs = lugarCompetenciasListEntity2DTO(competenciaLugarCompetenciasLogic.getLugarCompetencias(competenciasId));
         LOGGER.log(Level.INFO, "CompetenciaLugarCompetenciaResource getLugarCompetencias: output: {0}", listaDetailDTOs);
         return listaDetailDTOs;
     }
@@ -97,12 +96,12 @@ public class CompetenciaLugarCompetenciasResource {
      */
     @GET
     @Path("{lugarCompetenciasId: \\d+}")
-    public LugarCompetenciaDetailDTO getLugarCompetencia(@PathParam("competenciasId") Long competenciasId, @PathParam("lugarCompetenciasId") Long lugarCompetenciasId) throws BusinessLogicException {
+    public LugarCompetenciaDTO getLugarCompetencia(@PathParam("competenciasId") Long competenciasId, @PathParam("lugarCompetenciasId") Long lugarCompetenciasId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "CompetenciaLugarCompetenciasResource getLugarCompetencia: input: competenciasID: {0} , lugarCompetenciasId: {1}", new Object[]{competenciasId, lugarCompetenciasId});
         if (lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId) == null) {
             throw new WebApplicationException("El recurso /competencias/" + competenciasId + "/lugarCompetencias/" + lugarCompetenciasId + " no existe.", 404);
         }
-        LugarCompetenciaDetailDTO lugarCompetenciaDetailDTO = new LugarCompetenciaDetailDTO(competenciaLugarCompetenciasLogic.getLugarCompetencia(competenciasId, lugarCompetenciasId));
+        LugarCompetenciaDTO lugarCompetenciaDetailDTO = new LugarCompetenciaDTO(competenciaLugarCompetenciasLogic.getLugarCompetencia(competenciasId, lugarCompetenciasId));
         LOGGER.log(Level.INFO, "CompetenciaLugarCompetenciaResource getLugarCompetencia: output: {0}", lugarCompetenciaDetailDTO);
         return lugarCompetenciaDetailDTO;
     }
@@ -113,10 +112,10 @@ public class CompetenciaLugarCompetenciasResource {
      * @param entityList Lista de LugarCompetenciaEntity a convertir.
      * @return Lista de LugarCompetenciaDTO convertida.
      */
-    private List<LugarCompetenciaDetailDTO> lugarCompetenciasListEntity2DTO(List<LugarCompetenciaEntity> entityList) {
-        List<LugarCompetenciaDetailDTO> list = new ArrayList();
+    private List<LugarCompetenciaDTO> lugarCompetenciasListEntity2DTO(List<LugarCompetenciaEntity> entityList) {
+        List<LugarCompetenciaDTO> list = new ArrayList();
         for (LugarCompetenciaEntity entity : entityList) {
-            list.add(new LugarCompetenciaDetailDTO(entity));
+            list.add(new LugarCompetenciaDTO(entity));
         }
         return list;
     }
@@ -134,14 +133,14 @@ public class CompetenciaLugarCompetenciasResource {
      * Error de lógica que se genera cuando no se encuentra el lugarCompetencia.
      */
     @PUT
-    public List<LugarCompetenciaDetailDTO> replaceLugarCompetencias(@PathParam("competenciasId") Long competenciasId, List<LugarCompetenciaDetailDTO> lugarCompetencias) {
+    public List<LugarCompetenciaDTO> replaceLugarCompetencias(@PathParam("competenciasId") Long competenciasId, List<LugarCompetenciaDTO> lugarCompetencias) {
         LOGGER.log(Level.INFO, "CompetenciaLugarCompetenciasResource replaceLugarCompetencias: input: competenciasId: {0} , lugarCompetencias: {1}", new Object[]{competenciasId, lugarCompetencias});
-        for (LugarCompetenciaDetailDTO lugarCompetencia : lugarCompetencias) {
+        for (LugarCompetenciaDTO lugarCompetencia : lugarCompetencias) {
             if (lugarCompetenciaLogic.getLugarCompetencia(lugarCompetencia.getId()) == null) {
                 throw new WebApplicationException("El recurso /lugarCompetencias/" + lugarCompetencia.getId() + " no existe.", 404);
             }
         }
-        List<LugarCompetenciaDetailDTO> listaDetailDTOs = lugarCompetenciasListEntity2DTO(competenciaLugarCompetenciasLogic.replaceLugarCompetencias(competenciasId, lugarCompetenciasListDTO2Entity(lugarCompetencias)));
+        List<LugarCompetenciaDTO> listaDetailDTOs = lugarCompetenciasListEntity2DTO(competenciaLugarCompetenciasLogic.replaceLugarCompetencias(competenciasId, lugarCompetenciasListDTO2Entity(lugarCompetencias)));
         LOGGER.log(Level.INFO, "CompetenciaLugarCompetenciasResource replaceLugarCompetencias: output: {0}", listaDetailDTOs);
         return listaDetailDTOs;
     }
@@ -152,9 +151,9 @@ public class CompetenciaLugarCompetenciasResource {
      * @param dtos Lista de LugarCompetenciaDetailDTO a convertir.
      * @return Lista de LugarCompetenciaEntity convertida.
      */
-    private List<LugarCompetenciaEntity> lugarCompetenciasListDTO2Entity(List<LugarCompetenciaDetailDTO> dtos) {
+    private List<LugarCompetenciaEntity> lugarCompetenciasListDTO2Entity(List<LugarCompetenciaDTO> dtos) {
         List<LugarCompetenciaEntity> list = new ArrayList<>();
-        for (LugarCompetenciaDetailDTO dto : dtos) {
+        for (LugarCompetenciaDTO dto : dtos) {
             list.add(dto.toEntity());
         }
         return list;

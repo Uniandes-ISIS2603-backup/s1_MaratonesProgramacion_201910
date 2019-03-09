@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.maratones.resources;
 
 import co.edu.uniandes.csw.maratones.dtos.CompetenciaDTO;
-import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDetailDTO;
+import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDTO;
 import co.edu.uniandes.csw.maratones.ejb.CompetenciaLogic;
 import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaCompetenciaLogic;
 import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
@@ -55,7 +55,7 @@ public class LugarCompetenciaCompetenciaResource {
      * lugarCompetencia.
      */
     @PUT
-    public LugarCompetenciaDetailDTO replaceCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId, CompetenciaDTO competencia) {
+    public LugarCompetenciaDTO replaceCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId, CompetenciaDTO competencia) {
         LOGGER.log(Level.INFO, "LugarCompetenciaCompetenciaResource replaceCompetencia: input: lugarCompetenciasId{0} , Competencia:{1}", new Object[]{lugarCompetenciasId, competencia});
         if (lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId) == null) {
             throw new WebApplicationException("El recurso /lugarCompetencias/" + lugarCompetenciasId + " no existe.", 404);
@@ -63,8 +63,8 @@ public class LugarCompetenciaCompetenciaResource {
         if (competenciaLogic.getCompetencia(competencia.getId()) == null) {
             throw new WebApplicationException("El recurso /competencias/" + competencia.getId() + " no existe.", 404);
         }
-        LugarCompetenciaDetailDTO lugarCompetenciaDetailDTO = new LugarCompetenciaDetailDTO(lugarCompetenciaCompetenciaLogic.replaceCompetencia(lugarCompetenciasId, competencia.getId()));
-        LOGGER.log(Level.INFO, "LugarCompetenciaCompetenciaResource replaceCompetencia: output: {0}", lugarCompetenciaDetailDTO);
-        return lugarCompetenciaDetailDTO;
+        LugarCompetenciaDTO lugarCompetenciaDTO = new LugarCompetenciaDTO(lugarCompetenciaCompetenciaLogic.replaceCompetencia(lugarCompetenciasId, competencia.getId()));
+        LOGGER.log(Level.INFO, "LugarCompetenciaCompetenciaResource replaceCompetencia: output: {0}", lugarCompetenciaDTO);
+        return lugarCompetenciaDTO;
     }
 }
