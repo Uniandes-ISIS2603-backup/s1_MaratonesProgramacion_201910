@@ -33,9 +33,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     private List<EjercicioEntity> ejercicioEntitys;
     
     @PodamExclude
-    @OneToMany(mappedBy = "competencias",fetch = FetchType.LAZY,cascade = {
-        CascadeType.PERSIST
-    })
+    @OneToMany(mappedBy = "competencia",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<LugarCompetenciaEntity> lugarCompetencias;
     
     @PodamExclude

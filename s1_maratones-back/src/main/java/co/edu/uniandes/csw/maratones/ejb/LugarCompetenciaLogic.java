@@ -44,7 +44,7 @@ public class LugarCompetenciaLogic {
      */
     public LugarCompetenciaEntity createLugarCompetencia(LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del lugarCompetencia");
-        if(lugarCompetenciaEntity.getCompetencia()!=null || competenciaPersistence.find(lugarCompetenciaEntity.getCompetencia().getId())==null)
+        if(lugarCompetenciaEntity.getCompetencia()==null)
                 {
                     throw new BusinessLogicException("La competencia es inválida");
                 }
@@ -52,17 +52,18 @@ public class LugarCompetenciaLogic {
         if (lugarCompetenciaPersistence.find(lugarCompetenciaEntity.getId())!=null) {
             throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
         }
-        if(lugarCompetenciaEntity.getUbicaciones().equals(""))
+        if(lugarCompetenciaEntity.getUbicaciones().equals("")|| lugarCompetenciaEntity.getUbicaciones()==null)
         {
             throw new BusinessLogicException("El lugarCompetencia tiene una ubicación no valida");
         }
         CompetenciaEntity competencia =lugarCompetenciaEntity.getCompetencia();
         
         LocalDateTime date = lugarCompetenciaEntity.getFecha();
-        if(competencia!= null)
+        if(competencia!= null )
         {
-            LocalDateTime tomorrow = competencia.getFechaInicio().plusDays(1);
-            if(date.isAfter(competencia.getFechaFin())||date.isBefore(competencia.getFechaInicio())|| date.isAfter(tomorrow))
+            LocalDateTime dateCompetenciaInicio = competencia.getFechaInicio();
+            LocalDateTime dateCompetenciaFin = competencia.getFechaFin();
+            if(date.isBefore(dateCompetenciaInicio)||date.isAfter(dateCompetenciaFin))
             {
                 throw new BusinessLogicException("El lugarCompetencia tiene una fecha no valida");
             }

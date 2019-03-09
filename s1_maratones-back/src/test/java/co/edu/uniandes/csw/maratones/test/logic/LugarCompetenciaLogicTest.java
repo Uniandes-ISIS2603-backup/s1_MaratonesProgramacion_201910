@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -45,7 +46,7 @@ public class LugarCompetenciaLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<LugarCompetenciaEntity> data = new ArrayList<LugarCompetenciaEntity>();
+    private List<LugarCompetenciaEntity> lugarCompetenciaData = new ArrayList<LugarCompetenciaEntity>();
 
     private List<CompetenciaEntity> competenciaData = new ArrayList();
     
@@ -100,6 +101,8 @@ public class LugarCompetenciaLogicTest {
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             CompetenciaEntity competencia = factory.manufacturePojo(CompetenciaEntity.class);
+            competencia.setFechaInicio(LocalDateTime.now());
+            competencia.setFechaFin(competencia.getFechaInicio().plusHours(20));
             em.persist(competencia);
             competenciaData.add(competencia);
         }
@@ -108,7 +111,7 @@ public class LugarCompetenciaLogicTest {
             entity.setCompetencia(competenciaData.get(0));
 
             em.persist(entity);
-            data.add(entity);
+            lugarCompetenciaData.add(entity);
         }
     }
     /**
@@ -117,9 +120,10 @@ public class LugarCompetenciaLogicTest {
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void createBookTest() throws BusinessLogicException {
+    public void createLugarCompetenciaTest() throws BusinessLogicException {
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         newEntity.setCompetencia(competenciaData.get(0));
+        newEntity.setFecha(newEntity.getCompetencia().getFechaInicio().plusHours(2));
         LugarCompetenciaEntity result = lugarCompetenciaLogic.createLugarCompetencia(newEntity);
         Assert.assertNotNull(result);
         LugarCompetenciaEntity entity = em.find(LugarCompetenciaEntity.class, result.getId());
@@ -163,7 +167,7 @@ public class LugarCompetenciaLogicTest {
     public void createLugarCompetenciaTestConUbicacionesExistente() throws BusinessLogicException {
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         newEntity.setCompetencia(competenciaData.get(0));
-        newEntity.setUbicaciones(data.get(0).getUbicaciones());
+        newEntity.setUbicaciones(lugarCompetenciaData.get(0).getUbicaciones());
         lugarCompetenciaLogic.createLugarCompetencia(newEntity);
     }
     
@@ -199,10 +203,10 @@ public class LugarCompetenciaLogicTest {
     @Test
     public void getLugarCompetenciasTest() {
         List<LugarCompetenciaEntity> list = lugarCompetenciaLogic.getLugarCompetencias();
-        Assert.assertEquals(data.size(), list.size());
+        Assert.assertEquals(lugarCompetenciaData.size(), list.size());
         for (LugarCompetenciaEntity entity : list) {
             boolean found = false;
-            for (LugarCompetenciaEntity storedEntity : data) {
+            for (LugarCompetenciaEntity storedEntity : lugarCompetenciaData) {
                 if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
                 }
@@ -216,7 +220,7 @@ public class LugarCompetenciaLogicTest {
      */
     @Test
     public void getLugarCompetenciaTest() {
-        LugarCompetenciaEntity entity = data.get(0);
+        LugarCompetenciaEntity entity = lugarCompetenciaData.get(0);
         LugarCompetenciaEntity resultEntity = lugarCompetenciaLogic.getLugarCompetencia(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
@@ -230,8 +234,8 @@ public class LugarCompetenciaLogicTest {
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void updateBookTest() throws BusinessLogicException {
-        LugarCompetenciaEntity entity = data.get(0);
+    public void updateLugarCompetenciaTest() throws BusinessLogicException {
+        LugarCompetenciaEntity entity = lugarCompetenciaData.get(0);
         LugarCompetenciaEntity pojoEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         pojoEntity.setId(entity.getId());
         lugarCompetenciaLogic.updateLugarCompetencia(pojoEntity.getId(), pojoEntity);
@@ -248,7 +252,7 @@ public class LugarCompetenciaLogicTest {
      */
     @Test(expected = BusinessLogicException.class)
     public void updateLugarCompetenciaConUbicacionesInvalidoTest() throws BusinessLogicException {
-        LugarCompetenciaEntity entity = data.get(0);
+        LugarCompetenciaEntity entity = lugarCompetenciaData.get(0);
         LugarCompetenciaEntity pojoEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         pojoEntity.setUbicaciones("");
         pojoEntity.setId(entity.getId());
@@ -262,7 +266,7 @@ public class LugarCompetenciaLogicTest {
      */
     @Test(expected = BusinessLogicException.class)
     public void updateLugarCompetenciaConUbicacionesInvalidoTest2() throws BusinessLogicException {
-        LugarCompetenciaEntity entity = data.get(0);
+        LugarCompetenciaEntity entity = lugarCompetenciaData.get(0);
         LugarCompetenciaEntity pojoEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         pojoEntity.setUbicaciones(null);
         pojoEntity.setId(entity.getId());
@@ -276,7 +280,7 @@ public class LugarCompetenciaLogicTest {
      */
     @Test
     public void deleteLugarCompetenciaTest() throws BusinessLogicException {
-        LugarCompetenciaEntity entity = data.get(0);
+        LugarCompetenciaEntity entity = lugarCompetenciaData.get(0);
         lugarCompetenciaLogic.deleteLugarCompetencia(entity.getId());
         LugarCompetenciaEntity deleted = em.find(LugarCompetenciaEntity.class, entity.getId());
         Assert.assertNull(deleted);
