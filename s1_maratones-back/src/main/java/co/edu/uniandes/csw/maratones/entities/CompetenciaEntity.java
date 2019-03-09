@@ -43,14 +43,14 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     private UsuarioEntity patrocinadores;
     
     @PodamExclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<UsuarioEntity> jueces;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<EquipoEntity> equipos;
     
     @PodamExclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     private List<LenguajeEntity> lenguajes;
     
     private Boolean esVirtual;

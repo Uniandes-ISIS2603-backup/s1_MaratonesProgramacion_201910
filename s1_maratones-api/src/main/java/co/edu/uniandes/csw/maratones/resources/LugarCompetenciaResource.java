@@ -119,7 +119,7 @@ public class LugarCompetenciaResource {
      */
     @PUT
     @Path("{lugarCompetenciasId: \\d+}")
-    public LugarCompetenciaDTO updateLugarCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId, LugarCompetenciaDTO lugarCompetencia) throws WebApplicationException {
+    public LugarCompetenciaDTO updateLugarCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId, LugarCompetenciaDTO lugarCompetencia) throws WebApplicationException, BusinessLogicException {
         LOGGER.log(Level.INFO, "LugarCompetenciaResource updateLugarCompetencia: input: id:{0} , lugarCompetencia: {1}", new Object[]{lugarCompetenciasId, lugarCompetencia});
         lugarCompetencia.setId(lugarCompetenciasId);
         if (lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId) == null) {

@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -29,6 +30,9 @@ public class LugarCompetenciaLogic {
     
     @Inject
     private LugarCompetenciaPersistence lugarCompetenciaPersistence;
+    
+    @Inject
+    private CompetenciaPersistence competenciaPersistence;
    
     /**
      * Crea un lugarCompetencia en la persistencia.
@@ -40,6 +44,10 @@ public class LugarCompetenciaLogic {
      */
     public LugarCompetenciaEntity createLugarCompetencia(LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del lugarCompetencia");
+        if(lugarCompetenciaEntity.getCompetencia()!=null || competenciaPersistence.find(lugarCompetenciaEntity.getCompetencia().getId())==null)
+                {
+                    throw new BusinessLogicException("La competencia es inválida");
+                }
         // Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con el mismo id
         if (lugarCompetenciaPersistence.find(lugarCompetenciaEntity.getId())!=null) {
             throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
@@ -108,8 +116,12 @@ public class LugarCompetenciaLogic {
      * por ejemplo el nombre.
      * @return la editorial con los cambios actualizados en la base de datos.
      */
-    public LugarCompetenciaEntity updateLugarCompetencia(Long lugarCompetenciaId, LugarCompetenciaEntity lugarCompetenciaEntity) {
+    public LugarCompetenciaEntity updateLugarCompetencia(Long lugarCompetenciaId, LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el lugarCompetencia con id = {0}", lugarCompetenciaId);
+        if(!validateUbicaciones(lugarCompetenciaEntity.getUbicaciones()))
+        {
+            throw new BusinessLogicException("La ubicacion es invalida.");
+        }
         // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
         LugarCompetenciaEntity newEntity = lugarCompetenciaPersistence.update(lugarCompetenciaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el lugarCompetencia con id = {0}", lugarCompetenciaEntity.getId());
@@ -129,6 +141,17 @@ public class LugarCompetenciaLogic {
       
         lugarCompetenciaPersistence.delete(lugarCompetenciaId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el lugarCompetencia con id = {0}", lugarCompetenciaId);
+    }
+    
+    
+     /**
+     * Verifica que el Ubicaciones no sea invalido.
+     *
+     * @param ubicaciones a verificar
+     * @return true si el Ubicaciones es valido.
+     */
+    private boolean validateUbicaciones(String ubicaciones) {
+        return !(ubicaciones == null || ubicaciones.isEmpty());
     }
 
 }
