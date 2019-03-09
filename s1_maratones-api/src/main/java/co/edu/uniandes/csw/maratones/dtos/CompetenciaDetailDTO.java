@@ -17,7 +17,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     
     private List<LugarCompetenciaDTO> ubicaciones;
     
-    private List<UsuarioDetailDTO> inscritos;
+    private List<EquipoDetailDTO> inscritos;
     
     private List<UsuarioDetailDTO> jueces;
     
@@ -56,14 +56,14 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     /**
      * @return the inscritos
      */
-    public List<UsuarioDetailDTO> getInscritos() {
+    public List<EquipoDetailDTO> getInscritos() {
         return inscritos;
     }
 
     /**
      * @param inscritos the inscritos to set
      */
-    public void setInscritos(List<UsuarioDetailDTO> inscritos) {
+    public void setInscritos(List<EquipoDetailDTO> inscritos) {
         this.inscritos = inscritos;
     }
 
