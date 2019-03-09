@@ -27,6 +27,7 @@ import co.edu.uniandes.csw.maratones.ejb.EquipoLogic;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,9 +139,11 @@ public class EquipoLogicTest {
             Assert.assertNotNull(result);
             EquipoEntity entity = em.find(EquipoEntity.class, result.getId());
             Assert.assertEquals(newEntity.getId(), entity.getId());
-            Assert.assertEquals(newEntity.getNombreEquipo(), entity.getNombreEquipo());
         }catch(Exception exception){
             exception.getMessage();
         }
     }
+    
+    
+    
 }

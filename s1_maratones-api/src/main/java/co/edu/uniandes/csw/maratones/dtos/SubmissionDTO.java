@@ -12,6 +12,40 @@ import java.util.Date;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
+ * SubmissionDTO Objeto de transferencia de datos de Submission. Los DTO contienen las
+ * representaciones de los JSON que se transfieren entre el cliente y el
+ * servidor.
+ *
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+
+ *       "tiempo": number,  
+ *       "veredicto": string,
+ *       "archivo" : string,
+ *       "fecha" : date,
+ *       "memoria" : number,
+ *       "codigo" : string,
+ *       "id": number
+ * 
+ * 
+ *   }
+ * </pre> Por ejemplo una submission se representa asi:<br>
+ *
+ * <pre>
+ *
+ *   {
+ *      "tiempo": 123,  
+ *       "veredicto": "En revision",
+ *       "archivo" : string,
+ *       "fecha" : "2019-02-23T00:00:00-05:00",
+ *       "memoria" : 9876,
+ *       "codigo" : "col-12345",
+ *       "id": 123456
+ *   }
+ *
+ * </pre>
+/**
  *
  * @author aa.rodriguezv
  */
@@ -47,6 +81,12 @@ public class SubmissionDTO implements Serializable{
     
     */
     private String codigo;
+    
+    /*
+    
+    */
+    private Long id;
+    
     
     
     /**
@@ -188,5 +228,25 @@ public class SubmissionDTO implements Serializable{
         
         
         return submission;
+    }
+    
+          /**
+     * Obtiene el atributo id.
+     *
+     * @return atributo id.
+     *
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Establece el valor del atributo id.
+     *
+     * @param id nuevo valor del atributo
+     *
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }

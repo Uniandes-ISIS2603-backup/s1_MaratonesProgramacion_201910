@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.maratones.ejb;
 
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
+import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.EjercicioPersistence;
 import java.util.List;
@@ -64,14 +65,9 @@ public class EjercicioLogic {
         return ejercicio;
     }
     
-    public EjercicioEntity getEjercicio(Long ejerID) throws BusinessLogicException
+    public EjercicioEntity getEjercicio(Long ejerID)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar elejercicio con id = {0}", ejerID);
-        if(persistence.find(ejerID) == null)
-        {
-            throw new BusinessLogicException("No existe el ejercicio con el id:" + ejerID);
-        }
-        
         EjercicioEntity ejercicio = persistence.find(ejerID);
         LOGGER.log(Level.INFO, "Culmina proceso de consultar el ejercicio con id = {0}", ejerID);
         return ejercicio;
@@ -122,13 +118,14 @@ public class EjercicioLogic {
         if (persistence.find(ejerID)== null) {
             throw new BusinessLogicException("No se puede borrar el ejercicio porque no existe");
         }
-        /*
-        List<CompetenciaEntity> competenciasAsociadasA = getEjercicio(ejerID).getCompetencias();
-        if( competenciasAsociadasA!= null  && competenciasAsociadasA.isEmpty() )
+        
+        List<SubmissionEntity> submissionsAsociadasA = getEjercicio(ejerID).getSubmissions();
+        if( submissionsAsociadasA!= null  || !submissionsAsociadasA.isEmpty() )
         {
-            throw new BusinessLogicException("No se puede borrar el ejercicio porque ya esta asociado a una competencia");
+            throw new BusinessLogicException("No se puede borrar el ejercicio porque tiene submissions asociadas");
         }
-        */
+        
+        
         persistence.delete(ejerID);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el ejercicio con id = {0}", ejerID);
     }
