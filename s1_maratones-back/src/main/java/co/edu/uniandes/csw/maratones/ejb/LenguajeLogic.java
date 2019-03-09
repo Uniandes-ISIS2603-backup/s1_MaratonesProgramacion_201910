@@ -75,16 +75,16 @@ public class LenguajeLogic {
     }
     
     
-    public void deleteLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
+    public void deleteLenguaje(Long lenguajeId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el lenguaje con id = {0}", lenguaje.getId());
-        if(persistence.find(lenguaje.getId()) == null)
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el lenguaje con id = {0}", lenguajeId);
+        if(persistence.find(lenguajeId) == null)
         {
-            throw new BusinessLogicException("No existe el lenguaje con el id:" + lenguaje.getId());
+            throw new BusinessLogicException("No existe el lenguaje con el id:" + lenguajeId);
         }
         
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el lenguaje con id = {0}", lenguaje.getId());
-        persistence.delete(lenguaje.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el lenguaje con id = {0}", lenguajeId);
+        persistence.delete(lenguajeId);
     }
     
     public LenguajeEntity getLenguaje(Long lenguajeId)

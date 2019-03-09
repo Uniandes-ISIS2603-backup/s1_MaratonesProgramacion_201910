@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
 
 import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
+import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,8 +18,10 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,8 +46,13 @@ public class LenguajeResource {
 
     
     @POST
-    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje)
+    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: input: {0}", lenguaje);
+        LenguajeDTO nuevoEjercicio = new LenguajeDTO(lenguajeLogic.createLenguaje(lenguaje.toEntity()));
+        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: output: {0}", nuevoEjercicio);
+        
+        
         return lenguaje;
     }
     
@@ -91,5 +100,47 @@ public class LenguajeResource {
             list.add(new LenguajeDTO(entity));
         }
         return list;
+    }
+    
+    
+    /**
+     * Actualiza el libro con el id recibido en la URL con la información que se
+     * recibe en el cuerpo de la petición.
+     *
+     * @param booksId Identificador del libro que se desea actualizar. Este debe
+     * ser una cadena de dígitos.
+     * @param book {@link BookDTO} El libro que se desea guardar.
+     * @return JSON {@link BookDetailDTO} - El libro guardada.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el libro a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar el libro.
+     */
+    @PUT
+    @Path("{lenguajesId: \\d+}")
+    public LenguajeDTO updateLenguaje(@PathParam("lenguajesId") Long lenguajesId, LenguajeDTO lenguaje) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: input: id: {0} , book: {1}", new Object[]{lenguajesId, lenguaje});
+        lenguaje.setId(lenguajesId);
+        if (lenguajeLogic.getLenguaje(lenguajesId) == null) {
+            throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
+        }
+       
+        LenguajeDTO delDTO = new LenguajeDTO(lenguajeLogic.updateLenguaje(lenguaje.toEntity()));
+        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: output: {0}", delDTO);
+        return delDTO;
+    }
+    
+    @DELETE
+    @Path("{lenguajesId: \\d+}")
+    public void deletLenguaje(@PathParam("lenguajesId") Long lenguajesId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "LenguajeResource deleteLenguaje: input: {0}", lenguajesId);
+        LenguajeEntity entity = lenguajeLogic.getLenguaje(lenguajesId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
+        }
+        
+        lenguajeLogic.deleteLenguaje(lenguajesId);
+        LOGGER.info("SubmissionResource deleteLenguaje: output: void");
     }
 }

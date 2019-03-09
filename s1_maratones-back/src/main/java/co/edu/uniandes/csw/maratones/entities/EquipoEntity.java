@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -32,7 +33,16 @@ public class EquipoEntity extends BaseEntity implements Serializable{
         CascadeType.MERGE
     })
     private List<UsuarioEntity> participantes;
-
+    
+    
+    @PodamExclude
+    @ManyToMany 
+    private List<CompetenciaEntity> competencias;
+     
+    @PodamExclude
+    @OneToMany(mappedBy = "equipo")
+    private List<SubmissionEntity> submissions = new ArrayList<SubmissionEntity>();
+    
     public EquipoEntity getCoach() {
         return coach;
     }
