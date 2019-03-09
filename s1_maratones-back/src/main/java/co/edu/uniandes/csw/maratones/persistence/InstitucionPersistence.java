@@ -37,6 +37,22 @@ public class InstitucionPersistence {
          LOGGER.log(Level.INFO, "Consultando la institucion con id={x}", institucionId);
          return em.find(InstitucionEntity.class,institucionId);
      }
+      public InstitucionEntity findByName(String  nombreInstitucion)
+     {
+         LOGGER.log(Level.INFO, "Consultando la institucion por nombre", nombreInstitucion);
+         TypedQuery<InstitucionEntity> query=em.createQuery("select e from InstitucionEntity e where e.nombre = :nombreInstitucion",InstitucionEntity.class);
+         query = query.setParameter("nombreInstitucion", nombreInstitucion);
+         List<InstitucionEntity> sameName = query.getResultList();
+         InstitucionEntity result;
+        if (sameName == null) {
+            result = null;
+        } else if (sameName.isEmpty()) {
+            result = null;
+        } else {
+            result = sameName.get(0);
+        }
+         return result;
+     }
      public List<InstitucionEntity>  findall(){
          LOGGER.log(Level.INFO, "Consultando todas las institucions");
          TypedQuery<InstitucionEntity> query=em.createQuery("select u from InstitucionEntity u",InstitucionEntity.class);

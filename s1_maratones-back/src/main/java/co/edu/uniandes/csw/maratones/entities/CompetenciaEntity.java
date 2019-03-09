@@ -33,6 +33,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     private List<EjercicioEntity> ejercicioEntitys;
     
     @PodamExclude
+
     @OneToMany(mappedBy = "competencia",fetch = FetchType.LAZY,orphanRemoval = true)
     private List<LugarCompetenciaEntity> lugarCompetencias;
     
@@ -52,6 +53,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     private List<LenguajeEntity> lenguajes;
     
     private Boolean esVirtual;
+
     
     private LocalDateTime fechaInicio;
     

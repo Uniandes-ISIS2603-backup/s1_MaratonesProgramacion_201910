@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "0582ed67-5c29-4275-ae16-abb3b46200e5",
+		"name": "Blog Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pruebas Blog",
+			"item": [
+				{
+					"name": "POST a Blog",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c9f037e9-7bff-40d4-bc0d-12d939c48811",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "464cd04a-8b6c-4542-9094-8568d80be89a",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"new_id_i\",data.id);",
+									"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"parcticar\",\r\n  \"descripcion\":\"dara a conocer la imp...\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/s1_maratones-api/api/blogs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Blogs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13973704-d9a3-42d7-b021-c96a70c5e303",
+								"exec": [
+									"var data= JSON.parse(responseBody);",
+									"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+									"tests[\"Contador Instituciones\"] = data.length >= 0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Blog por Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "949e5e66-c13c-40d1-a12f-a3635e9b60fe",
+								"exec": [
+									"console.log(responseBody);",
+									"var data = JSON.parse(responseBody);",
+									"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Blog por Id inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "949e5e66-c13c-40d1-a12f-a3635e9b60fe",
+								"exec": [
+									"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; ",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/0",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Blogs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4d28511-0f22-487d-b257-7e57b46c618d",
+								"exec": [
+									"console.log(responseBody);",
+									"var data = JSON.parse(responseBody);",
+									"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"parcticar modificar\",\r\n  \"descripcion\":\"dara a conocer la modificacion\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Blogs inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4d28511-0f22-487d-b257-7e57b46c618d",
+								"exec": [
+									"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"parcticar modificar\",\r\n  \"descripcion\":\"dara a conocer la modificacion\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs0",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Blog",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c08e02f-899e-4d8b-857a-6a9c43aa07e8",
+								"exec": [
+									"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Blog inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c08e02f-899e-4d8b-857a-6a9c43aa07e8",
+								"exec": [
+									"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/0",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Pruebas a la clase BLogDTO"
+		}
+	]
+}

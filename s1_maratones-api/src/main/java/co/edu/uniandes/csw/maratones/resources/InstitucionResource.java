@@ -77,12 +77,16 @@ public class InstitucionResource {
     @PUT
     @Path("{institucionesId: \\d+}")
     public InstitucionDetailDTO updateInstitucion(@PathParam("institucionesId") Long institucionesId, InstitucionDetailDTO institucion) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "InstitucionResource updateInstitucion: input: id: {0} , blog: {1}", new Object[]{institucionesId, institucion});
+        LOGGER.log(Level.INFO, "InstitucionResource updateInstitucion: input: id: {0} , institucion: {1}", new Object[]{institucionesId, institucion});
         institucion.setId(institucionesId);
+        
         if (institucionLogic.getInstitucion(institucionesId) == null) {
-            throw new WebApplicationException("El recurso /institucion/" + institucionesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /institucion/" + institucionesId+ " no existe.", 404);
         }
+       
+        
         InstitucionDetailDTO detailDTO = new InstitucionDetailDTO(institucionLogic.updateInstitucion(institucionesId, institucion.toEntity()));
+        
         LOGGER.log(Level.INFO, "InstitucionResource updateInstitucion: output: {0}", detailDTO);
         return detailDTO;
     }

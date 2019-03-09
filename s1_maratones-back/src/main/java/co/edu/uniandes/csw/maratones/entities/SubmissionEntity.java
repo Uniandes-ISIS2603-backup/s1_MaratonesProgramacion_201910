@@ -24,9 +24,21 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     @ManyToOne
     private EjercicioEntity ejercicioEntity;
     
+    @PodamExclude
+    @ManyToOne
+    private EquipoEntity equipo;
+    
      /*
     */
     private double tiempo;
+
+    public EquipoEntity getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(EquipoEntity equipo) {
+        this.equipo = equipo;
+    }
     
     /*
     */

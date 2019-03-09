@@ -3,7 +3,8 @@
   <persistence-unit name="maratonesPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--Toca entity por entity, exclude-unlisted-clases = false no funciona-->
-    
+    <class>co.edu.uniandes.csw.maratones.entities.InstitucionEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.BlogEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
  <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
