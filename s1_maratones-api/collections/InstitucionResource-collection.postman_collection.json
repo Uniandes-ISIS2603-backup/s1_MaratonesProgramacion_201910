@@ -1,0 +1,655 @@
+{
+	"info": {
+		"_postman_id": "5d35cc5a-b3e7-4c28-ba4f-ea082c8a5477",
+		"name": "Institucion Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pruebas Institucion",
+			"item": [
+				{
+					"name": "POST a Institucion nombre invalido",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c9f037e9-7bff-40d4-bc0d-12d939c48811",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1ffacee6-722a-4574-a3eb-09377b040f10",
+								"exec": [
+									"tests[\"Nombre invalido\"] = responseCode.code === 412;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nombre de la institucion es invalido\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"imagen\":\"./data/imagenes/foto.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"institucion unversitaria\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST a Institucion 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c9f037e9-7bff-40d4-bc0d-12d939c48811",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1ffacee6-722a-4574-a3eb-09377b040f10",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"new_id_i\",data.id);",
+									"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"Universidad Nacional\",\r\n  \"imagen\":\"./data/imagenes/foto.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"institucion unversitaria\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST a Institucion 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c9f037e9-7bff-40d4-bc0d-12d939c48811",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1ffacee6-722a-4574-a3eb-09377b040f10",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"new_id_i2\",data.id);",
+									"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"Pontificia Universidad Javeriana\",\r\n  \"imagen\":\"./data/imagenes/foto.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"institucion unversitaria\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST a Institucion nombre ya existente",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c9f037e9-7bff-40d4-bc0d-12d939c48811",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1ffacee6-722a-4574-a3eb-09377b040f10",
+								"exec": [
+									"tests[\"Nombre ya existente\"] = responseCode.code === 412;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe una institucion con ese nombre\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"Universidad Nacional\",\r\n  \"imagen\":\"./data/imagenes/foto.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"institucion unversitaria\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Institucion por id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "949e5e66-c13c-40d1-a12f-a3635e9b60fe",
+								"exec": [
+									"console.log(responseBody);",
+									"var data = JSON.parse(responseBody);",
+									"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/{{new_id_i}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"{{new_id_i}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Instituciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13973704-d9a3-42d7-b021-c96a70c5e303",
+								"exec": [
+									"var data= JSON.parse(responseBody);",
+									"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+									"tests[\"Contador Instituciones\"] = data.length >= 0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Conultar Institucion Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "daf6a72b-e010-4b8d-95d7-72b55108ad6f",
+								"exec": [
+									"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; ",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/0",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Institucion Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f84d391d-1547-4c2e-ad92-62b26428315b",
+								"exec": [
+									"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"Universidad Nacional\",\r\n  \"imagen\":\"./data/imagenes/foto.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"institucion unversitaria\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/0",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Institucion nombre invalido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f84d391d-1547-4c2e-ad92-62b26428315b",
+								"exec": [
+									"tests[\"No actualiza con id que no existe\"] = responseCode.code === 412;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nombre de la institucion es invalido\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \"imagen\":\"./data/imagenes/foto.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"gg\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/{{new_id_i2}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"{{new_id_i2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Institucion nombre ya existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f84d391d-1547-4c2e-ad92-62b26428315b",
+								"exec": [
+									"tests[\"Ya existe una institucion con ese nombre\"] = responseCode.code === 412;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe una institucion con ese nombre\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"Universidad Nacional\",\r\n  \"imagen\":\"./data/imagenes/foto2.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"institucion unversitaria2\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/{{new_id_i}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"{{new_id_i}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Institucion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4d28511-0f22-487d-b257-7e57b46c618d",
+								"exec": [
+									"console.log(responseBody);",
+									"var data = JSON.parse(responseBody);",
+									"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"Universidad de los Andes\",\r\n  \"imagen\":\"./data/imagenes/fotoAndes.jpg\",\r\n  \"ubicacion\":\"Bogotá DC\",\r\n  \"descripcion\":\"institucion unversitaria ubicada en bogota\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/{{new_id_i}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"{{new_id_i}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Institucion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c08e02f-899e-4d8b-857a-6a9c43aa07e8",
+								"exec": [
+									"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/{{new_id_i}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"{{new_id_i}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Institucion  2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c08e02f-899e-4d8b-857a-6a9c43aa07e8",
+								"exec": [
+									"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/{{new_id_i2}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"{{new_id_i2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Institucion  que no existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c08e02f-899e-4d8b-857a-6a9c43aa07e8",
+								"exec": [
+									"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/instituciones/0",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"instituciones",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Pruebas realizadas a la clase InstitucionDTO"
+		}
+	]
+}

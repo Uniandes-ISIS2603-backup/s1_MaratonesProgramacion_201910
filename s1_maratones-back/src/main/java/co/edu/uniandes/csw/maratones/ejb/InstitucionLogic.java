@@ -25,26 +25,23 @@ public class InstitucionLogic {
     private InstitucionPersistence persistence;
     
     public InstitucionEntity createInstitucion(InstitucionEntity institucionEntity) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de creación deun Blog");
+        LOGGER.log(Level.INFO, "Inicia proceso de creación de una Institucion");
         //Reglas del nombre
-        if(institucionEntity.getNombre()==null)
+        if((institucionEntity.getNombre()==null)||(institucionEntity.getNombre().length()>60))
         {
             throw new BusinessLogicException("El nombre de la institucion es invalido");
         }
-        if(institucionEntity.getNombre().length()>60)
+        if(persistence.findByName(institucionEntity.getNombre())!=null)
         {
-            throw new BusinessLogicException("El numero de caracteres maximo es 60");
+            throw new BusinessLogicException("Ya existe una institucion con ese nombre");
         }
       
         //Reglas para descripcion
-        if(institucionEntity.getDescripcion()==null)
+        if(institucionEntity.getDescripcion()==null || institucionEntity.getDescripcion().length()>500)
         {
             throw new BusinessLogicException("La descripcion de la institucion invalida");
         }
-        if(institucionEntity.getDescripcion().length()>500)
-        {
-            throw new BusinessLogicException("El numero de caracteres maximo es 500");
-        }
+        
         //Reglas para imagen
         if(institucionEntity.getImagen()==null)
         {
@@ -79,12 +76,32 @@ public class InstitucionLogic {
      }
      
       public InstitucionEntity updateInstitucion(Long institucionId, InstitucionEntity institucionEntity) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la institucion con id = {0}", institucionId);
-        if(institucionId==null || institucionId<0){
-             throw new BusinessLogicException("El Id de la institucion no es valido");
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la institucion con id = {"+institucionId+"}", institucionId);
+         int x=0;
+            if(institucionEntity.getNombre()==null)
+        {
+            x=2;
+        }
+        if(x==2)
+        {
+           
+            throw new BusinessLogicException("El nombre de la institucion es invalido");
+        }
+        
+        if((institucionEntity.getNombre().equals("")))
+        {
+            throw new BusinessLogicException("El nombre de la institucion es invalido");
+        }
+        if(institucionEntity.getNombre().length()>60)
+        {
+            throw new BusinessLogicException("El nombre de la institucion es invalido");
+        }
+         if(persistence.findByName(institucionEntity.getNombre())!=null)
+        {
+            throw new BusinessLogicException("Ya existe una institucion con ese nombre");
         }
         InstitucionEntity newEntity = persistence.update(institucionEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el blog con id = {0}", institucionEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la institucion con id = {"+institucionId+"}", institucionEntity.getId());
         return newEntity;
     }
       
