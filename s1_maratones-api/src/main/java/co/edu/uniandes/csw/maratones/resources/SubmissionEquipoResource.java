@@ -25,6 +25,7 @@ package co.edu.uniandes.csw.maratones.resources;
 
 import co.edu.uniandes.csw.maratones.dtos.EquipoDetailDTO;
 import co.edu.uniandes.csw.maratones.dtos.SubmissionDTO;
+import co.edu.uniandes.csw.maratones.ejb.EquipoSubmissionLogic;
 import co.edu.uniandes.csw.maratones.ejb.SubmissionLogic;
 //import co.edu.uniandes.csw.maratones.ejb.SubmissionEquipoLogic;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
@@ -57,8 +58,8 @@ public class SubmissionEquipoResource {
 
     private static final Logger LOGGER = Logger.getLogger(SubmissionEquipoResource.class.getName());
 
-    //@Inject
-    //private SubmissionEquipoLogic submissionEquipoLogic;
+    @Inject
+    private EquipoSubmissionLogic submissionEquipoLogic;
 
     @Inject
     private SubmissionLogic submissionLogic;
@@ -72,14 +73,14 @@ public class SubmissionEquipoResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el equipo.
      */
-    /*@POST
+    @POST
     @Path("{equipoId: \\d+}")
     public SubmissionDTO addParticipante(@PathParam("submissionId") Long submissionId, @PathParam("equipoId") Long equipoId) {
         LOGGER.log(Level.INFO, "SubmissionEquipoResource addParticipante: input: submissionId {0} , equipoId {1}", new Object[]{submissionId, equipoId});
         if (submissionLogic.getSubmission(equipoId) == null) {
             throw new WebApplicationException("El recurso /participantes/" + equipoId + " no existe.", 404);
         }
-        SubmissionDTO detailDTO = new SubmissionDTO(submissionEquipoLogic.addUsuario(submissionId, equipoId));
+        SubmissionDTO detailDTO = new SubmissionDTO(submissionEquipoLogic.addEquipo(submissionId, equipoId));
         LOGGER.log(Level.INFO, "SubmissionEquipoResource addParticipante: output: {0}", detailDTO);
         return detailDTO;
     }
@@ -91,10 +92,10 @@ public class SubmissionEquipoResource {
      * @return JSONArray {@link SubmissionDTO} - Los autores encontrados en el
      * submission. Si no hay ninguno retorna una lista vacía.
      */
-    /*@GET
+    @GET
     public List<SubmissionDTO> getParticipantes(@PathParam("submissionId") Long equipoId) {
         LOGGER.log(Level.INFO, "SubmissionEquipoResource getParticipantes: input: {0}", equipoId);
-        List<SubmissionDTO> lista = participantesListEntity2DTO(submissionEquipoLogic.getUsuarios(equipoId));
+        List<SubmissionDTO> lista = participantesListEntity2DTO(submissionEquipoLogic.getEquipos(equipoId));
         LOGGER.log(Level.INFO, "SubmissionEquipoResource getParticipantes: output: {0}", lista);
         return lista;
     }
@@ -109,7 +110,7 @@ public class SubmissionEquipoResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el equipo.
      */
-    /*@GET
+    @GET
     @Path("{equipoId: \\d+}")
     public SubmissionDTO getParticipante(@PathParam("submissionId") Long submissionId, @PathParam("equipoId") Long equipoId) {
         LOGGER.log(Level.INFO, "SubmissionEquipoResource getParticipante: input: submissionId {0} , equipoId {1}", new Object[]{submissionId, equipoId});
@@ -133,7 +134,7 @@ public class SubmissionEquipoResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el equipo.
      */
-    /*@PUT
+    @PUT
     public List<SubmissionDTO> replaceParticipantes(@PathParam("submissionId") Long submissionId, List<SubmissionDTO> participantes) {
         LOGGER.log(Level.INFO, "SubmissionEquipoResource replaceParticipantes: input: submissionId {0} , participantes {1}", new Object[]{submissionId, participantes});
         for (SubmissionDTO participante : participantes) {
@@ -154,7 +155,7 @@ public class SubmissionEquipoResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el equipo.
      */
-    /*@DELETE
+    @DELETE
     @Path("{equipoId: \\d+}")
     public void remove(@PathParam("submissionId") Long submissionId, @PathParam("equipoId") Long equipoId) {
         LOGGER.log(Level.INFO, "SubmissionEquipoResource remove: input: submissionId {0} , equipoId {1}", new Object[]{submissionId, equipoId});

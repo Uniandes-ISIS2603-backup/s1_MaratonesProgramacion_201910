@@ -38,13 +38,13 @@ public class EquipoResource {
     private static final Logger LOGGER = Logger.getLogger(EquipoResource.class.getName());
     @Inject
     EquipoLogic equipoLogic;
-            
+    /*        
     @POST
     public EquipoDTO createEjercicio(EquipoDTO equipo)
     {
         return equipo;
     }
-    
+    */
     /**
      * Crea un nuevo equipo con la informacion que se recibe en el cuerpo de la
      * petición y se regresa un objeto identico con un id auto-generado por la
@@ -162,6 +162,7 @@ public class EquipoResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el equipo.
      */
+    /*
     @Path("{equipoId: \\d+}/participantes")
     public Class<UsuarioResource> getReviewResource(@PathParam("equipoId") Long equipoId) {
         if (equipoLogic.getEquipo(equipoId) == null) {
@@ -169,7 +170,7 @@ public class EquipoResource {
         }
         return UsuarioResource.class;
     }
-
+*/
     /**
      * Conexión con el servicio de autores para un equipo.
      * {@link UsuarioEquipoResource}
@@ -184,6 +185,7 @@ public class EquipoResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el equipo.
      */
+    /*
     @Path("{equipoId: \\d+}/participantes")
     public Class<UsuarioEquipoResource> getUsuarioEquipoResource(@PathParam("equipoId") Long equipoId) {
         if (equipoLogic.getEquipo(equipoId) == null) {
@@ -191,7 +193,7 @@ public class EquipoResource {
         }
         return UsuarioEquipoResource.class;
     }
-
+*/
     /**
      * Convierte una lista de entidades a DTO.
      *
