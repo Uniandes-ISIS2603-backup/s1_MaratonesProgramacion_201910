@@ -123,7 +123,7 @@ public class CompetenciaResource {
         if (logic.getCompetencia(competenciasId) == null) {
             throw new WebApplicationException("El recurso /competencias/" + competenciasId + " no existe.", 404);
         }
-        CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(logic.updateEditorial(competenciasId, competencia.toEntity()));
+        CompetenciaDetailDTO detailDTO = new CompetenciaDetailDTO(logic.updateCompetencia(competenciasId, competencia.toEntity()));
         LOGGER.log(Level.INFO, "CompetenciaResource updateCompetencia: output: {0}", detailDTO);
         return detailDTO;
     }

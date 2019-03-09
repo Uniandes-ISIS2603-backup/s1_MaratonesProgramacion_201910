@@ -42,8 +42,7 @@ public class CompetenciaLogic {
         {
             throw new BusinessLogicException("La descripcion no puede ser un String vacio");
         }
-        
-        competenciaEntity = persistence.create(competenciaEntity);
+        persistence.create(competenciaEntity);
         return competenciaEntity;
     }
     
@@ -89,7 +88,7 @@ public class CompetenciaLogic {
      * por ejemplo el nombre.
      * @return la editorial con los cambios actualizados en la base de datos.
      */
-    public CompetenciaEntity updateEditorial(Long competenciasId, CompetenciaEntity competenciaEntity) {
+    public CompetenciaEntity updateCompetencia(Long competenciasId, CompetenciaEntity competenciaEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar la competencia con id = {0}", competenciasId);
         // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
         CompetenciaEntity newEntity = persistence.update(competenciaEntity);
