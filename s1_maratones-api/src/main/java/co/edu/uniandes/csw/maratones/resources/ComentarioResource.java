@@ -96,7 +96,7 @@ public class ComentarioResource {
     @Path("{comentariosId: \\d+}")
     public void deleteComentario(@PathParam("comentariosId") Long comentariosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ComentarioResource deleteComentario: input: {0}", comentariosId);
-        ComentarioEntity entity = ComentarioLogic.getComentario(comentariosId);
+        ComentarioEntity entity = comentarioLogic.getComentario(comentariosId);
         if (entity == null) {
             throw new WebApplicationException("El recurso /comentarios/" + comentariosId + " no existe.", 404);
         }
