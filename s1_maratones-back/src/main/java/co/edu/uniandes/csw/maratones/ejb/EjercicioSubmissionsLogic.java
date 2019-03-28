@@ -86,4 +86,27 @@ public class EjercicioSubmissionsLogic {
         ejercicioEntity.getSubmissions().remove(submissionEntity);
         LOGGER.log(Level.INFO, "Termina proceso de borrar una submission del ejercicio con id = {0}", ejerciciosId);
     }
+    
+    
+        /**
+     * Remplazar submissions de un ejercicio
+     *
+     * @param submissions Lista de submissions que serán los de el ejercicio.
+     * @param ejerciciosId El id del ejercicio que se quiere actualizar.
+     * @return La lista de submissions actualizada.
+     */
+    public List<SubmissionEntity> replaceSubmissions(Long ejerciciosId, List<SubmissionEntity> submissions) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el ejercicio con id = {0}", ejerciciosId);
+        EjercicioEntity ejercicioEntity = ejercicioPersistence.find(ejerciciosId);
+        List<SubmissionEntity> submissionList = submissionPersistence.findAll();
+        for (SubmissionEntity submission : submissionList) {
+            if (submissions.contains(submission)) {
+                submission.setEjercicioEntity(ejercicioEntity);
+            } else if (submission.getEjercicioEntity() != null && submission.getEjercicioEntity().equals(ejercicioEntity)) {
+                submission.setEjercicioEntity(null);
+            }
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", ejerciciosId);
+        return submissions;
+    }
 }
