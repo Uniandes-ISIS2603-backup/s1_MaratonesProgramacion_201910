@@ -7,8 +7,10 @@ package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -20,6 +22,9 @@ public class LugarCompetenciaEntity extends BaseEntity implements Serializable {
     
     private String ubicaciones;
 
+    @PodamExclude
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CompetenciaEntity competencia;
 
     /**
      * @return the ubicaciones
@@ -47,5 +52,19 @@ public class LugarCompetenciaEntity extends BaseEntity implements Serializable {
      */
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the competencia
+     */
+    public CompetenciaEntity getCompetencia() {
+        return competencia;
+    }
+
+    /**
+     * @param competencia the competencia to set
+     */
+    public void setCompetencia(CompetenciaEntity competencia) {
+        this.competencia = competencia;
     }
 }
