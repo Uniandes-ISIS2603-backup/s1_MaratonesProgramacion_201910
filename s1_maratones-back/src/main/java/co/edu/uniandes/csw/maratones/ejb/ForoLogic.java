@@ -82,6 +82,24 @@ public class ForoLogic {
     
     /**
      *
+     * Obtener una Foro por medio de su id.
+     *
+     * @param forosId: id de Foro para ser buscado.
+     * @return el Foro solicitada por medio de su id.
+     */
+    public ForoEntity getEditorial(Long forosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el Foro con id = {0}", forosId);
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        ForoEntity foroEntity = persistence.find(forosId);
+        if (foroEntity == null) {
+            LOGGER.log(Level.SEVERE, "El Foro con el id = {0} no existe", forosId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el forocon id = {0}", forosId);
+        return foroEntity;
+    }
+    
+    /**
+     *
      * Actualizar un foro.
      *
      * @param forosId: id de la editorial para buscarla en la base de
@@ -110,5 +128,16 @@ public class ForoLogic {
         // Note que, por medio de la inyección de dependencias se llama al método "delete(id)" que se encuentra en la persistencia.
         persistence.delete(forosId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el foro con id = {0}", forosId);
+    }
+    
+     public ForoEntity getForo(Long forosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el foro con id = {0}", forosId);
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        ForoEntity foroEntity = persistence.find(forosId);
+        if (foroEntity == null) {
+            LOGGER.log(Level.SEVERE, "El foro con el id = {0} no existe", forosId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la editorial con id = {0}", forosId);
+        return foroEntity;
     }
 }

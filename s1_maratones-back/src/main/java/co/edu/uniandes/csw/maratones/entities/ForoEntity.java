@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -57,6 +58,10 @@ public class ForoEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @OneToMany(mappedBy = "foro", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ComentarioEntity> comentarios = new ArrayList<ComentarioEntity>();
+    
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private UsuarioEntity usuario;
 
     /**
      * @return the nombre
