@@ -112,12 +112,12 @@ public class LenguajeResource {
      *
      * @param lenguajesId
      * @param lenguaje
-     * @return JSON {@link BookDetailDTO} - El libro guardada.
+     * @return JSON {@link LenguajeDTO} - El lenguaje guardado.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el libro a
+     * Error de lógica que se genera cuando no se encuentra el lenguaje a
      * actualizar.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se puede actualizar el libro.
+     * Error de lógica que se genera cuando no se puede actualizar el lenguaje.
      */
     @PUT
     @Path("{lenguajesId: \\d+}")
@@ -143,6 +143,6 @@ public class LenguajeResource {
         }
         
         lenguajeLogic.deleteLenguaje(lenguajesId);
-        LOGGER.info("SubmissionResource deleteLenguaje: output: void");
+        LOGGER.info("LenguajeResource deleteLenguaje: output: void");
     }
 }
