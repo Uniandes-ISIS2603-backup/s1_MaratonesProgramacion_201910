@@ -123,11 +123,11 @@ public class LenguajeResource {
     @Path("{lenguajesId: \\d+}")
     public LenguajeDTO updateLenguaje(@PathParam("lenguajesId") Long lenguajesId, LenguajeDTO lenguaje) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: input: id: {0} , lenguaje: {1}", new Object[]{lenguajesId, lenguaje});
-        lenguaje.setId(lenguajesId);
+        
         if (lenguajeLogic.getLenguaje(lenguajesId) == null) {
             throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
         }
-       
+        lenguaje.setId(lenguajesId);
         LenguajeDTO delDTO = new LenguajeDTO(lenguajeLogic.updateLenguaje(lenguaje.toEntity()));
         LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: output: {0}", delDTO);
         return delDTO;

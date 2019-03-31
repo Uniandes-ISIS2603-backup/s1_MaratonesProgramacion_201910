@@ -78,14 +78,14 @@ public class LenguajeLogic {
     public LenguajeEntity getLenguaje(Long lenguajeId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el lenguaje con id = {0}", lenguajeId);
-        if(persistence.find(lenguajeId) == null)
+        LenguajeEntity entity = persistence.find(lenguajeId);
+        if(entity == null)
         {
             LOGGER.log(Level.SEVERE, "El lenguaje con el id = {0} no existe", lenguajeId);
         }
         
-        LenguajeEntity lenguaje = persistence.find(lenguajeId);
-        LOGGER.log(Level.INFO, "Culmina proceso de consultar el lenguaje con id = {0}", lenguaje.getId());
-        return lenguaje;
+        LOGGER.log(Level.INFO, "Culmina proceso de consultar el lenguaje con id = {0}", lenguajeId);
+        return entity;
     }
     
     

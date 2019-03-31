@@ -81,10 +81,11 @@ public class EjercicioResource {
     @Path("{ejerciciosId: \\d+}")
     public EjercicioDetailDTO updateEjercicio(@PathParam("ejerciciosId") Long ejerciciosId, EjercicioDTO ejercicio) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "EjercicioResource updateEjercicio: input: id: {0} , book: {1}", new Object[]{ejerciciosId, ejercicio});
-        ejercicio.setId(ejerciciosId);
+        
         if (ejercicioLogic.getEjercicio(ejerciciosId) == null) {
             throw new WebApplicationException("El recurso /ejercicios/" + ejerciciosId + " no existe.", 404);
         }
+        ejercicio.setId(ejerciciosId);
         EjercicioDetailDTO detailDTO = new EjercicioDetailDTO(ejercicioLogic.updateEjercicio(ejerciciosId, ejercicio.toEntity()));
         LOGGER.log(Level.INFO, "EjercicioResource updateEjercicio: output: {0}", detailDTO);
         return detailDTO;

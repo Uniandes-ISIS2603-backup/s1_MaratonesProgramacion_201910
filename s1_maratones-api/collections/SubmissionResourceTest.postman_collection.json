@@ -1,0 +1,251 @@
+{
+	"info": {
+		"_postman_id": "865da384-499e-4d2a-823e-3527b7a761d8",
+		"name": "SubmissionResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear una submission",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codigo\":\"col-12345\",\t\n\t\"tiempo\": 123,\n\t\"memoria\": 96,\t\n\t\"veredicto\":\"En revision\",\n\t\"fecha\":\"2019-03-01 00:00:01\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una submission 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codigo\":\"col-12345\",\t\n\t\"tiempo\": 123,\n\t\"memoria\": 96,\t\n\t\"veredicto\":\"En revision\",\n\t\"fecha\":\"2019-03-01 00:00:01\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una submission con codigo existente",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codigo\":\"col-12345\",\t\n\t\"tiempo\": 123,\n\t\"memoria\": 96,\t\n\t\"veredicto\":\"En revision\",\n\t\"fecha\":\"2019-03-01 00:00:01\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar submission",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar submission no existente",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All submissions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "49b56c1e-0af9-4509-ad2d-72768e4cca70",
+						"exec": [
+							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get submission existente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get submission no existente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar submission",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar submission no existente",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -69,6 +69,10 @@ public class EjercicioLogic {
     {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar elejercicio con id = {0}", ejerID);
         EjercicioEntity ejercicio = persistence.find(ejerID);
+        if(ejercicio == null)
+        {
+            LOGGER.log(Level.SEVERE, "El lenguaje con el id = {0} no existe", ejerID);
+        }
         LOGGER.log(Level.INFO, "Culmina proceso de consultar el ejercicio con id = {0}", ejerID);
         return ejercicio;
     }

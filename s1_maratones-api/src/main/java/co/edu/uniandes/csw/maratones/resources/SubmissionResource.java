@@ -122,11 +122,12 @@ public class SubmissionResource {
     @PUT
     @Path("{submissionsId: \\d+}")
     public SubmissionDTO updateSubmission(@PathParam("submissionsId") Long submissionsId, SubmissionDTO submission) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "SubmissionResource updateSubmission: input: id: {0} , lenguaje: {1}", new Object[]{submissionsId, submission});
-        submission.setId(submissionsId);
+        LOGGER.log(Level.INFO, "SubmissionResource updateSubmission: input: id: {0} , submission: {1}", new Object[]{submissionsId, submission});
+        
         if (submissionLogic.getSubmission(submissionsId) == null) {
             throw new WebApplicationException("El recurso /submissions/" + submissionsId + " no existe.", 404);
         }
+        submission.setId(submissionsId);
         SubmissionDTO detailDTO = new SubmissionDTO(submissionLogic.updateSubmission(submissionsId, submission.toEntity()));
         LOGGER.log(Level.INFO, "SubmissionResource updateSubmission: output: {0}", detailDTO);
         return detailDTO;
