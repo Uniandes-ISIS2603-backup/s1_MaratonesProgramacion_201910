@@ -36,10 +36,6 @@ public class LenguajeLogic {
     public LenguajeEntity createLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del lenguaje");
-        if(persistence.findByName(lenguaje.getNombre()) != null)
-        {
-            throw new BusinessLogicException("Ya existe un lenguaje con el nombre: " + lenguaje.getNombre());
-        }
         
         if(lenguaje.getExperiencia() <= 0)
         {

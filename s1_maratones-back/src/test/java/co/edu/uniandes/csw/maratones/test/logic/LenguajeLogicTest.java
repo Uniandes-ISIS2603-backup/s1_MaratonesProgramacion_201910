@@ -138,13 +138,7 @@ public class LenguajeLogicTest {
     
     
     
-    @Test(expected = BusinessLogicException.class)
     
-    public void createLenguajeConMismoNombreTest() throws BusinessLogicException {
-        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
-        newEntity.setNombre(data.get(0).getNombre());
-        lenguajeLogic.createLenguaje(newEntity);
-    }
     
     @Test(expected = BusinessLogicException.class)
     
