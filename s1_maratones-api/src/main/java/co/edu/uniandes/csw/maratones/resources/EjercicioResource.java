@@ -45,11 +45,15 @@ public class EjercicioResource {
     @POST
     public EjercicioDTO createEjercicio(EjercicioDTO ejercicio) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: input: {0}", ejercicio);
-        EjercicioDTO nuevoEjercicio = new EjercicioDTO(ejercicioLogic.createEjercicio(ejercicio.toEntity()));
-        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: output: {0}", nuevoEjercicio);
-        
-        return ejercicio;
+        LOGGER.log(Level.INFO, "EditorialResource createEjercicio: input: {0}", ejercicio);
+        // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
+        EjercicioEntity ejerEntity = ejercicio.toEntity();
+        // Invoca la lógica para crear el lenguaje nuevo
+        EjercicioEntity nuevoEjerEntity = ejercicioLogic.createEjercicio(ejerEntity);
+        // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
+        EjercicioDTO nuevoSubDTO = new EjercicioDTO(nuevoEjerEntity);
+        LOGGER.log(Level.INFO, "EditorialResource createEjercicio: output: {0}", nuevoSubDTO);
+        return nuevoSubDTO;
     }
     
     
