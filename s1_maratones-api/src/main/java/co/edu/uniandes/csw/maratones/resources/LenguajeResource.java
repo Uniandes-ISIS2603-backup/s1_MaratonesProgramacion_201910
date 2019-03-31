@@ -48,12 +48,15 @@ public class LenguajeResource {
     @POST
     public LenguajeDTO createLenguaje(LenguajeDTO lenguaje) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: input: {0}", lenguaje);
-        LenguajeDTO nuevoEjercicio = new LenguajeDTO(lenguajeLogic.createLenguaje(lenguaje.toEntity()));
-        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: output: {0}", nuevoEjercicio);
-        
-        
-        return lenguaje;
+        LOGGER.log(Level.INFO, "EditorialResource createLenguaje: input: {0}", lenguaje);
+        // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
+        LenguajeEntity lenguajeEntity = lenguaje.toEntity();
+        // Invoca la lógica para crear el lenguaje nuevo
+        LenguajeEntity nuevoEditorialEntity = lenguajeLogic.createLenguaje(lenguajeEntity);
+        // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
+        LenguajeDTO nuevoLenguajeDTO = new LenguajeDTO(nuevoEditorialEntity);
+        LOGGER.log(Level.INFO, "EditorialResource createEditorial: output: {0}", nuevoLenguajeDTO);
+        return nuevoLenguajeDTO;
     }
     
     @GET
@@ -107,9 +110,8 @@ public class LenguajeResource {
      * Actualiza el libro con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
      *
-     * @param booksId Identificador del libro que se desea actualizar. Este debe
-     * ser una cadena de dígitos.
-     * @param book {@link BookDTO} El libro que se desea guardar.
+     * @param lenguajesId
+     * @param lenguaje
      * @return JSON {@link BookDetailDTO} - El libro guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el libro a
@@ -120,7 +122,7 @@ public class LenguajeResource {
     @PUT
     @Path("{lenguajesId: \\d+}")
     public LenguajeDTO updateLenguaje(@PathParam("lenguajesId") Long lenguajesId, LenguajeDTO lenguaje) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: input: id: {0} , book: {1}", new Object[]{lenguajesId, lenguaje});
+        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: input: id: {0} , lenguaje: {1}", new Object[]{lenguajesId, lenguaje});
         lenguaje.setId(lenguajesId);
         if (lenguajeLogic.getLenguaje(lenguajesId) == null) {
             throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
