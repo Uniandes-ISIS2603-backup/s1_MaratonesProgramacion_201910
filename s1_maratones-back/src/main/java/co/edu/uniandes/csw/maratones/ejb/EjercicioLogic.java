@@ -84,9 +84,6 @@ public class EjercicioLogic {
     
     public EjercicioEntity updateEjercicio(Long ejerID, EjercicioEntity ejercicioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el ejercicio con id = {0}", ejerID);
-        if (persistence.find(ejerID) == null) {
-            throw new BusinessLogicException("El ejercicio que se desea actualizar no existe");
-        }
         if(ejercicioEntity.getDescripcion().equals(""))
         {
             throw new BusinessLogicException("La descripcion de un ejercicio no puede ir vacia");
@@ -114,10 +111,6 @@ public class EjercicioLogic {
     
     public void deleteEjercicio(Long ejerID) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el ejercicio con id = {0}", ejerID);
-        
-        if (persistence.find(ejerID)== null) {
-            throw new BusinessLogicException("No se puede borrar el ejercicio porque no existe");
-        }
         
         List<SubmissionEntity> submissionsAsociadasA = getEjercicio(ejerID).getSubmissions();
         if( submissionsAsociadasA!= null  || !submissionsAsociadasA.isEmpty() )

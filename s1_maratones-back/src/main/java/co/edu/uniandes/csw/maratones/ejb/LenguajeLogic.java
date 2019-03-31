@@ -55,10 +55,6 @@ public class LenguajeLogic {
     public LenguajeEntity updateLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el lenguaje con id = {0}", lenguaje.getId());
-        if(persistence.find(lenguaje.getId()) == null)
-        {
-             throw new BusinessLogicException("No existe un lenguaje con el nombre: " + lenguaje.getNombre());
-        }
         
         if(lenguaje.getExperiencia() <= 0)
         {
@@ -71,14 +67,10 @@ public class LenguajeLogic {
     }
     
     
-    public void deleteLenguaje(Long lenguajeId) throws BusinessLogicException
+    public void deleteLenguaje(Long lenguajeId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el lenguaje con id = {0}", lenguajeId);
-        if(persistence.find(lenguajeId) == null)
-        {
-            throw new BusinessLogicException("No existe el lenguaje con el id:" + lenguajeId);
-        }
-        
+        LenguajeEntity lengEnt = persistence.find(lenguajeId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el lenguaje con id = {0}", lenguajeId);
         persistence.delete(lenguajeId);
     }

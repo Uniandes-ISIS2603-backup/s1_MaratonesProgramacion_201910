@@ -232,7 +232,7 @@ public class EjercicioLogicTest {
     
     
     @Test
-    public void updateBookTest() throws BusinessLogicException {
+    public void updateEjercicioTest() throws BusinessLogicException {
         EjercicioEntity entity = data.get(0);
         EjercicioEntity pojoEntity = factory.manufacturePojo(EjercicioEntity.class);
         pojoEntity.setId(entity.getId());
