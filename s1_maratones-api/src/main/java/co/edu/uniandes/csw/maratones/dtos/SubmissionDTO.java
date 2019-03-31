@@ -122,6 +122,7 @@ public class SubmissionDTO implements Serializable{
     {
         if(entity != null)
         {
+            this.id = entity.getId();
             this.archivo = entity.getArchivo();
             this.codigo = entity.getCodigo();
             this.fecha = entity.getFecha();
@@ -227,6 +228,7 @@ public class SubmissionDTO implements Serializable{
     {
         SubmissionEntity submission = new SubmissionEntity();
         
+        submission.setId(id);
         submission.setArchivo(archivo);
         submission.setCodigo(codigo);
         submission.setFecha(fecha);
