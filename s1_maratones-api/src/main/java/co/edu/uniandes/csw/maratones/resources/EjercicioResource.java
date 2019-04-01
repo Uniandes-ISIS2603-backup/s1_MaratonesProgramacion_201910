@@ -69,12 +69,13 @@ public class EjercicioResource {
     
     @GET
     @Path("{ejerciciosId: \\d+}")
-    public EjercicioDetailDTO getEjercicio(@PathParam("ejerciciossId") Long ejerciciosId) throws BusinessLogicException {
+    public EjercicioDetailDTO getEjercicio(@PathParam("ejerciciosId") Long ejerciciosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "EjercicioResource getEjercicio: input: {0}", ejerciciosId);
-        EjercicioEntity ejercicioEntity = ejercicioLogic.getEjercicio(ejerciciosId);
-        if (ejercicioEntity == null) {
+        
+        if (ejercicioLogic.getEjercicio(ejerciciosId) == null) {
             throw new WebApplicationException("El recurso /ejercicios/" + ejerciciosId + " no existe.", 404);
         }
+        EjercicioEntity ejercicioEntity = ejercicioLogic.getEjercicio(ejerciciosId);
         EjercicioDetailDTO ejercicioDetailDTO = new EjercicioDetailDTO(ejercicioEntity);
         LOGGER.log(Level.INFO, "EjercicioResource getEjercicio: output: {0}", ejercicioDetailDTO);
         return ejercicioDetailDTO;
