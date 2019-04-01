@@ -29,6 +29,10 @@ public class ComentarioEntity extends BaseEntity implements Serializable{
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ForoEntity foro;
     
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private UsuarioEntity usuario;
+    
     public ComentarioEntity(){
         
     }
