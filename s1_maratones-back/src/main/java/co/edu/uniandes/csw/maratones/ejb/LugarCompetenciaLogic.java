@@ -48,11 +48,25 @@ public class LugarCompetenciaLogic {
                 {
                     throw new BusinessLogicException("La competencia es inválida");
                 }
-        // Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con el mismo id
+            
+        //TODO Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con el mismo id
         if (lugarCompetenciaPersistence.find(lugarCompetenciaEntity.getId())!=null) {
             throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
         }
         //TODO ubicaciones del lugar de competencias puede llegar nulo, validar donde se certifica que no llega a esta línea como valor nulo
+        
+         //TODO Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con la misma ubicación
+         List<LugarCompetenciaEntity> ubicaciones = lugarCompetenciaPersistence.findAll();
+         if(ubicaciones!= null){
+         for (int i = 0; i < ubicaciones.size(); i++) {
+             LugarCompetenciaEntity ubicacion = ubicaciones.get(i);
+            if(lugarCompetenciaEntity.getUbicaciones().equals(ubicacion.getUbicaciones()))
+            {
+                throw new BusinessLogicException("El lugarCompetencia tiene una ubicación que ya existe");
+            }
+            
+        }
+         }
         if(lugarCompetenciaEntity.getUbicaciones()==null||lugarCompetenciaEntity.getUbicaciones().equals("") )
         {
             throw new BusinessLogicException("El lugarCompetencia tiene una ubicación no valida");

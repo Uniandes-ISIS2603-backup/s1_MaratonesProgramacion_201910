@@ -155,6 +155,7 @@ public class LugarCompetenciaLogicTest {
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         newEntity.setCompetencia(competenciaData.get(0));
         newEntity.setUbicaciones(null);
+        System.out.println(newEntity.getId());
         lugarCompetenciaLogic.createLugarCompetencia(newEntity);
     }
     
