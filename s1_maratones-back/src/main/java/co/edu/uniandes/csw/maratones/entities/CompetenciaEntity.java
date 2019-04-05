@@ -44,6 +44,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     @OneToMany(fetch = FetchType.LAZY)
     private List<UsuarioEntity> jueces;
     
+    @PodamExclude
     @OneToMany(fetch = FetchType.LAZY)
     private List<EquipoEntity> equipos;
     

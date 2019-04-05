@@ -169,6 +169,7 @@ public class LugarCompetenciaLogicTest {
         newEntity.setCompetencia(competenciaData.get(0));
         newEntity.setUbicaciones(lugarCompetenciaData.get(0).getUbicaciones());
         lugarCompetenciaLogic.createLugarCompetencia(newEntity);
+        // debe revisarse en el create que la ubicacion no exista.
     }
     
     /**

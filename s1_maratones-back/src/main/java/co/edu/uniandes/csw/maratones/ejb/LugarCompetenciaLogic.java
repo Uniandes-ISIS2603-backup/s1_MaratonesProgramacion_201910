@@ -52,12 +52,13 @@ public class LugarCompetenciaLogic {
         if (lugarCompetenciaPersistence.find(lugarCompetenciaEntity.getId())!=null) {
             throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
         }
-        if(lugarCompetenciaEntity.getUbicaciones().equals("")|| lugarCompetenciaEntity.getUbicaciones()==null)
+        //TODO ubicaciones del lugar de competencias puede llegar nulo, validar donde se certifica que no llega a esta línea como valor nulo
+        if(lugarCompetenciaEntity.getUbicaciones()==null||lugarCompetenciaEntity.getUbicaciones().equals("") )
         {
             throw new BusinessLogicException("El lugarCompetencia tiene una ubicación no valida");
         }
         CompetenciaEntity competencia =lugarCompetenciaEntity.getCompetencia();
-        
+        //TODO date o dateC... es nulo, es necesario certificar que los valores no llegarán nulos a esta parte del método
         LocalDateTime date = lugarCompetenciaEntity.getFecha();
         if(competencia!= null )
         {
