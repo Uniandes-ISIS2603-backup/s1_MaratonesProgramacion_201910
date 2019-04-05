@@ -56,7 +56,7 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     private List<CompetenciaEntity> competencias;
     
     @PodamExclude
-    @OneToMany(mappedBy = "ejercicioEntitys",cascade = {
+    @OneToMany(mappedBy = "ejercicioEntity",cascade = {
         CascadeType.PERSIST,
         CascadeType.MERGE
     })
