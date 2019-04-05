@@ -36,10 +36,6 @@ public class LenguajeLogic {
     public LenguajeEntity createLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del lenguaje");
-        if(persistence.findByName(lenguaje.getNombre()) != null)
-        {
-            throw new BusinessLogicException("Ya existe un lenguaje con el nombre: " + lenguaje.getNombre());
-        }
         
         if(lenguaje.getExperiencia() <= 0)
         {
@@ -59,10 +55,6 @@ public class LenguajeLogic {
     public LenguajeEntity updateLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el lenguaje con id = {0}", lenguaje.getId());
-        if(persistence.find(lenguaje.getId()) == null)
-        {
-             throw new BusinessLogicException("No existe un lenguaje con el nombre: " + lenguaje.getNombre());
-        }
         
         if(lenguaje.getExperiencia() <= 0)
         {
@@ -75,14 +67,10 @@ public class LenguajeLogic {
     }
     
     
-    public void deleteLenguaje(Long lenguajeId) throws BusinessLogicException
+    public void deleteLenguaje(Long lenguajeId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el lenguaje con id = {0}", lenguajeId);
-        if(persistence.find(lenguajeId) == null)
-        {
-            throw new BusinessLogicException("No existe el lenguaje con el id:" + lenguajeId);
-        }
-        
+        LenguajeEntity lengEnt = persistence.find(lenguajeId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el lenguaje con id = {0}", lenguajeId);
         persistence.delete(lenguajeId);
     }
@@ -90,14 +78,14 @@ public class LenguajeLogic {
     public LenguajeEntity getLenguaje(Long lenguajeId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el lenguaje con id = {0}", lenguajeId);
-        if(persistence.find(lenguajeId) == null)
+        LenguajeEntity entity = persistence.find(lenguajeId);
+        if(entity == null)
         {
             LOGGER.log(Level.SEVERE, "El lenguaje con el id = {0} no existe", lenguajeId);
         }
         
-        LenguajeEntity lenguaje = persistence.find(lenguajeId);
-        LOGGER.log(Level.INFO, "Culmina proceso de consultar el lenguaje con id = {0}", lenguaje.getId());
-        return lenguaje;
+        LOGGER.log(Level.INFO, "Culmina proceso de consultar el lenguaje con id = {0}", lenguajeId);
+        return entity;
     }
     
     

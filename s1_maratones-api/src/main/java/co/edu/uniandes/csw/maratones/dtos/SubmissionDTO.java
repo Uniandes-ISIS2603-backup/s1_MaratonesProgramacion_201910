@@ -87,7 +87,10 @@ public class SubmissionDTO implements Serializable{
     */
     private Long id;
     
+    /*
     
+    */
+    private EjercicioDTO ejercicio;
     
     /**
      * 
@@ -119,6 +122,7 @@ public class SubmissionDTO implements Serializable{
     {
         if(entity != null)
         {
+            this.id = entity.getId();
             this.archivo = entity.getArchivo();
             this.codigo = entity.getCodigo();
             this.fecha = entity.getFecha();
@@ -126,6 +130,11 @@ public class SubmissionDTO implements Serializable{
             this.tiempo = entity.getTiempo();
             this.veredicto = entity.getVeredicto();
         }
+        if (entity.getEjercicioEntity() != null) {
+                this.ejercicio = new EjercicioDTO(entity.getEjercicioEntity());
+            } else {
+                this.ejercicio = null;
+            }
     }       
         
     
@@ -219,12 +228,16 @@ public class SubmissionDTO implements Serializable{
     {
         SubmissionEntity submission = new SubmissionEntity();
         
+        submission.setId(id);
         submission.setArchivo(archivo);
         submission.setCodigo(codigo);
         submission.setFecha(fecha);
         submission.setMemoria(memoria);
         submission.setVeredicto(veredicto);
         submission.setTiempo(tiempo);
+        if (this.ejercicio != null) {
+            submission.setEjercicioEntity(this.ejercicio.toEntity());
+        }
         
         
         return submission;
@@ -248,5 +261,19 @@ public class SubmissionDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the ejercicio
+     */
+    public EjercicioDTO getEjercicio() {
+        return ejercicio;
+    }
+
+    /**
+     * @param ejercicio the ejercicio to set
+     */
+    public void setEjercicio(EjercicioDTO ejercicio) {
+        this.ejercicio = ejercicio;
     }
 }

@@ -197,5 +197,87 @@ public class EjercicioLogicTest {
         
     }
     
+        /**
+     * Prueba para consultar la lista de Ejercicios.
+     */
+    @Test
+    public void getEjerciciosTest() {
+        List<EjercicioEntity> list = ejercicioLogic.getEjercicios();
+        Assert.assertEquals(data.size(), list.size());
+        for (EjercicioEntity entity : list) {
+            boolean found = false;
+            for (EjercicioEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
     
+    /**
+     * Prueba para consultar un Book.
+     */
+    @Test
+    public void getEjercicioTest() {
+        EjercicioEntity entity = data.get(0);
+        EjercicioEntity resultEntity = ejercicioLogic.getEjercicio(entity.getId());
+        Assert.assertNotNull(resultEntity);
+        Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
+        Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
+        Assert.assertEquals(entity.getPuntaje(), resultEntity.getPuntaje());
+        Assert.assertEquals(entity.getNivel(), resultEntity.getNivel());
+    }
+    
+    
+    @Test
+    public void updateEjercicioTest() throws BusinessLogicException {
+        EjercicioEntity entity = data.get(0);
+        EjercicioEntity pojoEntity = factory.manufacturePojo(EjercicioEntity.class);
+        pojoEntity.setId(entity.getId());
+        pojoEntity.setDescripcion("Descripcion");
+        pojoEntity.setNombre("Nombre");
+        pojoEntity.setPuntaje(1);
+        pojoEntity.setNivel(1);
+        ejercicioLogic.updateEjercicio(pojoEntity.getId(), pojoEntity);
+        EjercicioEntity resp = em.find(EjercicioEntity.class, entity.getId());
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
+        Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(pojoEntity.getNivel(), resp.getNivel());
+        Assert.assertEquals(pojoEntity.getPuntaje(), resp.getPuntaje());
+        Assert.assertEquals(pojoEntity.getInputt(), resp.getInputt());
+        Assert.assertEquals(pojoEntity.getOutputt(), resp.getOutputt());
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void updateEjercicioConNivelNegativoTest()throws BusinessLogicException
+    {
+        EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        newEntity.setNivel(-1);
+        newEntity.setDescripcion("Descripcion");
+        newEntity.setNombre("Nombre");
+        newEntity.setPuntaje(1);
+        ejercicioLogic.updateEjercicio(newEntity.getId(), newEntity);
+        
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void updateEjercicioConPuntajeNegativoTest()throws BusinessLogicException
+    {
+         EjercicioEntity newEntity = factory.manufacturePojo(EjercicioEntity.class);
+        newEntity.setPuntaje(-1);
+        newEntity.setDescripcion("Descripcion");
+        newEntity.setNombre("Nombre");
+        newEntity.setNivel(1);
+        ejercicioLogic.updateEjercicio(newEntity.getId(),newEntity);
+        
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEjercicioConSubmissionsTest() throws BusinessLogicException {
+        EjercicioEntity entity = data.get(0);
+        ejercicioLogic.deleteEjercicio(entity.getId());
+    }
 }

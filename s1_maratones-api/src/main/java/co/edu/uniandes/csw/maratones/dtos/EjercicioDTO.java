@@ -195,6 +195,7 @@ public class EjercicioDTO implements Serializable{
         
         EjercicioEntity entity = new EjercicioEntity();
        
+        entity.setId(id);
         entity.setDescripcion(descripcion);
         entity.setInputt(inputt);
         entity.setOutputt(outputt);

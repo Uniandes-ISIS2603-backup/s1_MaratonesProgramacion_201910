@@ -75,7 +75,7 @@ public class LenguajeDTO implements Serializable{
             this.id = entity.getId();
             this.nombre = entity.getNombre();
             this.experiencia = entity.getExperiencia();
-        
+   
         }
     }
 
@@ -128,7 +128,7 @@ public class LenguajeDTO implements Serializable{
     public LenguajeEntity toEntity()
     {
         LenguajeEntity entity = new LenguajeEntity();
-        
+        entity.setId(this.id);
         entity.setNombre(this.nombre);
         entity.setExperiencia(this.experiencia);
         if(this.programador != null)

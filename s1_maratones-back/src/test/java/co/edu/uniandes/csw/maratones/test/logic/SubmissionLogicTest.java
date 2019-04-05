@@ -231,18 +231,12 @@ public class SubmissionLogicTest {
     
     
     @Test
-    public void deleteSubmissionTest() throws BusinessLogicException
+    public void deleteSubmissionTest() 
     {
         SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
         newEntity.setId(data.get(0).getId());
         submissionLogic.deleteSubmission(newEntity.getId());
     }
-    
-    @Test(expected = BusinessLogicException.class)
-    public void deleteSubmissionQueNoExisteTest() throws BusinessLogicException
-    {
-        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
-        submissionLogic.deleteSubmission(newEntity.getId());
-    }
+  
     
 }
