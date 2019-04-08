@@ -3,7 +3,21 @@
   <persistence-unit name="maratonesPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--Toca entity por entity, exclude-unlisted-clases = false no funciona-->
-    
+    <class>co.edu.uniandes.csw.maratones.entities.EjercicioEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.SubmissionEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.LenguajeEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.UsuarioEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.EquipoEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.CompetenciaEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.ForoEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.PrerequisitoEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.InstitucionEntity</class>
+    <class>co.edu.uniandes.csw.maratones.entities.BlogEntity</class>
+     <class>co.edu.uniandes.csw.maratones.entities.BaseEntity</class>
+     <class>co.edu.uniandes.csw.maratones.entities.ForoEntity</class>
+     <class>co.edu.uniandes.csw.maratones.entities.ComentarioEntity</class>
+     <class>co.edu.uniandes.csw.maratones.entities.PublicacionEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
  <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
