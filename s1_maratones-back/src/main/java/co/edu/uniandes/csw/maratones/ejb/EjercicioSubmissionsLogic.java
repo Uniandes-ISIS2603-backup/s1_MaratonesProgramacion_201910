@@ -37,7 +37,7 @@ public class EjercicioSubmissionsLogic {
      * @param ejerciciosId
      * @param submissionsId
      * @return Instancia de BookEntity que fue asociada a Author
-     */    public SubmissionEntity addSubmission(Long ejerciciosId, Long submissionsId) {
+     */ public SubmissionEntity addSubmission(Long ejerciciosId, Long submissionsId) {
         LOGGER.log(Level.INFO, "Inicia proceso de asociarle una submission al ejercicio con id = {0}", ejerciciosId);
         EjercicioEntity ejerEntity = ejercicioPersistence.find(ejerciciosId);
         SubmissionEntity subEntity = submissionPersistence.find(submissionsId);
