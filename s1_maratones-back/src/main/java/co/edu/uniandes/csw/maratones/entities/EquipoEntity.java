@@ -24,7 +24,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class EquipoEntity extends BaseEntity implements Serializable{
 
-    private EquipoEntity coach;
+    private UsuarioEntity coach;
     private String nombreEquipo;
     
     @PodamExclude
@@ -43,11 +43,11 @@ public class EquipoEntity extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "equipo")
     private List<SubmissionEntity> submissions = new ArrayList<SubmissionEntity>();
     
-    public EquipoEntity getCoach() {
+    public UsuarioEntity getCoach() {
         return coach;
     }
 
-    public void setCoach(EquipoEntity coach) {
+    public void setCoach(UsuarioEntity coach) {
         this.coach = coach;
     }
 
