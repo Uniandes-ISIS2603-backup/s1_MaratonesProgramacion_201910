@@ -48,11 +48,15 @@ public class SubmissionResource {
     @POST
     public SubmissionDTO createSubmission(SubmissionDTO submission) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "SubmissionResource createSubmission: input: {0}", submission);
-        SubmissionDTO nuevoSubmission = new SubmissionDTO(submissionLogic.createSubmission(submission.toEntity()));
-        LOGGER.log(Level.INFO, "SubmissionResource createSubmission: output: {0}", nuevoSubmission);
-        
-        return submission;
+        LOGGER.log(Level.INFO, "EditorialResource createLenguaje: input: {0}", submission);
+        // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
+        SubmissionEntity submissionEntity = submission.toEntity();
+        // Invoca la lógica para crear el lenguaje nuevo
+        SubmissionEntity nuevoSubEntity = submissionLogic.createSubmission(submissionEntity);
+        // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
+        SubmissionDTO nuevoSubDTO = new SubmissionDTO(nuevoSubEntity);
+        LOGGER.log(Level.INFO, "EditorialResource createEditorial: output: {0}", nuevoSubDTO);
+        return nuevoSubDTO;
     }
     
     @GET
@@ -118,11 +122,12 @@ public class SubmissionResource {
     @PUT
     @Path("{submissionsId: \\d+}")
     public SubmissionDTO updateSubmission(@PathParam("submissionsId") Long submissionsId, SubmissionDTO submission) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "SubmissionResource updateSubmission: input: id: {0} , lenguaje: {1}", new Object[]{submissionsId, submission});
-        submission.setId(submissionsId);
+        LOGGER.log(Level.INFO, "SubmissionResource updateSubmission: input: id: {0} , submission: {1}", new Object[]{submissionsId, submission});
+        
         if (submissionLogic.getSubmission(submissionsId) == null) {
             throw new WebApplicationException("El recurso /submissions/" + submissionsId + " no existe.", 404);
         }
+        submission.setId(submissionsId);
         SubmissionDTO detailDTO = new SubmissionDTO(submissionLogic.updateSubmission(submissionsId, submission.toEntity()));
         LOGGER.log(Level.INFO, "SubmissionResource updateSubmission: output: {0}", detailDTO);
         return detailDTO;

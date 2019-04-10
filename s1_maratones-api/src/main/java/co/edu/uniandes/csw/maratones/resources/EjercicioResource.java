@@ -45,11 +45,15 @@ public class EjercicioResource {
     @POST
     public EjercicioDTO createEjercicio(EjercicioDTO ejercicio) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: input: {0}", ejercicio);
-        EjercicioDTO nuevoEjercicio = new EjercicioDTO(ejercicioLogic.createEjercicio(ejercicio.toEntity()));
-        LOGGER.log(Level.INFO, "EjercicioResource createEjercicio: output: {0}", nuevoEjercicio);
-        
-        return ejercicio;
+        LOGGER.log(Level.INFO, "EditorialResource createEjercicio: input: {0}", ejercicio);
+        // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
+        EjercicioEntity ejerEntity = ejercicio.toEntity();
+        // Invoca la lógica para crear el lenguaje nuevo
+        EjercicioEntity nuevoEjerEntity = ejercicioLogic.createEjercicio(ejerEntity);
+        // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
+        EjercicioDTO nuevoSubDTO = new EjercicioDTO(nuevoEjerEntity);
+        LOGGER.log(Level.INFO, "EditorialResource createEjercicio: output: {0}", nuevoSubDTO);
+        return nuevoSubDTO;
     }
     
     
@@ -65,12 +69,13 @@ public class EjercicioResource {
     
     @GET
     @Path("{ejerciciosId: \\d+}")
-    public EjercicioDetailDTO getEjercicio(@PathParam("ejerciciossId") Long ejerciciosId) throws BusinessLogicException {
+    public EjercicioDetailDTO getEjercicio(@PathParam("ejerciciosId") Long ejerciciosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "EjercicioResource getEjercicio: input: {0}", ejerciciosId);
-        EjercicioEntity ejercicioEntity = ejercicioLogic.getEjercicio(ejerciciosId);
-        if (ejercicioEntity == null) {
+        
+        if (ejercicioLogic.getEjercicio(ejerciciosId) == null) {
             throw new WebApplicationException("El recurso /ejercicios/" + ejerciciosId + " no existe.", 404);
         }
+        EjercicioEntity ejercicioEntity = ejercicioLogic.getEjercicio(ejerciciosId);
         EjercicioDetailDTO ejercicioDetailDTO = new EjercicioDetailDTO(ejercicioEntity);
         LOGGER.log(Level.INFO, "EjercicioResource getEjercicio: output: {0}", ejercicioDetailDTO);
         return ejercicioDetailDTO;
@@ -80,12 +85,14 @@ public class EjercicioResource {
     @PUT
     @Path("{ejerciciosId: \\d+}")
     public EjercicioDetailDTO updateEjercicio(@PathParam("ejerciciosId") Long ejerciciosId, EjercicioDTO ejercicio) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "EjercicioResource updateEjercicio: input: id: {0} , book: {1}", new Object[]{ejerciciosId, ejercicio});
-        ejercicio.setId(ejerciciosId);
+        LOGGER.log(Level.INFO, "EjercicioResource updateEjercicio: input: id: {0} , ejercicio: {1}", new Object[]{ejerciciosId, ejercicio});
+        
         if (ejercicioLogic.getEjercicio(ejerciciosId) == null) {
             throw new WebApplicationException("El recurso /ejercicios/" + ejerciciosId + " no existe.", 404);
         }
-        EjercicioDetailDTO detailDTO = new EjercicioDetailDTO(ejercicioLogic.updateEjercicio(ejerciciosId, ejercicio.toEntity()));
+        ejercicio.setId(ejerciciosId);
+        EjercicioEntity ejercicioEntity = ejercicioLogic.getEjercicio(ejerciciosId);
+        EjercicioDetailDTO detailDTO = new EjercicioDetailDTO(ejercicioLogic.updateEjercicio(ejerciciosId, ejercicioEntity));
         LOGGER.log(Level.INFO, "EjercicioResource updateEjercicio: output: {0}", detailDTO);
         return detailDTO;
     }
