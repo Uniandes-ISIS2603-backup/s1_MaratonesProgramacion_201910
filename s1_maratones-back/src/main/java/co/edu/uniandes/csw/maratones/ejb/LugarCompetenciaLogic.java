@@ -11,7 +11,6 @@ import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -54,7 +53,11 @@ public class LugarCompetenciaLogic {
             throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
         }
         //TODO ubicaciones del lugar de competencias puede llegar nulo, validar donde se certifica que no llega a esta línea como valor nulo
-        
+        if(lugarCompetenciaEntity.getUbicaciones()==null)
+        {
+            throw new BusinessLogicException("La ubicacion no puede ser null");
+        }
+       
          //TODO Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con la misma ubicación
          List<LugarCompetenciaEntity> ubicaciones = lugarCompetenciaPersistence.findAll();
          if(ubicaciones!= null){
@@ -73,15 +76,23 @@ public class LugarCompetenciaLogic {
         }
         CompetenciaEntity competencia =lugarCompetenciaEntity.getCompetencia();
         //TODO date o dateC... es nulo, es necesario certificar que los valores no llegarán nulos a esta parte del método
-        LocalDateTime date = lugarCompetenciaEntity.getFecha();
+        Date date = lugarCompetenciaEntity.getFecha();
+        System.out.println(date+"=================================");
         if(competencia!= null )
         {
-            LocalDateTime dateCompetenciaInicio = competencia.getFechaInicio();
-            LocalDateTime dateCompetenciaFin = competencia.getFechaFin();
-            if(date.isBefore(dateCompetenciaInicio)||date.isAfter(dateCompetenciaFin))
+            Date dateCompetenciaInicio = competencia.getFechaInicio();
+            
+            System.out.println("competenia inicio fecha"+ dateCompetenciaInicio+"======================================");
+            Date dateCompetenciaFin = competencia.getFechaFin();
+            if(date.before(dateCompetenciaInicio)||date.after(dateCompetenciaFin))
             {
-                throw new BusinessLogicException("El lugarCompetencia tiene una fecha no valida");
+                throw new BusinessLogicException("Fecha invalida.");
             }
+        }
+        
+         if(competenciaPersistence.find(lugarCompetenciaEntity.getCompetencia().getId())==null)
+        {
+            throw new BusinessLogicException("La competencia no existe");
         }
         // Invoca la persistencia para crear la editorial
         lugarCompetenciaPersistence.create(lugarCompetenciaEntity);

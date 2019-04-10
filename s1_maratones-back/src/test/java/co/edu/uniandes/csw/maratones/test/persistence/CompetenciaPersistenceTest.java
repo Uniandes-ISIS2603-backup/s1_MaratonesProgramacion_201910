@@ -127,7 +127,7 @@ public class CompetenciaPersistenceTest {
         for (CompetenciaEntity ent : list) {
             boolean found = false;
             for (CompetenciaEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
+                if (ent.getEjercicioEntitys().equals(entity.getEjercicioEntitys())) {
                     found = true;
                 }
             }

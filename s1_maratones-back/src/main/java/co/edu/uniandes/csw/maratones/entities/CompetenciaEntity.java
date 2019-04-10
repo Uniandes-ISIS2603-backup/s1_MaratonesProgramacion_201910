@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -16,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -37,24 +37,35 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     private List<LugarCompetenciaEntity> lugarCompetencias;
     
     @PodamExclude
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private UsuarioEntity patrocinadores;
     
     @PodamExclude
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = 
+            {
+                CascadeType.PERSIST
+            })
     private List<UsuarioEntity> jueces;
     
     @PodamExclude
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = 
+            {
+                CascadeType.PERSIST
+            })
     private List<EquipoEntity> equipos;
     
     @PodamExclude
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = 
+            {
+                CascadeType.PERSIST
+            })
     private List<LenguajeEntity> lenguajes;
     
     private Boolean esVirtual;
     
-    private LocalDateTime fechaInicio;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaInicio;
     
     private String nombre;
     
@@ -64,7 +75,8 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     
     private String condiciones;
     
-    private LocalDateTime fechaFin;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaFin;
     
     private Integer nivel;
 
@@ -155,14 +167,14 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     /**
      * @return the fechaInicio
      */
-    public LocalDateTime getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
     /**
      * @param fechaInicio the fechaInicio to set
      */
-    public void setFechaInicio(LocalDateTime fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
@@ -225,14 +237,14 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     /**
      * @return the fechaFin
      */
-    public LocalDateTime getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
     /**
      * @param fechaFin the fechaFin to set
      */
-    public void setFechaFin(LocalDateTime fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 

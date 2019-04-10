@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.maratones.dtos;
 
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import java.io.Serializable;
+import java.util.Date;
 import java.time.LocalDateTime;
 
 
@@ -19,7 +20,7 @@ public class CompetenciaDTO implements Serializable{
 
     private Boolean esVirtual;
     
-    private LocalDateTime fechaInicio;
+    private Date fechaInicio;
     
     private String nombre;
     
@@ -29,7 +30,7 @@ public class CompetenciaDTO implements Serializable{
     
     private String condiciones;
     
-    private LocalDateTime fechaFin;
+    private Date fechaFin;
     
     private Integer nivel;
    
@@ -89,14 +90,14 @@ public class CompetenciaDTO implements Serializable{
     /**
      * @return the fechaInicio
      */
-    public LocalDateTime getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
     /**
      * @param fechaInicio the fechaInicio to set
      */
-    public void setFechaInicio(LocalDateTime fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
@@ -159,14 +160,14 @@ public class CompetenciaDTO implements Serializable{
     /**
      * @return the fechaFin
      */
-    public LocalDateTime getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
     /**
      * @param fechaFin the fechaFin to set
      */
-    public void setFechaFin(LocalDateTime fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 

@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +44,32 @@ public class CompetenciaLogic {
         {
             throw new BusinessLogicException("La descripcion no puede ser un String vacio");
         }
+        
+        Date inicio = competenciaEntity.getFechaInicio();
+        
+        Date fin = competenciaEntity.getFechaFin();
+        
+        if(inicio ==null || fin == null)
+        {
+            throw new BusinessLogicException("Las fechas de inicio y fin no pueden ser nulas");
+        }else
+        {
+            if(inicio.after(fin))
+            {
+                throw new BusinessLogicException("La fecha inicial no puede ser despues que la fecha final y la fecha final no puede ser antes que la fecha inicial.");
+            }
+        }
+        
+        if(competenciaEntity.getJueces().isEmpty())
+        {
+            throw new BusinessLogicException("Debe haber al menos un juez al creaerse la competencia");
+        }
+        if(competenciaEntity.getEjercicioEntitys().isEmpty())
+        {
+            throw new BusinessLogicException("Debe haber al menos un ejercicio al crearse la competencia");
+        }
         persistence.create(competenciaEntity);
+        
         return competenciaEntity;
     }
     
@@ -88,9 +115,45 @@ public class CompetenciaLogic {
      * por ejemplo el nombre.
      * @return la editorial con los cambios actualizados en la base de datos.
      */
-    public CompetenciaEntity updateCompetencia(Long competenciasId, CompetenciaEntity competenciaEntity) {
+    public CompetenciaEntity updateCompetencia(Long competenciasId, CompetenciaEntity competenciaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar la competencia con id = {0}", competenciasId);
         // Note que, por medio de la inyección de dependencias se llama al método "update(entity)" que se encuentra en la persistencia.
+        if(persistence.findByName(competenciaEntity.getNombre())!= null)
+        {
+            throw new BusinessLogicException("El nombre de la competencia ya existe");
+        }
+        if(competenciaEntity.getNombre().equals(""))
+        {
+            throw new BusinessLogicException("El nombre no puede ser un String vacio");
+        }
+        if(competenciaEntity.getDescripcion().equals(""))
+        {
+            throw new BusinessLogicException("La descripcion no puede ser un String vacio");
+        }
+        
+        Date inicio = competenciaEntity.getFechaInicio();
+        
+        Date fin = competenciaEntity.getFechaFin();
+        
+        if(inicio ==null || fin == null)
+        {
+            throw new BusinessLogicException("Las fechas de inicio y fin no pueden ser nulas");
+        }else
+        {
+            if(inicio.after(fin))
+            {
+                throw new BusinessLogicException("Fecha inicial: "+ inicio + " fecha final: "+ fin);
+            }
+        }
+        
+        if(competenciaEntity.getJueces()== null ||competenciaEntity.getJueces().isEmpty())
+        {
+            throw new BusinessLogicException("Debe haber al menos un juez al creaerse la competencia");
+        }
+        if(competenciaEntity.getEjercicioEntitys()==null ||competenciaEntity.getEjercicioEntitys().isEmpty())
+        {
+            throw new BusinessLogicException("Debe haber al menos un ejercicio al crearse la competencia");
+        }
         CompetenciaEntity newEntity = persistence.update(competenciaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar la competencia con id = {0}", competenciaEntity.getId());
         return newEntity;

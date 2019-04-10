@@ -18,7 +18,7 @@ public class LugarCompetenciaDTO implements Serializable{
  
     private Long id;
     
-    private LocalDateTime fecha;
+    private Date fecha;
     
     private String ubicacion;
 
@@ -75,14 +75,14 @@ public class LugarCompetenciaDTO implements Serializable{
     /**
      * @return the fecha
      */
-    public LocalDateTime getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
     /**
      * @param fecha the fecha to set
      */
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
