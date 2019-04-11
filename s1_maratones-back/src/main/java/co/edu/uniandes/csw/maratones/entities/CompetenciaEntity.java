@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -22,9 +23,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class CompetenciaEntity extends BaseEntity implements Serializable{
 
     @PodamExclude
-    @ManyToMany(mappedBy = "competencias", cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
+    @OneToMany(mappedBy = "competencia", cascade = {
+        CascadeType.REMOVE
     })
     private List<EjercicioEntity> ejercicioEntitys;
     
@@ -137,6 +137,20 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
      */
     public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    /**
+     * @return the ejercicioEntitys
+     */
+    public List<EjercicioEntity> getEjercicioEntitys() {
+        return ejercicioEntitys;
+    }
+
+    /**
+     * @param ejercicioEntitys the ejercicioEntitys to set
+     */
+    public void setEjercicioEntitys(List<EjercicioEntity> ejercicioEntitys) {
+        this.ejercicioEntitys = ejercicioEntitys;
     }
     
 }
