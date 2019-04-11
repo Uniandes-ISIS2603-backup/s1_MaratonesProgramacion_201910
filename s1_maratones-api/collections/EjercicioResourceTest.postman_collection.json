@@ -58,8 +58,7 @@
 					"script": {
 						"id": "3ab3967e-9ec8-4373-b843-ed89b2b00b38",
 						"exec": [
-							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"newnewejercicio\", data.id);",
+							"",
 							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
@@ -71,13 +70,13 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Prediccion de Terremotos\",  \n   \"descripcion\": \"blablablabla\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"putputdelejercicio\",\n   \"puntaje\" : 12345,\n   \"nivel\" : 12345\n}"
+					"raw": "{\n\t\"nombre\": \"Termometro\",  \n   \"descripcion\": \"blablablabla\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"putputdelejercicio\",\n   \"puntaje\" : 1234,\n   \"nivel\" : 123\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios",
@@ -103,9 +102,8 @@
 					"script": {
 						"id": "3ab3967e-9ec8-4373-b843-ed89b2b00b38",
 						"exec": [
-							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"newnewejercicio\", data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe un ejercicio con el nombre\");"
 						],
 						"type": "text/javascript"
 					}
@@ -116,13 +114,13 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Prediccion de Terremotos\",  \n   \"descripcion\": \"blablablabla\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"putputdelejercicio\",\n   \"puntaje\" : 12345,\n   \"nivel\" : 12345\n}"
+					"raw": "{\n\t\"nombre\": \"Prediccion de Terremotos\",  \n   \"descripcion\": \"asf\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputdelejercicio\",\n   \"puntaje\" : 123,\n   \"nivel\" : 123\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios",
@@ -142,21 +140,65 @@
 		},
 		{
 			"name": "Editar ejercicio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e57e1a0a-6876-4f6b-959c-2ae046d2fe9f",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{  \n   \"descripcion\": \"blablablabla\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputoutputdelejercicio\",\n   \"puntaje\" : 1234,\n   \"nivel\" : 123\n}"
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios",
+						"{{newnewejercicio}}"
+					]
 				}
 			},
 			"response": []
 		},
 		{
 			"name": "Editar ejercicio no existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6777cf5b-b7a6-417e-9010-209dee0912e1",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /ejercicios/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -165,7 +207,18 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": ""
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios",
+						"0"
+					]
 				}
 			},
 			"response": []
@@ -227,23 +280,22 @@
 					"script": {
 						"id": "49b56c1e-0af9-4509-ad2d-72768e4cca70",
 						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
 							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
 						"type": "text",
+						"value": "application/json",
 						"disabled": true
 					}
 				],
@@ -252,7 +304,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -261,7 +313,8 @@
 					"path": [
 						"s1_maratones-api",
 						"api",
-						"submissions"
+						"ejercicios",
+						"{{newnewejercicio}}"
 					]
 				}
 			},
@@ -275,7 +328,8 @@
 					"script": {
 						"id": "49b56c1e-0af9-4509-ad2d-72768e4cca70",
 						"exec": [
-							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /ejercicios/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -300,7 +354,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -309,7 +363,8 @@
 					"path": [
 						"s1_maratones-api",
 						"api",
-						"submissions"
+						"ejercicios",
+						"0"
 					]
 				}
 			},
@@ -317,6 +372,18 @@
 		},
 		{
 			"name": "Borrar ejercicio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e5e676a-1aa4-4528-bf09-7c4465e51078",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -364,7 +431,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -374,7 +441,7 @@
 						"s1_maratones-api",
 						"api",
 						"ejercicios",
-						"{{newnewejercicio}}"
+						"0"
 					]
 				}
 			},

@@ -129,6 +129,12 @@ public class InstitucionLogicTest {
         bl.createInstitucion(newEntity);
     }
     @Test(expected = BusinessLogicException.class)
+    public void createInstitucionTestNombreExistente() throws BusinessLogicException {
+        InstitucionEntity newEntity = factory.manufacturePojo(InstitucionEntity.class);
+        newEntity.setNombre(data.get(0).getNombre());
+        bl.createInstitucion(newEntity);
+    }
+    @Test(expected = BusinessLogicException.class)
     public void createInstitucionTestNombre60() throws BusinessLogicException {
         InstitucionEntity newEntity = factory.manufacturePojo(InstitucionEntity.class);
         newEntity.setNombre("vVit__+a*xumvBu(kV-q=a_$Z9j{iuT!M-4*Y:-Dw,ELVT=/@iEQ.RH{8UhVT");
@@ -187,40 +193,42 @@ public class InstitucionLogicTest {
             Assert.assertTrue(found);
         }
     }
-     @Test
+     
+    
+     
+    @Test(expected = BusinessLogicException.class)
+    public void updateInstitucionTestNombreInvalido()throws BusinessLogicException  {
+        InstitucionEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        InstitucionEntity newEntity = factory.manufacturePojo(InstitucionEntity.class);
+        newEntity.setNombre(null);
+        bl.updateInstitucion(newEntity.getId(),newEntity);
+        
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getImagen(), entity.getImagen());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getUbicacion(), entity.getUbicacion());
+    }
+    @Test(expected = BusinessLogicException.class)
+    public void updateInstitucionTestNombreExistente() throws BusinessLogicException {
+        InstitucionEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        InstitucionEntity newEntity = factory.manufacturePojo(InstitucionEntity.class);
+        newEntity.setNombre(data.get(0).getNombre());
+        bl.updateInstitucion(newEntity.getId(),newEntity);
+        
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getImagen(), entity.getImagen());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getUbicacion(), entity.getUbicacion());
+    }
+    @Test
     public void deleteInstitucionTest() {
         InstitucionEntity entity = data.get(0);
         bl.deleteInstitucion(entity.getId());
         InstitucionEntity deleted = em.find(InstitucionEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }
-     @Test(expected = BusinessLogicException.class)
-    public void updateInstitucionTestIdMenor0()throws BusinessLogicException  {
-        InstitucionEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        InstitucionEntity newEntity = factory.manufacturePojo(InstitucionEntity.class);
-        newEntity.setId(entity.getId());
-        Long id= -2L;
-        bl.updateInstitucion(id,newEntity);
-        InstitucionEntity resp = em.find(InstitucionEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
-        Assert.assertEquals(newEntity.getImagen(), entity.getImagen());
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-        Assert.assertEquals(newEntity.getUbicacion(), entity.getUbicacion());
-    }
-     @Test(expected = BusinessLogicException.class)
-    public void updateInstitucionTestIdNull()throws BusinessLogicException  {
-        InstitucionEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        InstitucionEntity newEntity = factory.manufacturePojo(InstitucionEntity.class);
-        newEntity.setId(entity.getId());
-        bl.updateInstitucion(null,newEntity);
-        InstitucionEntity resp = em.find(InstitucionEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
-        Assert.assertEquals(newEntity.getImagen(), entity.getImagen());
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-        Assert.assertEquals(newEntity.getUbicacion(), entity.getUbicacion());
     }
 }

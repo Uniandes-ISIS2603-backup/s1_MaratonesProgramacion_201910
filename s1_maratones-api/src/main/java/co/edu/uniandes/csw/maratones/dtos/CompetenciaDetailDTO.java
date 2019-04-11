@@ -5,7 +5,14 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
+import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,58 +20,122 @@ import java.util.List;
  * @author Julian David Mendoza Ruiz
  */
 public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable {
-    private List<PrerequisitoDetailDTO> prerequisitos;
     
-    private List<LugarCompetenciaDTO> ubicaciones;
-    
-    private List<EquipoDetailDTO> inscritos;
-    
+    private List<LugarCompetenciaDTO> lugarCompetencias;
+    private List<EquipoDetailDTO> inscritos;    
     private List<UsuarioDetailDTO> jueces;
     
-    public CompetenciaDetailDTO () {
+    private List<EquipoDTO> equipos;
+    
+    private UsuarioDTO patrocinadores;
+    
+    private List<LenguajeDTO> lenguajes;
+    
+    public CompetenciaDetailDTO (CompetenciaEntity entity) {
+        super(entity);
         
+        if(entity!= null)
+        {
+            if(entity.getlugarCompetencias()!= null)
+            {
+                lugarCompetencias = new ArrayList<>();
+                for(LugarCompetenciaEntity entityLugarCompetencia: entity.getlugarCompetencias())
+                {
+                    lugarCompetencias.add(new LugarCompetenciaDTO(entityLugarCompetencia));
+                }
+            }
+            if(entity.getJueces()!=null)
+            {
+                jueces = new ArrayList<>();
+                for(UsuarioEntity entityUsuario: entity.getJueces())
+                {
+                    jueces.add(new UsuarioDetailDTO(entityUsuario));
+                }
+            }
+            if(entity.getEquipos()!= null){
+                equipos = new ArrayList<>();
+                for(EquipoEntity entityEquipo: entity.getEquipos())
+                {
+                    equipos.add(new EquipoDTO(entityEquipo));
+                }
+            }
+            if(entity.getPatrocinadores()!=null)
+            {
+                patrocinadores = new UsuarioDTO(entity.getPatrocinadores());
+            }
+            if(entity.getLenguajes()!=null)
+            {
+                lenguajes = new ArrayList<>();
+                for(LenguajeEntity entityLenguaje: entity.getLenguajes())
+                {
+                    lenguajes.add(new LenguajeDTO(entityLenguaje));
+                }
+            }
+            
+        }
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public CompetenciaEntity toEntity ()
+    {
+        CompetenciaEntity competenciaEntity= super.toEntity();
+        if(lugarCompetencias!= null)
+        {
+            List<LugarCompetenciaEntity> ubicacionesEntity = new ArrayList<>();
+            for (LugarCompetenciaDTO dtoLugarCompetencia : lugarCompetencias) {
+                ubicacionesEntity.add(dtoLugarCompetencia.toEntity());
+            }
+            competenciaEntity.setLugarCompetencias(ubicacionesEntity);
+        }
+       if(jueces!= null)
+       {
+           List<UsuarioEntity> juecesEntity= new ArrayList<>();
+           for(UsuarioDetailDTO dtoJueces: jueces)
+           {
+               juecesEntity.add(dtoJueces.toEntity());
+           }
+           competenciaEntity.setJueces(juecesEntity);
+       }
+       if(equipos!=null)
+       {
+           List<EquipoEntity> equiposEntity = new ArrayList<>();
+           for(EquipoDTO dtoEquipos: equipos)
+           {
+               equiposEntity.add(dtoEquipos.toEntity());
+           }
+           competenciaEntity.setEquipos(equiposEntity);
+       }
+       if(patrocinadores!=null)
+       {
+           competenciaEntity.setPatrocinadores(patrocinadores.toEntity());
+       }
+       if(lenguajes!= null){
+           List<LenguajeEntity> lenguajesEntity = new ArrayList<>();
+           for(LenguajeDTO dtoLenguajes: lenguajes)
+           {
+               lenguajesEntity.add(dtoLenguajes.toEntity());
+           }
+           competenciaEntity.setLenguajes(lenguajesEntity);
+       }
+                
+        return competenciaEntity;         
     }
 
     /**
-     * @return the prerequisitos
+     * @return the lugarCompetencias
      */
-    public List<PrerequisitoDetailDTO> getPrerequisitos() {
-        return prerequisitos;
+    public List<LugarCompetenciaDTO> getLugarCompetencias() {
+        return lugarCompetencias;
     }
 
     /**
-     * @param prerequisitos the prerequisitos to set
+     * @param lugarCompetencias the lugarCompetencias to set
      */
-    public void setPrerequisitos(List<PrerequisitoDetailDTO> prerequisitos) {
-        this.prerequisitos = prerequisitos;
-    }
-
-    /**
-     * @return the ubicaciones
-     */
-    public List<LugarCompetenciaDTO> getUbicaciones() {
-        return ubicaciones;
-    }
-
-    /**
-     * @param ubicaciones the ubicaciones to set
-     */
-    public void setUbicaciones(List<LugarCompetenciaDTO> ubicaciones) {
-        this.ubicaciones = ubicaciones;
-    }
-
-    /**
-     * @return the inscritos
-     */
-    public List<EquipoDetailDTO> getInscritos() {
-        return inscritos;
-    }
-
-    /**
-     * @param inscritos the inscritos to set
-     */
-    public void setInscritos(List<EquipoDetailDTO> inscritos) {
-        this.inscritos = inscritos;
+    public void setLugarCompetencias(List<LugarCompetenciaDTO> lugarCompetencias) {
+        this.lugarCompetencias = lugarCompetencias;
     }
 
     /**
@@ -80,4 +151,57 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     public void setJueces(List<UsuarioDetailDTO> jueces) {
         this.jueces = jueces;
     }
+
+    /**
+     * @return the equipos
+     */
+    public List<EquipoDTO> getEquipos() {
+        return equipos;
+    }
+
+    /**
+     * @param equipos the equipos to set
+     */
+    public void setEquipos(List<EquipoDTO> equipos) {
+        this.equipos = equipos;
+    }
+
+//     /**
+//      * @return the patrocinadores
+//      */
+// <<<<<<< jd.mendozar
+//     public UsuarioDTO getPatrocinadores() {
+//         return patrocinadores;
+// =======
+//     public List<EquipoDetailDTO> getInscritos() {
+//         return inscritos;
+// >>>>>>> master
+//     }
+
+//     /**
+//      * @param patrocinadores the patrocinadores to set
+//      */
+// <<<<<<< jd.mendozar
+//     public void setPatrocinadores(UsuarioDTO patrocinadores) {
+//         this.patrocinadores = patrocinadores;
+// =======
+//     public void setInscritos(List<EquipoDetailDTO> inscritos) {
+//         this.inscritos = inscritos;
+// >>>>>>> master
+//     }
+
+    /**
+     * @return the lenguajes
+     */
+    public List<LenguajeDTO> getLenguajes() {
+        return lenguajes;
+    }
+
+    /**
+     * @param lenguajes the lenguajes to set
+     */
+    public void setLenguajes(List<LenguajeDTO> lenguajes) {
+        this.lenguajes = lenguajes;
+    }
+
 }

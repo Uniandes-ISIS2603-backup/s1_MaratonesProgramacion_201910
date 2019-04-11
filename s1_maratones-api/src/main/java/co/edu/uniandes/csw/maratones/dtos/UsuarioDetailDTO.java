@@ -56,12 +56,12 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
      */
     public UsuarioDetailDTO(UsuarioEntity usuarioEntity) {
         super(usuarioEntity);
-        /*if (usuarioEntity.getLenguajes()!= null) {
+        if (usuarioEntity.getLenguajes()!= null) {
             lenguajes = new ArrayList<>();
             for (LenguajeEntity entity : usuarioEntity.getLenguajes()) {
                 lenguajes.add(new LenguajeDTO(entity));
             }
-        }*/
+        }
         if (usuarioEntity.getEquipos()!= null) {
             equipos = new ArrayList<>();
             for (EquipoEntity entity : usuarioEntity.getEquipos()) {
@@ -88,15 +88,14 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     @Override
     public UsuarioEntity toEntity() {
         UsuarioEntity usuarioEntity = super.toEntity();
-        /*if (lenguajes != null) {
+        if (lenguajes != null) {
             List<LenguajeEntity> entity = new ArrayList<>();
-            for (LenguajeDTO eldto : lenguajes) {
+            for(LenguajeDTO eldto : lenguajes) {
                 entity.add(eldto.toEntity());
             }
             usuarioEntity.setLenguajes(entity);
         }
-        */
-        //FALTA QUE EL ENCARGADO DE LENGUAJES IMPLEMENTE SU TOENTTY
+        
         if (equipos != null) {
             List<EquipoEntity> entity = new ArrayList<>();
             for (EquipoDTO eldto : equipos) {

@@ -59,22 +59,13 @@ import java.util.List;
  */
 public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     
-    /*
-    
-    */
-    private List<CompetenciaDTO> competencias;
     
     /*
     
     */
     private List<SubmissionDTO> submissions;
 
-    /**
-     * @return the competencias
-     */
-    public List<CompetenciaDTO> getCompetencias() {
-        return competencias;
-    }
+    
     
     
     public EjercicioDetailDTO()
@@ -85,15 +76,6 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     public EjercicioDetailDTO(EjercicioEntity entity)
     {
         super(entity);
-        if(entity.getCompetencias() != null)
-        {
-            competencias = new ArrayList<>();
-            for(CompetenciaEntity competencia: entity.getCompetencias())
-            {
-                
-            }
-            
-        }
         if(entity.getSubmissions() != null)
         {
             submissions = new ArrayList<>();
@@ -104,12 +86,7 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
         }
     }
 
-    /**
-     * @param competencias the competencias to set
-     */
-    public void setCompetencias(List<CompetenciaDTO> competencias) {
-        this.competencias = competencias;
-    }
+    
     
     /**
      * @return the submissions
@@ -129,17 +106,7 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     {
         EjercicioEntity entity = super.toEntity();
         
-        if(competencias != null)
-        {
-            List<CompetenciaEntity> competenciasEntity = new ArrayList<>();
-            for(CompetenciaDTO competencia : getCompetencias())
-            {
-                competenciasEntity.add(new CompetenciaEntity());
-            }
-            entity.setCompetencias(competenciasEntity);
-        }
-        
-        if(submissions != null)
+        if(getSubmissions() != null)
         {
             List<SubmissionEntity> subEntity = new ArrayList<>();
             for(SubmissionDTO sub : getSubmissions())

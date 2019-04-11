@@ -14,7 +14,7 @@
 						"id": "49b56c1e-0af9-4509-ad2d-72768e4cca70",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"new_id_e\", data.id);",
+							"pm.globals.set(\"newnew\", data.id);",
 							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
@@ -194,9 +194,8 @@
 					"script": {
 						"id": "4ccae943-07c3-4633-a6a4-10f1fb9f374a",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+							"tests[\"No crea con experiencia negativa\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No se puede configurar un lenguaje con una experiencia menor o igual a 0\");"
 						],
 						"type": "text/javascript"
 					}
@@ -207,13 +206,13 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"java\",\n\t\"experiencia\":4\n}"
+					"raw": "{\n\t\"nombre\": \"java\",\n\t\"experiencia\":-1\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lenguajes/{{newnew}}",
@@ -344,9 +343,6 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -356,6 +352,12 @@
 						"value": "application/json",
 						"type": "text",
 						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -363,7 +365,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lenguajes/{{new_id}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lenguajes/{{newnew}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -373,7 +375,7 @@
 						"s1_maratones-api",
 						"api",
 						"lenguajes",
-						"{{new_id}}"
+						"{{newnew}}"
 					]
 				}
 			},
@@ -387,25 +389,21 @@
 					"script": {
 						"id": "49b56c1e-0af9-4509-ad2d-72768e4cca70",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /lenguajes/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
 						"type": "text",
+						"value": "application/json",
 						"disabled": true
 					}
 				],
@@ -414,7 +412,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lenguajes/{{new_id}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lenguajes/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -424,7 +422,7 @@
 						"s1_maratones-api",
 						"api",
 						"lenguajes",
-						"{{new_id}}"
+						"0"
 					]
 				}
 			},
@@ -438,9 +436,7 @@
 					"script": {
 						"id": "4ccae943-07c3-4633-a6a4-10f1fb9f374a",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
@@ -451,24 +447,26 @@
 				"header": [
 					{
 						"key": "Content-Type",
+						"type": "text",
 						"value": "application/json",
-						"type": "text"
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"experiencia\":4\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/s1_maratones-api/api/{{newnew}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lenguajes/{{newnew}}",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s1_maratones-api",
 						"api",
+						"lenguajes",
 						"{{newnew}}"
 					]
 				}
@@ -483,9 +481,8 @@
 					"script": {
 						"id": "4ccae943-07c3-4633-a6a4-10f1fb9f374a",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /lenguajes/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -496,25 +493,27 @@
 				"header": [
 					{
 						"key": "Content-Type",
+						"type": "text",
 						"value": "application/json",
-						"type": "text"
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"experiencia\":4\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/s1_maratones-api/api/{{newnew}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lenguajes/0",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s1_maratones-api",
 						"api",
-						"{{newnew}}"
+						"lenguajes",
+						"0"
 					]
 				}
 			},
