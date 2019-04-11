@@ -117,7 +117,7 @@ public class EjercicioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el ejercicio con id = {0}", ejerID);
         
         List<SubmissionEntity> submissionsAsociadasA = getEjercicio(ejerID).getSubmissions();
-        if( submissionsAsociadasA!= null  || !submissionsAsociadasA.isEmpty() )
+        if( submissionsAsociadasA!= null  && !submissionsAsociadasA.isEmpty() )
         {
             throw new BusinessLogicException("No se puede borrar el ejercicio porque tiene submissions asociadas");
         }

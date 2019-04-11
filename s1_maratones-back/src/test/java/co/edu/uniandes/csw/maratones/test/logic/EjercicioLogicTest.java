@@ -275,9 +275,10 @@ public class EjercicioLogicTest {
         
     }
     
-    @Test(expected = BusinessLogicException.class)
+    @Test
     public void deleteEjercicioConSubmissionsTest() throws BusinessLogicException {
         EjercicioEntity entity = data.get(0);
         ejercicioLogic.deleteEjercicio(entity.getId());
+        Assert.assertNull(ejercicioLogic.getEjercicio(entity.getId()));
     }
 }
