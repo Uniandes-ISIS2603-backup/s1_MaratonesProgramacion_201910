@@ -68,7 +68,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class EquipoDetailDTO extends EquipoDTO implements Serializable {
 
     private List<UsuarioDTO> participantes;
-    
+    private List<SubmissionDTO> submissions;
+    private List<CompetenciaDTO> competencias;
+
     
     /**
      * Constructor por defecto

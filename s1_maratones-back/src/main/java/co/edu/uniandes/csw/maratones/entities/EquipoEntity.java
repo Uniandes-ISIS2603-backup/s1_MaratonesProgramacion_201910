@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class EquipoEntity extends BaseEntity implements Serializable{
 
-    private EquipoEntity coach;
+    private UsuarioEntity coach;
     private String nombreEquipo;
     
     @PodamExclude
@@ -32,12 +33,21 @@ public class EquipoEntity extends BaseEntity implements Serializable{
         CascadeType.MERGE
     })
     private List<UsuarioEntity> participantes;
-
-    public EquipoEntity getCoach() {
+    
+    
+    @PodamExclude
+    @ManyToMany 
+    private List<CompetenciaEntity> competencias;
+     
+    @PodamExclude
+    @OneToMany(mappedBy = "equipo")
+    private List<SubmissionEntity> submissions = new ArrayList<SubmissionEntity>();
+    
+    public UsuarioEntity getCoach() {
         return coach;
     }
 
-    public void setCoach(EquipoEntity coach) {
+    public void setCoach(UsuarioEntity coach) {
         this.coach = coach;
     }
 

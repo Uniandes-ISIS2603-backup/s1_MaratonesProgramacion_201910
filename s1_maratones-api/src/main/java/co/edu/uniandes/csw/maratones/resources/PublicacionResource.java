@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.maratones.ejb.PublicacionLogic;
 import co.edu.uniandes.csw.maratones.entities.PublicacionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,9 +39,12 @@ public class PublicacionResource {
      @Inject
     private PublicacionLogic publicacionLogic;
    @POST
-   public PublicacionDTO crearPublicacion(PublicacionDTO publicacion) throws BusinessLogicException{
+   public PublicacionDTO crearPublicacion(@PathParam("blogsId") Long blogsId,PublicacionDTO publicacion) throws BusinessLogicException{
        LOGGER.log(Level.INFO, "PublicacionResource createPublicacion: input: {0}", publicacion);
-        PublicacionDTO bpublicacion = new PublicacionDTO(publicacionLogic.createPublicacion(publicacion.toEntity()));
+      
+        Date f = new Date();
+        publicacion.setFecha(f);
+        PublicacionDTO bpublicacion = new PublicacionDTO(publicacionLogic.createPublicacion(blogsId,publicacion.toEntity()));
         LOGGER.log(Level.INFO, "PublicacionResource createPublicacion: output: {0}", bpublicacion);
         return bpublicacion;
        
@@ -61,7 +65,7 @@ public class PublicacionResource {
     }
      @GET
     @Path("{publicacionesId: \\d+}")
-    public PublicacionDTO getBlog(@PathParam("publicacionesId") Long publicacionesId) {
+    public PublicacionDTO getPublicacion(@PathParam("publicacionesId") Long publicacionesId) {
         LOGGER.log(Level.INFO, "PublicacionResource getPublicacion: input: {0}", publicacionesId);
         PublicacionEntity publicacionEntity = publicacionLogic.getPublicacion(publicacionesId);
         if (publicacionEntity == null) {

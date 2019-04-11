@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.maratones.ejb;
 
+import co.edu.uniandes.csw.maratones.entities.BlogEntity;
 import co.edu.uniandes.csw.maratones.entities.PublicacionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.maratones.persistence.BlogPersistence;
 import co.edu.uniandes.csw.maratones.persistence.PublicacionPersistence;
 import java.util.Date;
 import java.util.List;
@@ -21,27 +23,36 @@ import javax.inject.Inject;
  */
 @Stateless
 public class PublicacionLogic {
-    private static final Logger LOGGER = Logger.getLogger(BlogLogic.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PublicacionLogic.class.getName());
     @Inject
     private PublicacionPersistence persistence;
+    @Inject
+    private BlogPersistence blogPersistencia;
     
-    public PublicacionEntity createPublicacion(PublicacionEntity publicacionEntity) throws BusinessLogicException {
+    public PublicacionEntity createPublicacion(Long blogsId,PublicacionEntity publicacionEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de una Publicacion");
+        BlogEntity blogEntity=blogPersistencia.find(blogsId);
+        if(blogEntity==null)
+        {
+            throw new BusinessLogicException("No existe un blog con este id");
+        }
+        publicacionEntity.setBlog(blogEntity);
+        
         //Reglas para fecha
         if(publicacionEntity.getFecha()==null)
         {
             throw new BusinessLogicException("La fecha de la Publicacion invalida");
         }
-        Date instante =new Date();
+        /*Date instante =new Date();
        
         if(!evaluarLimite(instante, publicacionEntity.getFecha())){
             throw new BusinessLogicException("La fecha de la Publicacion invalida");
-        }
+        }*/
         persistence.create(publicacionEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de una Publicacion");
         return publicacionEntity;
     }
-    public static boolean evaluarLimite(Date date1, Date date2) {
+    /*public static boolean evaluarLimite(Date date1, Date date2) {
     boolean correcto = false;
     long diferencia = (Math.abs(date1.getTime() - date2.getTime())) / 1000;
     long limit = (60 * 1000) / 100L;//limite de tiempo
@@ -50,7 +61,7 @@ public class PublicacionLogic {
         correcto= true;
     }
     return correcto;
-}
+    }*/
     public PublicacionEntity getPublicacion(Long publicacionId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar una Publicacion con id = {0}", publicacionId);
         PublicacionEntity publicacionEntity = persistence.find(publicacionId);

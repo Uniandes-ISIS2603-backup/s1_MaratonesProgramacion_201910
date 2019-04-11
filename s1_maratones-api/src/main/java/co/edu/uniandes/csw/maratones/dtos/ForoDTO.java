@@ -23,6 +23,7 @@ public class ForoDTO implements Serializable{
    private String descripcion;
    private Date fecha;
    private String tags;
+   private Long id;
    
    public ForoDTO()
    {}
@@ -41,6 +42,7 @@ public class ForoDTO implements Serializable{
             this.descripcion = foroEntity.getDescripcion();
             this.fecha = foroEntity.getFecha();
             this.tags = foroEntity.getTags();
+            this.id = foroEntity.getId();
         }
     }
     
@@ -142,11 +144,26 @@ public class ForoDTO implements Serializable{
         foroEntity.setVotosEnContra(this.votosEnContra);
         foroEntity.setFecha(this.fecha);
         foroEntity.setTags(this.tags);
+        foroEntity.setId(this.id);
         return foroEntity;
     }
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }
