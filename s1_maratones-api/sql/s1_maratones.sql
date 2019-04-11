@@ -21,3 +21,8 @@ insert into ForoEntity (id, nombre, votosAFavor, votosEnContra, descripcion, fec
 insert into ForoEntity (id, nombre, votosAFavor, votosEnContra, descripcion, fecha, tags) values (101, 'TensorFlow', 1000, 0, 'Machine learning en maratones?', '2019-04-11 11:12:12', '#help');
 insert into ForoEntity (id, nombre, votosAFavor, votosEnContra, descripcion, fecha, tags) values (102, 'sdfsdsfsfs', 1, 10, 'sdfsdfdfsd', '2019-04-11 12:12:12', '#help');
 
+insert into ComentarioEntity (id, mensaje, votosAFavor, votosEnContra) values (100, 'no sé', 10, 100);
+insert into ComentarioEntity (id, mensaje, votosAFavor, votosEnContra) values (101, 'Eso es el back jodido', 100, 100);
+insert into ComentarioEntity (id, mensaje, votosAFavor, votosEnContra) values (102, 'no sé', 10000, 100);
+
+
