@@ -36,6 +36,7 @@ import java.io.Serializable;
  * @author c.mendez11
  */
 public class InstitucionDTO implements Serializable{
+    private Long id;
     private String nombre;
     private String imagen;
     private String ubicacion;
@@ -110,6 +111,7 @@ public class InstitucionDTO implements Serializable{
         institucionEntity.setDescripcion(this.descripcion);
         institucionEntity.setImagen(this.imagen);
         institucionEntity.setUbicacion(this.ubicacion);
+        institucionEntity.setId(this.id);
        return institucionEntity;
     }
     /**
@@ -122,7 +124,21 @@ public class InstitucionDTO implements Serializable{
             this.descripcion = institucionEntity.getDescripcion();
             this.imagen = institucionEntity.getImagen();
             this.ubicacion = institucionEntity.getUbicacion();
-         
+            this.id=institucionEntity.getId();
         }
      }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

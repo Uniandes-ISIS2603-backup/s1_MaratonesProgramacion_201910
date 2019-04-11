@@ -18,11 +18,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ForoDTO implements Serializable{
         
    private String nombre;
-   private int votosAFavor;
-   private int votosEnContra;
+   private Integer votosAFavor;
+   private Integer votosEnContra;
    private String descripcion;
    private Date fecha;
    private String tags;
+   private Long id;
    
    public ForoDTO()
    {}
@@ -41,6 +42,7 @@ public class ForoDTO implements Serializable{
             this.descripcion = foroEntity.getDescripcion();
             this.fecha = foroEntity.getFecha();
             this.tags = foroEntity.getTags();
+            this.id = foroEntity.getId();
         }
     }
     
@@ -103,28 +105,28 @@ public class ForoDTO implements Serializable{
     /**
      * @return the votosAFavor
      */
-    public int getVotosAFavor() {
+    public Integer getVotosAFavor() {
         return votosAFavor;
     }
 
     /**
      * @param votosAFavor the votosAFavor to set
      */
-    public void setVotosAFavor(int votosAFavor) {
+    public void setVotosAFavor(Integer votosAFavor) {
         this.votosAFavor = votosAFavor;
     }
 
     /**
      * @return the votosEnContra
      */
-    public int getVotosEnContra() {
+    public Integer getVotosEnContra() {
         return votosEnContra;
     }
 
     /**
      * @param votosEnContra the votosEnContra to set
      */
-    public void setVotosEnContra(int votosEnContra) {
+    public void setVotosEnContra(Integer votosEnContra) {
         this.votosEnContra = votosEnContra;
     }
     
@@ -142,11 +144,26 @@ public class ForoDTO implements Serializable{
         foroEntity.setVotosEnContra(this.votosEnContra);
         foroEntity.setFecha(this.fecha);
         foroEntity.setTags(this.tags);
+        foroEntity.setId(this.id);
         return foroEntity;
     }
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }

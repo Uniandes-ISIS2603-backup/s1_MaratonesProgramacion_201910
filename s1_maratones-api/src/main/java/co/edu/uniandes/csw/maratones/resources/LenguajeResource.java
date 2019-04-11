@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
 
 import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
+import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
+import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,8 +18,10 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,9 +46,17 @@ public class LenguajeResource {
 
     
     @POST
-    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje)
+    public LenguajeDTO createLenguaje(LenguajeDTO lenguaje) throws BusinessLogicException
     {
-        return lenguaje;
+        LOGGER.log(Level.INFO, "EditorialResource createLenguaje: input: {0}", lenguaje);
+        // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
+        LenguajeEntity lenguajeEntity = lenguaje.toEntity();
+        // Invoca la lógica para crear el lenguaje nuevo
+        LenguajeEntity nuevoEditorialEntity = lenguajeLogic.createLenguaje(lenguajeEntity);
+        // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
+        LenguajeDTO nuevoLenguajeDTO = new LenguajeDTO(nuevoEditorialEntity);
+        LOGGER.log(Level.INFO, "EditorialResource createEditorial: output: {0}", nuevoLenguajeDTO);
+        return nuevoLenguajeDTO;
     }
     
     @GET
@@ -91,5 +103,46 @@ public class LenguajeResource {
             list.add(new LenguajeDTO(entity));
         }
         return list;
+    }
+    
+    
+    /**
+     * Actualiza el libro con el id recibido en la URL con la información que se
+     * recibe en el cuerpo de la petición.
+     *
+     * @param lenguajesId
+     * @param lenguaje
+     * @return JSON {@link LenguajeDTO} - El lenguaje guardado.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el lenguaje a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar el lenguaje.
+     */
+    @PUT
+    @Path("{lenguajesId: \\d+}")
+    public LenguajeDTO updateLenguaje(@PathParam("lenguajesId") Long lenguajesId, LenguajeDTO lenguaje) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: input: id: {0} , lenguaje: {1}", new Object[]{lenguajesId, lenguaje});
+        
+        if (lenguajeLogic.getLenguaje(lenguajesId) == null) {
+            throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
+        }
+        lenguaje.setId(lenguajesId);
+        LenguajeDTO delDTO = new LenguajeDTO(lenguajeLogic.updateLenguaje(lenguaje.toEntity()));
+        LOGGER.log(Level.INFO, "LenguajeResource updateLenguaje: output: {0}", delDTO);
+        return delDTO;
+    }
+    
+    @DELETE
+    @Path("{lenguajesId: \\d+}")
+    public void deletLenguaje(@PathParam("lenguajesId") Long lenguajesId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "LenguajeResource deleteLenguaje: input: {0}", lenguajesId);
+        LenguajeEntity entity = lenguajeLogic.getLenguaje(lenguajesId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /lenguajes/" + lenguajesId + " no existe.", 404);
+        }
+        
+        lenguajeLogic.deleteLenguaje(lenguajesId);
+        LOGGER.info("LenguajeResource deleteLenguaje: output: void");
     }
 }

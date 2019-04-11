@@ -138,13 +138,7 @@ public class LenguajeLogicTest {
     
     
     
-    @Test(expected = BusinessLogicException.class)
     
-    public void createLenguajeConMismoNombreTest() throws BusinessLogicException {
-        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
-        newEntity.setNombre(data.get(0).getNombre());
-        lenguajeLogic.createLenguaje(newEntity);
-    }
     
     @Test(expected = BusinessLogicException.class)
     
@@ -155,12 +149,7 @@ public class LenguajeLogicTest {
     }
     
     
-    @Test(expected = BusinessLogicException.class)
-    public void updateLenguajeQueNoExiste() throws BusinessLogicException
-    {
-        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
-        lenguajeLogic.updateLenguaje(newEntity);
-    }
+
     
     @Test(expected = BusinessLogicException.class)
     
@@ -172,19 +161,14 @@ public class LenguajeLogicTest {
     }
     
     @Test
-    public void deleteLenguajeTest() throws BusinessLogicException
+    public void deleteLenguajeTest()
     {
         LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
         newEntity.setId(data.get(0).getId());
-        lenguajeLogic.deleteLenguaje(newEntity);
+        lenguajeLogic.deleteLenguaje(newEntity.getId());
     }
     
-    @Test(expected = BusinessLogicException.class)
-    public void deleteLenguajeQueNoExisteTest() throws BusinessLogicException
-    {
-        LenguajeEntity newEntity = factory.manufacturePojo(LenguajeEntity.class);
-        lenguajeLogic.deleteLenguaje(newEntity);
-    }
+    
     
     @Test
     public void getLenguajeTest()throws BusinessLogicException

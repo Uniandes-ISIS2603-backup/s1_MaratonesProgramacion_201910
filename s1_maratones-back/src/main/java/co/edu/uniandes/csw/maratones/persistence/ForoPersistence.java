@@ -45,9 +45,18 @@ public class ForoPersistence {
     @PersistenceContext(unitName = "maratonesPU")
     protected EntityManager em;
     
-    public ForoEntity create(ForoEntity foroEntity){
-        LOGGER.log(Level.INFO, "Creando un foro nuevo");
-        
+    
+    /**
+     * Método para persisitir la entidad en la base de datos.
+     *
+     * @param foroEntity objeto forol que se creará en la base de datos
+     * @return devuelve la entidad creada con un id dado por la base de datos.
+     */
+    public ForoEntity create(ForoEntity foroEntity) {
+        LOGGER.log(Level.INFO, "Creando un foro nueva");
+        /* Note que hacemos uso de un método propio de EntityManager para persistir la editorial en la base de datos.
+        Es similar a "INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);" en SQL.
+         */
         em.persist(foroEntity);
         LOGGER.log(Level.INFO, "Saliendo de crear un foro nuevo");
         return foroEntity;
@@ -89,17 +98,17 @@ public class ForoPersistence {
     }
     
     /**
-     * Busca si hay alguna editorial con el nombre que se envía de argumento
+     * Busca si hay algún foro con el nombre que se envía de argumento
      *
-     * @param name: Nombre de la editorial que se está buscando
-     * @return null si no existe ninguna editorial con el nombre del argumento.
-     * Si existe alguna devuelve la primera.
+     * @param name: Nombre del foro que se está buscando
+     * @return null si no existe ningún foro con el nombre del argumento.
+     * Si existe alguna devuelve el primero.
      */
     public ForoEntity findByName(String name)
     {
-        LOGGER.log(Level.INFO, "Consultando editorial por nombre ", name);
-        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From EditorialEntity e where e.name = :name", ForoEntity.class);
+        LOGGER.log(Level.INFO, "Consultando foro por nombre ", name);
+        // Se crea un query para buscar foros con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From ForoEntity e where e.nombre = :name", ForoEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
         query = query.setParameter("name", name);
         // Se invoca el query se obtiene la lista resultado

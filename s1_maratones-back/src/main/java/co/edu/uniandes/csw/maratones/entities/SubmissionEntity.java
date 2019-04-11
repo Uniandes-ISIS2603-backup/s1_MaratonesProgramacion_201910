@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -22,9 +24,21 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     @ManyToOne
     private EjercicioEntity ejercicioEntity;
     
+    @PodamExclude
+    @ManyToOne
+    private EquipoEntity equipo;
+    
      /*
     */
     private double tiempo;
+
+    public EquipoEntity getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(EquipoEntity equipo) {
+        this.equipo = equipo;
+    }
     
     /*
     */
@@ -36,6 +50,7 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     
     /*
     */
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
     /*
@@ -46,6 +61,29 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     
     */
     private String codigo;
+     
+    
+    /**
+     * 
+     */
+    public static final String EN_REVISION = "En revision";
+    
+        /**
+     * 
+     */
+    public static final String APROBADA = "Aprobada";
+    
+     /**
+     * 
+     */
+    public static final String ERROR_COMPILACION = "Error de compilacion";
+    
+        /**
+     * 
+     */
+    public static final String ERROR_TIEMPO= "Error de tiempo limite excedido";
+    
+
 
     /**
      * @return the tiempo
@@ -144,6 +182,8 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     public void setEjercicioEntity(EjercicioEntity ejercicioEntity) {
         this.ejercicioEntity = ejercicioEntity;
     }
+
+
     
     
     
@@ -151,7 +191,5 @@ public class SubmissionEntity extends BaseEntity implements Serializable{
     
     
     
-    
-    
-    
+      
 }

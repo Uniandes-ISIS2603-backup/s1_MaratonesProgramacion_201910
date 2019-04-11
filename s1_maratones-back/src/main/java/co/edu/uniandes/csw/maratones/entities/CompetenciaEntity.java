@@ -28,6 +28,13 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     })
     private List<EjercicioEntity> ejercicioEntitys;
     
+    @PodamExclude
+    @ManyToMany (mappedBy = "competencias", cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    private List<EquipoEntity> equipos;
+    
     private boolean esVirtual;
     
     private LocalDateTime fechaInicio;

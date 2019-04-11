@@ -17,8 +17,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ComentarioDTO implements Serializable{
     
     private String mensaje;
-    private int votosAFavor;
-    private int votosEnContra;
+    private Integer votosAFavor;
+    private Integer votosEnContra;
+    private Long id;
     
     /*
     * Relación a un foro  
@@ -42,6 +43,7 @@ public class ComentarioDTO implements Serializable{
             this.mensaje = comentarioEntity.getMensaje();
             this.votosAFavor = comentarioEntity.getVotosAFavor();
             this.votosEnContra = comentarioEntity.getVotosEnContra();
+            this.id = comentarioEntity.getId();
             if (comentarioEntity.getForo() != null) {
                 this.foro = new ForoDTO(comentarioEntity.getForo());
             } else {
@@ -60,8 +62,9 @@ public class ComentarioDTO implements Serializable{
         comentarioEntity.setMensaje(this.mensaje);
         comentarioEntity.setVotosAFavor(this.votosAFavor);
         comentarioEntity.setVotosEnContra(this.votosEnContra);
-        if (this.foro != null) {
-            comentarioEntity.setForo(this.foro.toEntity());
+        comentarioEntity.setId(this.getId());
+        if (this.getForo() != null) {
+            comentarioEntity.setForo(this.getForo().toEntity());
         }
         return comentarioEntity;
     }
@@ -82,33 +85,61 @@ public class ComentarioDTO implements Serializable{
     /**
      * @return the votosAFavor
      */
-    public int getVotosAFavor() {
+    public Integer getVotosAFavor() {
         return votosAFavor;
     }
 
     /**
      * @param votosAFavor the votosAFavor to set
      */
-    public void setVotosAFavor(int votosAFavor) {
+    public void setVotosAFavor(Integer votosAFavor) {
         this.votosAFavor = votosAFavor;
     }
 
     /**
      * @return the votosEnContra
      */
-    public int getVotosEnContra() {
+    public Integer getVotosEnContra() {
         return votosEnContra;
     }
 
     /**
      * @param votosEnContra the votosEnContra to set
      */
-    public void setVotosEnContra(int votosEnContra) {
+    public void setVotosEnContra(Integer votosEnContra) {
         this.votosEnContra = votosEnContra;
     }
     
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the foro
+     */
+    public ForoDTO getForo() {
+        return foro;
+    }
+
+    /**
+     * @param foro the foro to set
+     */
+    public void setForo(ForoDTO foro) {
+        this.foro = foro;
     }
 }

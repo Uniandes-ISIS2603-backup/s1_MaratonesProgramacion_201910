@@ -60,6 +60,53 @@ public class ComentarioLogic {
         LOGGER.log(Level.INFO, "Termina proceso de creación del comentario");
         return comentarioEntity;
     }
+    
+    /**
+     * Busca un lComentario por ID
+     *
+     * @param comentariosId El id del Comentarioo a buscar
+     * @return El Comentario encontrado, null si no lo encuentra.
+     */
+    public ComentarioEntity getComentario(Long comentariosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el Comentarioo con id = {0}", comentariosId);
+        ComentarioEntity comentarioEntity = persistence.find(comentariosId);
+        if (comentarioEntity == null) {
+            LOGGER.log(Level.SEVERE, "El Comentario con el id = {0} no existe", comentariosId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el Comentario con id = {0}", comentariosId);
+        return comentarioEntity;
+    }
+
+    /**
+     * Actualizar un Comentario por ID
+     *
+     * @param comentariosId El ID del Comentario a actualizar
+     * @param comentarioEntity La entidad del Comentario con los cambios deseados
+     * @return La entidad del Comentario luego de actualizarla
+     * @throws BusinessLogicException Si el IBN de la actualización es inválido
+     */
+    public ComentarioEntity updateComentario(Long comentariosId, ComentarioEntity comentarioEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el Comentario con id = {0}", comentariosId);
+
+        
+        ComentarioEntity newEntity = persistence.update(comentarioEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el Comentario con id = {0}", comentarioEntity.getId());
+        return newEntity;
+    }
+
+    /**
+     * Eliminar un Comentario por ID
+     *
+     * @param comentariosId El ID del Comentario a eliminar
+     * @throws BusinessLogicException si el Comentario tiene autores asociados
+     */
+    public void deleteComentario(Long comentariosId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el Comentarioo con id = {0}", comentariosId);
+   
+        //tener en cuenta
+        persistence.delete(comentariosId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el Comentario con id = {0}", comentariosId);
+    }
 
     /**
      * Devuelve todos los comentarios que hay en la base de datos.
