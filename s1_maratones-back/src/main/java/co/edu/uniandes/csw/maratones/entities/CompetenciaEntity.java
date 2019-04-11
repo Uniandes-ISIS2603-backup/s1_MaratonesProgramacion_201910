@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -26,7 +27,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class CompetenciaEntity extends BaseEntity implements Serializable{
 
     @PodamExclude
-    @ManyToMany(mappedBy = "competencias", cascade = {
+    @ManyToMany(mappedBy = "competencias",fetch = FetchType.LAZY, cascade = {
         CascadeType.PERSIST,
         CascadeType.MERGE
     })
@@ -61,10 +62,10 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
             })
     private List<LenguajeEntity> lenguajes;
     
-    private Boolean esVirtual;
+    private String esVirtual;
     
     
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
     
     private String nombre;
@@ -75,7 +76,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     
     private String condiciones;
     
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFin;
     
     private Integer nivel;
@@ -153,14 +154,14 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     /**
      * @return the esVirtual
      */
-    public boolean isEsVirtual() {
+    public String isEsVirtual() {
         return esVirtual;
     }
 
     /**
      * @param esVirtual the esVirtual to set
      */
-    public void setEsVirtual(boolean esVirtual) {
+    public void setEsVirtual(String esVirtual) {
         this.esVirtual = esVirtual;
     }
 

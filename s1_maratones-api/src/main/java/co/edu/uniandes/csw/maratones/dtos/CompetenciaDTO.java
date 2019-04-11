@@ -5,10 +5,12 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.adapters.DateAdapter;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import java.io.Serializable;
 import java.util.Date;
 import java.time.LocalDateTime;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -18,8 +20,9 @@ import java.time.LocalDateTime;
 public class CompetenciaDTO implements Serializable{
     private Long id;
 
-    private Boolean esVirtual;
+    private String esVirtual;
     
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaInicio;
     
     private String nombre;
@@ -30,6 +33,7 @@ public class CompetenciaDTO implements Serializable{
     
     private String condiciones;
     
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaFin;
     
     private Integer nivel;
@@ -76,14 +80,14 @@ public class CompetenciaDTO implements Serializable{
     /**
      * @return the esVirtual
      */
-    public boolean isEsVirtual() {
+    public String isEsVirtual() {
         return esVirtual;
     }
 
     /**
      * @param esVirtual the esVirtual to set
      */
-    public void setEsVirtual(boolean esVirtual) {
+    public void setEsVirtual(String esVirtual) {
         this.esVirtual = esVirtual;
     }
 

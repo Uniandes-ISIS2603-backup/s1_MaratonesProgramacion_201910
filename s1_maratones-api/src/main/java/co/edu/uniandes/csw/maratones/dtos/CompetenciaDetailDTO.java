@@ -21,8 +21,7 @@ import java.util.List;
  */
 public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable {
     
-    private List<LugarCompetenciaDTO> lugarCompetencias;
-    private List<EquipoDetailDTO> inscritos;    
+    private List<LugarCompetenciaDTO> lugarCompetencias;  
     private List<UsuarioDetailDTO> jueces;
     
     private List<EquipoDTO> equipos;
@@ -165,30 +164,6 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     public void setEquipos(List<EquipoDTO> equipos) {
         this.equipos = equipos;
     }
-
-//     /**
-//      * @return the patrocinadores
-//      */
-// <<<<<<< jd.mendozar
-//     public UsuarioDTO getPatrocinadores() {
-//         return patrocinadores;
-// =======
-//     public List<EquipoDetailDTO> getInscritos() {
-//         return inscritos;
-// >>>>>>> master
-//     }
-
-//     /**
-//      * @param patrocinadores the patrocinadores to set
-//      */
-// <<<<<<< jd.mendozar
-//     public void setPatrocinadores(UsuarioDTO patrocinadores) {
-//         this.patrocinadores = patrocinadores;
-// =======
-//     public void setInscritos(List<EquipoDetailDTO> inscritos) {
-//         this.inscritos = inscritos;
-// >>>>>>> master
-//     }
 
     /**
      * @return the lenguajes

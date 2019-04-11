@@ -7,10 +7,11 @@ package co.edu.uniandes.csw.maratones.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -19,6 +20,8 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class LugarCompetenciaEntity extends BaseEntity implements Serializable {
+    
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     
     private String ubicaciones;
