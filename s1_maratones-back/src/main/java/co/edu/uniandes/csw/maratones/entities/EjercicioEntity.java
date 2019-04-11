@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -52,8 +53,8 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     private int nivel;
 
     @PodamExclude
-    @ManyToMany 
-    private List<CompetenciaEntity> competencias;
+    @ManyToOne 
+    private CompetenciaEntity competencia;
     
     @PodamExclude
     @OneToMany(mappedBy = "ejercicioEntity",cascade = {
@@ -149,16 +150,16 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     /**
      * @return the competencias
      */
-    public List<CompetenciaEntity> getCompetencias() {
-        return competencias;
+    public CompetenciaEntity getCompetencia() {
+        return competencia;
     }
     
     
     /**
      * @param competencias the competencias to set
      */
-    public void setCompetencias(List<CompetenciaEntity> competencias) {
-        this.competencias = competencias;
+    public void setCompetencia(CompetenciaEntity competencias) {
+        this.competencia = competencias;
     }
 
     /**
