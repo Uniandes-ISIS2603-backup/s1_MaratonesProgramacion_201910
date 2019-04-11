@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "d2ffd39b-e87e-4eea-b80f-a2fa55fa50ce",
+		"name": "Usuario Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		"_postman_id": "3957bd00-dcbd-411b-befa-e05f142a99f5",
+			"name": "Crear un lenguaje",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Norma\"}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/maratones-api/api/lenguajes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"maratones-api",
+						"api",
+						"lenguajes"
+					]
+				},
+				"description": "**Release: Paso-**\r\n\r\nCrea un nuevo lenguaje. El recurso solo tiene de atributo \"name\" que debe ser único. El Id es inicializado por la BD y se debe ver en la respuesta. \r\n\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+        {
+			"_postman_id": "4ce87dd2-c01d-444b-8291-f424a357241c",
+			"name": "Crear un usuario con nombre de usuario invalido 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d80427e6-5008-41d2-88de-479a8d9c5f51",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No crea con nombre de usuario invalido\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nombre de usuario es inválido\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"maria camila\",\n    \"nombredeusuario\": \"\",\n    \"lenguajes\": { \"id\": {{new_id_e}} },\n    \"nombre\": \"py\",\n    \"clave\": \"fjdkjkgrkf43&&\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/maratones-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"maratones-api",
+						"api",
+						"usuarios"
+					]
+				},
+				"description": "**Release: Paso**\r\n\r\nCrea un nuevo usuario pero con un nombre de usuario invalido. Verifica que se genera el error y el mensaje \"El nombre de usuario es inválido\".\r\n\r\n**Código HTTP esperado: 412 Precondition failed\".**"
+			},
+			"response": []
+		},{
+			"_postman_id": "2ada7754-88d7-4d99-aa37-94f45cd3f25e",
+			"name": "Crear un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "304084ed-d326-4e9b-b66a-8c2c95b18e0b",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_b\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"blablablanom\",\n    \"clave\": \"/2017dsfsf\",\n    \"nombre de usuario\": \"mariacamila\",\n    \"editorial\": { \"id\": {{new_id_e}} },\n    \"nombre\": \"Historia de los hombres lobo 2\"}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/maratones-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"maratones-api",
+						"api",
+						"usuarios"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea un nuevo usuario. El nombre de usuario del recurso debe ser único. El Id es inicializado por la BD y se debe ver en la respuesta. \r\n\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		}
+	]
+}

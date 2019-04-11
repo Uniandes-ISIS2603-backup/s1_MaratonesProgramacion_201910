@@ -1,3 +1,4 @@
+
 delete from EjercicioEntity;
 delete from LenguajeEntity;
 delete from SubmissionEntity;

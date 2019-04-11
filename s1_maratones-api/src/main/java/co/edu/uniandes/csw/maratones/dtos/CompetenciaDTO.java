@@ -5,34 +5,73 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 /**
  *
  * @author Julian David Mendoza Ruiz
  */
 public class CompetenciaDTO implements Serializable{
-    private boolean esVirtual;
+    private Long id;
+
+    private Boolean esVirtual;
     
-    private Date fechaInicio;
+    private LocalDateTime fechaInicio;
     
     private String nombre;
     
     private String descripcion;
     
-    private UsuarioDTO patrocinadores;
-    
-    private int puntos;
+    private Integer puntos;
     
     private String condiciones;
     
-    private Date fechaFin;
+    private LocalDateTime fechaFin;
+    
+    private Integer nivel;
+   
     
     public CompetenciaDTO () {
         
     }
 
+    public CompetenciaDTO(CompetenciaEntity entity)
+    {
+      if(entity!= null)
+      {
+          this.id= entity.getId();
+          this.esVirtual= entity.isEsVirtual();
+          this.fechaInicio = entity.getFechaInicio();
+          this.nombre= entity.getNombre();
+          this.descripcion= entity.getDescripcion();
+          this.puntos = entity.getPuntos();
+          this.condiciones= entity.getCondiciones();
+          this.fechaFin= entity.getFechaFin();
+          this.nivel= entity.getNivel();
+      }
+    
+    }
+    
+    public CompetenciaEntity toEntity()
+    {
+        CompetenciaEntity entity = new CompetenciaEntity();
+        entity.setId(this.id);
+        entity.setEsVirtual(this.esVirtual);
+        entity.setFechaInicio(this.fechaInicio);
+        entity.setNombre(this.nombre);
+        entity.setDescripcion(this.descripcion);
+        entity.setPuntos(this.puntos);
+        entity.setCondiciones(this.condiciones);
+        entity.setFechaFin(this.fechaFin);
+        entity.setNivel(this.nivel);
+        
+        return entity;
+        
+                
+    }
     /**
      * @return the esVirtual
      */
@@ -50,14 +89,14 @@ public class CompetenciaDTO implements Serializable{
     /**
      * @return the fechaInicio
      */
-    public Date getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
     /**
      * @param fechaInicio the fechaInicio to set
      */
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
@@ -90,30 +129,16 @@ public class CompetenciaDTO implements Serializable{
     }
 
     /**
-     * @return the patrocinadores
-     */
-    public UsuarioDTO getPatrocinadores() {
-        return patrocinadores;
-    }
-
-    /**
-     * @param patrocinadores the patrocinadores to set
-     */
-    public void setPatrocinadores(UsuarioDTO patrocinadores) {
-        this.patrocinadores = patrocinadores;
-    }
-
-    /**
      * @return the puntos
      */
-    public int getPuntos() {
+    public Integer getPuntos() {
         return puntos;
     }
 
     /**
      * @param puntos the puntos to set
      */
-    public void setPuntos(int puntos) {
+    public void setPuntos(Integer puntos) {
         this.puntos = puntos;
     }
 
@@ -134,14 +159,44 @@ public class CompetenciaDTO implements Serializable{
     /**
      * @return the fechaFin
      */
-    public Date getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
     }
 
     /**
      * @param fechaFin the fechaFin to set
      */
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+    /**
+     * @return the nivel
+     */
+    public Integer getNivel() {
+        return nivel;
+    }
+
+    /**
+     * @param nivel the nivel to set
+     */
+    public void setNivel(Integer nivel) {
+        this.nivel = nivel;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
 }
