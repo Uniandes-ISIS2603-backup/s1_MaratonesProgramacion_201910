@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.maratones.entities;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -27,7 +29,12 @@ public class LenguajeEntity extends BaseEntity implements Serializable{
     */
     private int experiencia;
     
-    
+    /**
+     * 
+     */
+    @PodamExclude
+    @ManyToOne 
+    private UsuarioEntity programador;
     
     /**
      * @return the nombre
@@ -55,6 +62,20 @@ public class LenguajeEntity extends BaseEntity implements Serializable{
      */
     public void setExperiencia(int experiencia) {
         this.experiencia = experiencia;
+    }
+
+    /**
+     * @return the programador
+     */
+    public UsuarioEntity getProgramador() {
+        return programador;
+    }
+
+    /**
+     * @param programador the programador to set
+     */
+    public void setProgramador(UsuarioEntity programador) {
+        this.programador = programador;
     }
     
     
