@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "f1a9be61-6642-4d06-a079-66619466b0d0",
+		"name": "EquipoResource",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear equipo 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3229dfa6-012d-4683-93e0-4b82344fcd78",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"newnew\", data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n    \"nombreEquipo\": \"elnombre\"\n}\n"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/equipos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All equipos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3229dfa6-012d-4683-93e0-4b82344fcd78",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"newnew\", data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar equipo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3229dfa6-012d-4683-93e0-4b82344fcd78",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"newnew\", data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios/{{newnew}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"usuarios",
+						"{{newnew}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar equipo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d40fe81-c2dc-4e1c-a1d1-3c677486ff7b",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n    \"nombreEquipo\": \"equipo1\"\n}\n"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/equipos/{{newnew}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"equipos",
+						"{{newnew}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear equipo2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c316a455-4b49-44eb-b2e6-4ef3aaacf288",
+						"exec": [
+							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n    \"nombreEquipo\": \"equipito\"\n}\n"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/equipos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"equipos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
