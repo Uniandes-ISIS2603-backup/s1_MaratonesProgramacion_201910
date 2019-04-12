@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       "memoria" : number,
  *       "codigo" : string,
  *       "id": number
+  *      "ejercicio": {@link EjercicioDTO}
+ * 
  * 
  * 
  *   }
@@ -42,6 +44,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       "memoria" : 9876,
  *       "codigo" : "col-12345",
  *       "id": 123456
+ *       "ejercicio":
+ *      {
+ *          "id" : 1,
+ *          "nombre" : "Prediccion de terremotos"
+ *      }
  *   }
  *
  * </pre>
@@ -141,14 +148,14 @@ public class SubmissionDTO implements Serializable{
     /**
      * @return the tiempo
      */
-    public double getTiempo() {
+    public Double getTiempo() {
         return tiempo;
     }
 
     /**
      * @param tiempo the tiempo to set
      */
-    public void setTiempo(double tiempo) {
+    public void setTiempo(Double tiempo) {
         this.tiempo = tiempo;
     }
 
@@ -197,14 +204,14 @@ public class SubmissionDTO implements Serializable{
     /**
      * @return the memoria
      */
-    public double getMemoria() {
+    public Double getMemoria() {
         return memoria;
     }
 
     /**
      * @param memoria the memoria to set
      */
-    public void setMemoria(double memoria) {
+    public void setMemoria(Double memoria) {
         this.memoria = memoria;
     }
 

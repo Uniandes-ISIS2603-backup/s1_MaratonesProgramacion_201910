@@ -27,14 +27,16 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class CompetenciaEntity extends BaseEntity implements Serializable{
 
     @PodamExclude
-    @ManyToMany(mappedBy = "competencias",fetch = FetchType.LAZY, cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
+    @OneToMany(mappedBy = "competencia",orphanRemoval = true, cascade = {
+        CascadeType.PERSIST
     })
     private List<EjercicioEntity> ejercicioEntitys;
     
     @PodamExclude
-    @OneToMany(mappedBy = "competencia",fetch = FetchType.LAZY,orphanRemoval = true)
+    @OneToMany(mappedBy = "competencia",fetch = FetchType.LAZY,orphanRemoval = true, cascade = 
+            {
+                CascadeType.PERSIST
+            })
     private List<LugarCompetenciaEntity> lugarCompetencias;
     
     @PodamExclude
@@ -81,7 +83,8 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     
     private Integer nivel;
 
-    /**
+
+      /**
      * @return the ejercicioEntitys
      */
     public List<EjercicioEntity> getEjercicioEntitys() {
@@ -94,6 +97,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     public void setEjercicioEntitys(List<EjercicioEntity> ejercicioEntitys) {
         this.ejercicioEntitys = ejercicioEntitys;
     }
+
 
     /**
      * @return the lugarCompetencias
