@@ -91,14 +91,14 @@ public class SubmissionLogic {
      * @param submissionID
      * @throws BusinessLogicException 
      */
-    public void deleteSubmission(Long submissionID) throws BusinessLogicException
+    public void deleteSubmission(Long submissionID)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar una submission con id = {0}", submissionID);
-        if(persistence.find(submissionID) == null)
+        SubmissionEntity subEntity = persistence.find(submissionID);
+        if(subEntity.getEjercicioEntity() != null)
         {
-            throw new BusinessLogicException("No existe la submission con el id:" + submissionID);
+            subEntity.getEjercicioEntity().getSubmissions().remove(subEntity);
         }
-        
         LOGGER.log(Level.INFO, "Termina proceso de borrar la submission con id = {0}", submissionID);
         persistence.delete(submissionID);
     }
@@ -114,10 +114,7 @@ public class SubmissionLogic {
     public SubmissionEntity updateSubmission(Long subID, SubmissionEntity sub) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar la submission con id = {0}", subID);
-        if(persistence.find(subID) == null)
-        {
-             throw new BusinessLogicException("No existe un lenguaje con el codigo: " + sub.getCodigo());
-        }
+        
         
         if(sub.getTiempo() <= 0)
         {

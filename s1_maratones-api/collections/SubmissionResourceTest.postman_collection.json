@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "865da384-499e-4d2a-823e-3527b7a761d8",
+		"name": "SubmissionResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear una submission",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67924ab7-cd10-4b71-ac46-cdb5efae9b86",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"newnewsub\", data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codigo\":\"col-32345\",\t\n\t\"tiempo\": 123,\n\t\"memoria\": 96,\t\n\t\"veredicto\":\"En revision\",\n\t\"fecha\":\"2019-03-01 00:00:01\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una submission 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7f8f479-928b-4ab8-bb01-dc2a42e8f0d4",
+						"exec": [
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codigo\":\"col-1123\",\t\n\t\"tiempo\": 345,\n\t\"memoria\": 98,\t\n\t\"veredicto\":\"En revision\",\n\t\"fecha\":\"2019-02-01 00:00:01\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una submission con codigo existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e0d9ab8-7248-459d-a79d-c3f05bdeeb79",
+						"exec": [
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe una submission enviada con el codigo\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codigo\":\"col-32345\",\t\n\t\"tiempo\": 123,\n\t\"memoria\": 96,\t\n\t\"veredicto\":\"En revision\",\n\t\"fecha\":\"2019-04-02 00:00:01\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar submission",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a650927-a3f7-4787-9975-17b6fb17d82f",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"tiempo\": 123,\n\t\"memoria\": 96,\t\n\t\"veredicto\":\"En revision\",\n\t\"fecha\":\"2019-03-02 00:00:01\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions/{{newnewsub}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions",
+						"{{newnewsub}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar submission no existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "80877ae5-045c-46f9-a808-4694b0f4d9fe",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /submissions/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All submissions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "49b56c1e-0af9-4509-ad2d-72768e4cca70",
+						"exec": [
+							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get submission existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf4df42e-7db3-4ee2-b441-72443dfae38d",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions/{{newnewsub}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions",
+						"{{newnewsub}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get submission no existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e51f4697-fda6-45be-a6c8-6868373b2bb1",
+						"exec": [
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /submissions/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar submission",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f59e3e87-aeb5-4142-83fc-4e3f4fcc3d31",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions/{{newnewsub}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions",
+						"{{newnewsub}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar submission no existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fddcc639-9bd3-42ab-8f66-3345882ca32a",
+						"exec": [
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /submissions/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/submissions/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"submissions",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

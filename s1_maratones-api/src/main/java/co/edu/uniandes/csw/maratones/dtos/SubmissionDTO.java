@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       "memoria" : number,
  *       "codigo" : string,
  *       "id": number
+  *      "ejercicio": {@link EjercicioDTO}
+ * 
  * 
  * 
  *   }
@@ -42,6 +44,11 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       "memoria" : 9876,
  *       "codigo" : "col-12345",
  *       "id": 123456
+ *       "ejercicio":
+ *      {
+ *          "id" : 1,
+ *          "nombre" : "Prediccion de terremotos"
+ *      }
  *   }
  *
  * </pre>
@@ -87,7 +94,10 @@ public class SubmissionDTO implements Serializable{
     */
     private Long id;
     
+    /*
     
+    */
+    private EjercicioDTO ejercicio;
     
     /**
      * 
@@ -119,6 +129,7 @@ public class SubmissionDTO implements Serializable{
     {
         if(entity != null)
         {
+            this.id = entity.getId();
             this.archivo = entity.getArchivo();
             this.codigo = entity.getCodigo();
             this.fecha = entity.getFecha();
@@ -126,20 +137,25 @@ public class SubmissionDTO implements Serializable{
             this.tiempo = entity.getTiempo();
             this.veredicto = entity.getVeredicto();
         }
+        if (entity.getEjercicioEntity() != null) {
+                this.ejercicio = new EjercicioDTO(entity.getEjercicioEntity());
+            } else {
+                this.ejercicio = null;
+            }
     }       
         
     
     /**
      * @return the tiempo
      */
-    public double getTiempo() {
+    public Double getTiempo() {
         return tiempo;
     }
 
     /**
      * @param tiempo the tiempo to set
      */
-    public void setTiempo(double tiempo) {
+    public void setTiempo(Double tiempo) {
         this.tiempo = tiempo;
     }
 
@@ -188,14 +204,14 @@ public class SubmissionDTO implements Serializable{
     /**
      * @return the memoria
      */
-    public double getMemoria() {
+    public Double getMemoria() {
         return memoria;
     }
 
     /**
      * @param memoria the memoria to set
      */
-    public void setMemoria(double memoria) {
+    public void setMemoria(Double memoria) {
         this.memoria = memoria;
     }
 
@@ -219,12 +235,16 @@ public class SubmissionDTO implements Serializable{
     {
         SubmissionEntity submission = new SubmissionEntity();
         
+        submission.setId(id);
         submission.setArchivo(archivo);
         submission.setCodigo(codigo);
         submission.setFecha(fecha);
         submission.setMemoria(memoria);
         submission.setVeredicto(veredicto);
         submission.setTiempo(tiempo);
+        if (this.ejercicio != null) {
+            submission.setEjercicioEntity(this.ejercicio.toEntity());
+        }
         
         
         return submission;
@@ -248,5 +268,19 @@ public class SubmissionDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the ejercicio
+     */
+    public EjercicioDTO getEjercicio() {
+        return ejercicio;
+    }
+
+    /**
+     * @param ejercicio the ejercicio to set
+     */
+    public void setEjercicio(EjercicioDTO ejercicio) {
+        this.ejercicio = ejercicio;
     }
 }

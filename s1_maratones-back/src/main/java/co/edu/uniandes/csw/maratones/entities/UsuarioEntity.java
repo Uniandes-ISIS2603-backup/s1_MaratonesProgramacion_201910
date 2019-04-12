@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -38,6 +39,12 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @ManyToMany
     private List<EquipoEntity> equipos = new ArrayList<>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "programador",cascade = {
+        CascadeType.REMOVE
+    })
+    private List<LenguajeEntity> lenguajes = new ArrayList<>();
 
     public List<EquipoEntity> getEquipos() {
         return equipos;
@@ -107,5 +114,19 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     
     public UsuarioEntity(){
         }
+
+    /**
+     * @return the lenguajes
+     */
+    public List<LenguajeEntity> getLenguajes() {
+        return lenguajes;
+    }
+
+    /**
+     * @param lenguajes the lenguajes to set
+     */
+    public void setLenguajes(List<LenguajeEntity> lenguajes) {
+        this.lenguajes = lenguajes;
+    }
   
 }
