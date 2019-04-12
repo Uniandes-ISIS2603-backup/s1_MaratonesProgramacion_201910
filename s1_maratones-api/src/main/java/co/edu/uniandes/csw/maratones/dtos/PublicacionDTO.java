@@ -35,7 +35,7 @@ public class PublicacionDTO implements Serializable{
     private Long id;
     private Date fecha;
     private String texto;
-    private BlogDTO blog;
+    
     
     public PublicacionDTO(){
         
@@ -76,10 +76,8 @@ public class PublicacionDTO implements Serializable{
         PublicacionEntity publicacionEntity = new PublicacionEntity();
         publicacionEntity.setFecha(this.fecha);
         publicacionEntity.setTexto(this.texto);
-        if(this.blog!=null)
-        {
-            publicacionEntity.setBlog(this.blog.toEntity());
-        }
+        publicacionEntity.setId(this.id);
+        
        return publicacionEntity;
     }
     /**
@@ -90,27 +88,12 @@ public class PublicacionDTO implements Serializable{
         if (publicacionEntity != null) {
             this.fecha = publicacionEntity.getFecha();
             this.texto = publicacionEntity.getTexto();
-         if (publicacionEntity.getBlog() != null) {
-                this.blog = new BlogDTO(publicacionEntity.getBlog());
-            } else {
-                this.blog = null;
-            }
+            this.id=publicacionEntity.getId();
+         
         }
      }
 
-    /**
-     * @return the blog
-     */
-    public BlogDTO getBlog() {
-        return blog;
-    }
-
-    /**
-     * @param blogDto the blogD to set
-     */
-    public void setBlog(BlogDTO blogDto) {
-        this.blog = blogDto;
-    }
+    
 
     /**
      * @return the id
