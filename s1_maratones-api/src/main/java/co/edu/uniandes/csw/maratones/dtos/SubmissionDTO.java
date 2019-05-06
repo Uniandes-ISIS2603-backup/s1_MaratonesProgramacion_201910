@@ -136,12 +136,13 @@ public class SubmissionDTO implements Serializable{
             this.memoria = entity.getMemoria();
             this.tiempo = entity.getTiempo();
             this.veredicto = entity.getVeredicto();
-        }
-        if (entity.getEjercicioEntity() != null) {
+            if (entity.getEjercicioEntity() != null) {
                 this.ejercicio = new EjercicioDTO(entity.getEjercicioEntity());
             } else {
                 this.ejercicio = null;
             }
+        }
+        
     }       
         
     
