@@ -100,6 +100,14 @@ public class BlogResource {
         blogLogic.deleteBlog(blogsId);
         LOGGER.info("BlogResource deleteBlog: output: void");
     }
+    
+     @Path("{blogsId: \\d+}/publicaciones")
+    public Class<PublicacionResource> getPublicacionResource(@PathParam("blogsId") Long blogsId   ) {
+        if (blogLogic.getBlog(blogsId) == null) {
+            throw new WebApplicationException("El recurso /blogs/" + blogsId + "/públicaciones no existe.", 404);
+        }
+        return PublicacionResource.class;
+    }
 
 
 }

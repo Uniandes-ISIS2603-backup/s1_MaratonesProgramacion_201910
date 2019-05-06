@@ -24,7 +24,7 @@ import java.io.Serializable;
  *       "puntaje" : number,
  *       "nivel" : number,
  *       "id": number
- * 
+ *       "competencia": {@link CompetenciaDTO}
  * 
  *   }
  * </pre> Por ejemplo un ejercicio se representa asi:<br>
@@ -39,6 +39,11 @@ import java.io.Serializable;
  *       "puntaje" : 12345,
  *       "nivel" : 12345,
  *       "id": 123456
+ *       "competencia":
+ *      {
+ *          "id" : 1,
+ *          "nombre" : "Nintendo"
+ *      }
  *   }
  *
  * </pre>
@@ -83,6 +88,11 @@ public class EjercicioDTO implements Serializable{
      */
     private Long id;
     
+    /**
+     * 
+     */
+    private CompetenciaDTO competencia;
+    
 
     
     
@@ -102,6 +112,14 @@ public class EjercicioDTO implements Serializable{
             this.nivel = entity.getNivel();
             this.puntaje = entity.getPuntaje();
             this.descripcion = entity.getDescripcion();
+            if(entity.getCompetencia()!= null)
+            {
+                //this.competencia = new CompetenciaDTO(entity.getCompetencia());
+            }
+            else
+            {
+                this.competencia = null;
+            }
         }
     }
     
@@ -166,28 +184,28 @@ public class EjercicioDTO implements Serializable{
     /**
      * @return the puntaje
      */
-    public int getPuntaje() {
+    public Integer getPuntaje() {
         return puntaje;
     }
 
     /**
      * @param puntaje the puntaje to set
      */
-    public void setPuntaje(int puntaje) {
+    public void setPuntaje(Integer puntaje) {
         this.puntaje = puntaje;
     }
 
     /**
      * @return the nivel
      */
-    public int getNivel() {
+    public Integer getNivel() {
         return nivel;
     }
 
     /**
      * @param nivel the nivel to set
      */
-    public void setNivel(int nivel) {
+    public void setNivel(Integer nivel) {
         this.nivel = nivel;
     }
 
@@ -195,6 +213,7 @@ public class EjercicioDTO implements Serializable{
         
         EjercicioEntity entity = new EjercicioEntity();
        
+        entity.setId(id);
         entity.setDescripcion(descripcion);
         entity.setInputt(inputt);
         entity.setOutputt(outputt);
@@ -224,6 +243,20 @@ public class EjercicioDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the competencia
+     */
+    public CompetenciaDTO getCompetencia() {
+        return competencia;
+    }
+
+    /**
+     * @param competencia the competencia to set
+     */
+    public void setCompetencia(CompetenciaDTO competencia) {
+        this.competencia = competencia;
     }
     
     
