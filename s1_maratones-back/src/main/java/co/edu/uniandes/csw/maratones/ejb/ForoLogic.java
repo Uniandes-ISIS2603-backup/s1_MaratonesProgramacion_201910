@@ -23,7 +23,6 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.ejb;
 
-import co.edu.uniandes.csw.maratones.entities.ComentarioEntity;
 import co.edu.uniandes.csw.maratones.entities.ForoEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.ForoPersistence;
@@ -87,7 +86,7 @@ public class ForoLogic {
      * @param forosId: id de Foro para ser buscado.
      * @return el Foro solicitada por medio de su id.
      */
-    public ForoEntity getEditorial(Long forosId) {
+    public ForoEntity getForo(Long forosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el Foro con id = {0}", forosId);
         // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
         ForoEntity foroEntity = persistence.find(forosId);
@@ -130,14 +129,14 @@ public class ForoLogic {
         LOGGER.log(Level.INFO, "Termina proceso de borrar el foro con id = {0}", forosId);
     }
     
-     public ForoEntity getForo(Long forosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el foro con id = {0}", forosId);
-        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
-        ForoEntity foroEntity = persistence.find(forosId);
-        if (foroEntity == null) {
-            LOGGER.log(Level.SEVERE, "El foro con el id = {0} no existe", forosId);
-        }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la editorial con id = {0}", forosId);
-        return foroEntity;
-    }
+//     public ForoEntity getForo(Long forosId) {
+//        LOGGER.log(Level.INFO, "Inicia proceso de consultar el foro con id = {0}", forosId);
+//        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+//        ForoEntity foroEntity = persistence.find(forosId);
+//        if (foroEntity == null) {
+//            LOGGER.log(Level.SEVERE, "El foro con el id = {0} no existe", forosId);
+//        }
+//        LOGGER.log(Level.INFO, "Termina proceso de consultar la editorial con id = {0}", forosId);
+//        return foroEntity;
+//    }
 }
