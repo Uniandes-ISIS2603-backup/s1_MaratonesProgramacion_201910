@@ -53,7 +53,7 @@ public class EjercicioEntity extends BaseEntity implements Serializable{
     private int nivel;
 
     @PodamExclude
-    @ManyToOne 
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private CompetenciaEntity competencia;
     
     @PodamExclude

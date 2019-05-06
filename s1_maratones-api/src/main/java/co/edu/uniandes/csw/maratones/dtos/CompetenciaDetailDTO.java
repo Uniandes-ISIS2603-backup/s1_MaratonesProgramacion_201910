@@ -28,8 +28,6 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     
     private UsuarioDTO patrocinadores;
     
-    private List<LenguajeDTO> lenguajes;
-    
     public CompetenciaDetailDTO (CompetenciaEntity entity) {
         super(entity);
         
@@ -62,14 +60,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
             {
                 patrocinadores = new UsuarioDTO(entity.getPatrocinadores());
             }
-            if(entity.getLenguajes()!=null)
-            {
-                lenguajes = new ArrayList<>();
-                for(LenguajeEntity entityLenguaje: entity.getLenguajes())
-                {
-                    lenguajes.add(new LenguajeDTO(entityLenguaje));
-                }
-            }
+
             
         }
     }
@@ -110,14 +101,6 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
        if(patrocinadores!=null)
        {
            competenciaEntity.setPatrocinadores(patrocinadores.toEntity());
-       }
-       if(lenguajes!= null){
-           List<LenguajeEntity> lenguajesEntity = new ArrayList<>();
-           for(LenguajeDTO dtoLenguajes: lenguajes)
-           {
-               lenguajesEntity.add(dtoLenguajes.toEntity());
-           }
-           competenciaEntity.setLenguajes(lenguajesEntity);
        }
                 
         return competenciaEntity;         
@@ -165,18 +148,5 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
         this.equipos = equipos;
     }
 
-    /**
-     * @return the lenguajes
-     */
-    public List<LenguajeDTO> getLenguajes() {
-        return lenguajes;
-    }
-
-    /**
-     * @param lenguajes the lenguajes to set
-     */
-    public void setLenguajes(List<LenguajeDTO> lenguajes) {
-        this.lenguajes = lenguajes;
-    }
 
 }

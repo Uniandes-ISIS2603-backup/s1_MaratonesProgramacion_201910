@@ -7,10 +7,12 @@ package co.edu.uniandes.csw.maratones.test.logic;
 
 import co.edu.uniandes.csw.maratones.ejb.CompetenciaLogic;
 import co.edu.uniandes.csw.maratones.ejb.EjercicioLogic;
+import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
 import co.edu.uniandes.csw.maratones.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
+import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
@@ -75,22 +77,6 @@ public class CompetenciaLogicTest {
     
     private List<EjercicioEntity> ejercicioData = new ArrayList<EjercicioEntity>();
     
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(CompetenciaEntity.class.getPackage())
-                .addPackage(CompetenciaLogic.class.getPackage())
-                .addPackage(CompetenciaPersistence.class.getPackage())
-                .addPackage(UsuarioEntity.class.getPackage())
-                .addPackage(UsuarioLogic.class.getPackage())
-                .addPackage(UsuarioPersistence.class.getPackage())
-                .addPackage(EjercicioEntity.class.getPackage())
-                .addPackage(EjercicioLogic.class.getPackage())
-                .addPackage(EjercicioPersistence.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-    }
-    
      /**
      * Configuración inicial de la prueba.
      */
@@ -111,6 +97,23 @@ public class CompetenciaLogicTest {
             }
         }
     }
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(CompetenciaEntity.class.getPackage())
+                .addPackage(CompetenciaLogic.class.getPackage())
+                .addPackage(CompetenciaPersistence.class.getPackage())
+                .addPackage(UsuarioEntity.class.getPackage())
+                .addPackage(UsuarioLogic.class.getPackage())
+                .addPackage(UsuarioPersistence.class.getPackage())
+                .addPackage(EjercicioEntity.class.getPackage())
+                .addPackage(EjercicioLogic.class.getPackage())
+                .addPackage(EjercicioPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    }
+    
+    
 
     /**
      * Limpia las tablas que están implicadas en la prueba.
@@ -121,6 +124,10 @@ public class CompetenciaLogicTest {
         em.createQuery("delete from CompetenciaEntity").executeUpdate();
         em.createQuery("DELETE FROM EjercicioEntity").executeUpdate();
         em.createQuery("DELETE FROM UsuarioEntity").executeUpdate();
+        em.createQuery("delete from EquipoEntity").executeUpdate();
+        usuarioData.clear();
+        ejercicioData.clear();
+        competenciaData.clear();
     }
 
      /**
@@ -146,7 +153,11 @@ public class CompetenciaLogicTest {
         for (int i = 0; i < 3; i++) {
             CompetenciaEntity competencia = factory.manufacturePojo(CompetenciaEntity.class);
             competencia.setJueces(usuarioData);
-            competencia.setEjercicioEntitys(ejercicioData);
+            List<EjercicioEntity> ejer = new ArrayList<EjercicioEntity>();
+            ejer.add(ejercicioData.get(i));
+            ejercicioData.get(i).setCompetencia(competencia);
+            competencia.setEjercicioEntitys(ejer);
+            competencia.setPatrocinadores(usuarioData.get(0));
             Date inicio= competencia.getFechaInicio();
             Calendar cal = Calendar.getInstance();
             cal.setTime(inicio);
@@ -181,14 +192,15 @@ public class CompetenciaLogicTest {
             cal.add(Calendar.HOUR_OF_DAY,10);
             Date fin = cal.getTime();
             newEntity.setFechaFin(fin);
+            ejercicio.setCompetencia(newEntity);
         CompetenciaEntity result = competenciaLogic.create(newEntity);
 
         Assert.assertNotNull(result);
-
         CompetenciaEntity entity = em.find(CompetenciaEntity.class, result.getId());
-        
-
         Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertTrue("La lista de ejercicios está vacia",result.getEjercicioEntitys().isEmpty());
+        Assert.assertEquals(result.getEjercicioEntitys(), entity.getEjercicioEntitys());
+        
     }
     
     /**
@@ -221,13 +233,15 @@ public class CompetenciaLogicTest {
         Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
         Assert.assertEquals(entity.getCondiciones(), resultEntity.getCondiciones());
         Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion() );
-//        Assert.assertEquals(entity.getEjercicioEntitys(), resultEntity.getEjercicioEntitys());
-        Assert.assertEquals(entity.getEquipos(), resultEntity.getEquipos());
-//        Assert.assertEquals(entity.getJueces(), resultEntity.getJueces());
         Assert.assertEquals(entity.getPuntos(),resultEntity.getPuntos() );
-        Assert.assertEquals(entity.getLenguajes(),resultEntity.getLenguajes() );
         Assert.assertEquals(entity.getNivel(), resultEntity.getNivel() );
-        Assert.assertEquals(entity.getPatrocinadores(),resultEntity.getPatrocinadores() );
+        Assert.assertEquals("Falla los patrocinadores",entity.getPatrocinadores(),resultEntity.getPatrocinadores());
+        Assert.assertEquals("Falla los lenguajes",entity.getLenguajes(),resultEntity.getLenguajes() );
+        Assert.assertEquals("Falla los ejercicios",entity.getEjercicioEntitys(), resultEntity.getEjercicioEntitys());
+        Assert.assertEquals("Falla los equipos",entity.getEquipos(), resultEntity.getEquipos());
+        
+//        Assert.assertEquals(entity.getJueces(), resultEntity.getJueces());
+        ;
     }
     
     /**

@@ -60,11 +60,15 @@ public class CompetenciaLogic {
             }
         }
         
-        if(competenciaEntity.getJueces().isEmpty())
+        if(competenciaEntity.getJueces()==null ||competenciaEntity.getJueces().isEmpty())
         {
             throw new BusinessLogicException("Debe haber al menos un juez al creaerse la competencia");
         }
-        if(competenciaEntity.getEjercicioEntitys().isEmpty())
+        if(competenciaEntity.getLenguajes()==null ||competenciaEntity.getLenguajes().isEmpty())
+        {
+            throw new BusinessLogicException("La competencia debe tener al menos un lenguaje asociado");
+        }
+        if(competenciaEntity.getEjercicioEntitys()==null||competenciaEntity.getEjercicioEntitys().isEmpty())
         {
             throw new BusinessLogicException("Debe haber al menos un ejercicio al crearse la competencia");
         }

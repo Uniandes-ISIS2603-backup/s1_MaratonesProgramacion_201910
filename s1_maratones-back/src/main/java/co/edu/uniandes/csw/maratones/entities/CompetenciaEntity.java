@@ -11,8 +11,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -57,12 +55,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
             })
     private List<EquipoEntity> equipos;
     
-    @PodamExclude
-    @OneToMany(fetch = FetchType.LAZY, cascade = 
-            {
-                CascadeType.PERSIST
-            })
-    private List<LenguajeEntity> lenguajes;
+    private List<String> lenguajes;
     
     private String esVirtual;
     
@@ -270,15 +263,17 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     /**
      * @return the lenguajes
      */
-    public List<LenguajeEntity> getLenguajes() {
+    public List<String> getLenguajes() {
         return lenguajes;
     }
 
     /**
      * @param lenguajes the lenguajes to set
      */
-    public void setLenguajes(List<LenguajeEntity> lenguajes) {
+    public void setLenguajes(List<String> lenguajes) {
         this.lenguajes = lenguajes;
     }
+
+   
     
 }
