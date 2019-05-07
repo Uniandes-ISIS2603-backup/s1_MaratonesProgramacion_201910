@@ -103,14 +103,14 @@ public class LenguajeDTO implements Serializable{
     /**
      * @return the experiencia
      */
-    public int getExperiencia() {
+    public Integer getExperiencia() {
         return experiencia;
     }
 
     /**
      * @param experiencia the experiencia to set
      */
-    public void setExperiencia(int experiencia) {
+    public void setExperiencia(Integer experiencia) {
         this.experiencia = experiencia;
     }
 
