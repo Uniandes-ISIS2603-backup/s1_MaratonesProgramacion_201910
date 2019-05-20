@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
-import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import java.io.Serializable;
@@ -102,6 +101,7 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
         this.submissions = submissions;
     }
     
+    @Override
     public EjercicioEntity toEntity()
     {
         EjercicioEntity entity = super.toEntity();

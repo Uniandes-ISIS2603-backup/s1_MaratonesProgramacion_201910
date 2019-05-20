@@ -35,15 +35,15 @@ public class EjercicioSubmissionsLogic {
      * Asocia una Submission existente a un Ejercicio
      *
      * @param ejerciciosId
-     * @param submissionsId
+     * @param submission
      * @return Instancia de BookEntity que fue asociada a Author
-     */ public SubmissionEntity addSubmission(Long ejerciciosId, Long submissionsId) {
+     */ public SubmissionEntity addSubmission(Long ejerciciosId, SubmissionEntity submission) {
         LOGGER.log(Level.INFO, "Inicia proceso de asociarle una submission al ejercicio con id = {0}", ejerciciosId);
         EjercicioEntity ejerEntity = ejercicioPersistence.find(ejerciciosId);
-        SubmissionEntity subEntity = submissionPersistence.find(submissionsId);
+        SubmissionEntity subEntity = submissionPersistence.find(submission.getId());
         ejerEntity.getSubmissions().add(subEntity);
         LOGGER.log(Level.INFO, "Termina proceso de asociarle una submission al ejercicio con id = {0}", ejerciciosId);
-        return submissionPersistence.find(submissionsId);
+        return submissionPersistence.find(submission.getId());
     }
      
      /**
@@ -61,11 +61,12 @@ public class EjercicioSubmissionsLogic {
 
     
     public SubmissionEntity getSubmission(Long ejerciciosId, Long submissionsId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la submission con id = {0} del ejercicio con id = " + ejerciciosId, submissionsId);
+        Object[] ids = {submissionsId, ejerciciosId};
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la submission con id = {0} del ejercicio con id = {1}", ids);
         List<SubmissionEntity> submissions = ejercicioPersistence.find(ejerciciosId).getSubmissions();
         SubmissionEntity submissionEntity = submissionPersistence.find(submissionsId);
         int index = submissions.indexOf(submissionEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la submission con id = {0} del ejercicio con id = " + ejerciciosId, submissionsId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la submission con id = {0} del ejercicio con id = {1}", ids);
         if (index >= 0) {
             return submissions.get(index);
         }

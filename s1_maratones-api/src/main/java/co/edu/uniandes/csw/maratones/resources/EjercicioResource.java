@@ -123,5 +123,9 @@ public class EjercicioResource {
         return list;
     }
 
-    
+    @Path("{ejercicioId: \\d+}/submissions")
+    public Class<EjercicioSubmissionsResource> getEjercicioSubmissionsResource(@PathParam("ejercicioId") Long id)
+    {
+        return EjercicioSubmissionsResource.class;
+    }
 }

@@ -114,7 +114,7 @@ public class EjercicioDTO implements Serializable{
             this.descripcion = entity.getDescripcion();
             if(entity.getCompetencia()!= null)
             {
-                //this.competencia = new CompetenciaDTO(entity.getCompetencia());
+                this.competencia = new CompetenciaDTO(entity.getCompetencia());
             }
             else
             {

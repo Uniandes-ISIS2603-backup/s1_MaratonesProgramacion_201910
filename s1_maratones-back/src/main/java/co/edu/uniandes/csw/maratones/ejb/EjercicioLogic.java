@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.maratones.ejb;
 
-import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
