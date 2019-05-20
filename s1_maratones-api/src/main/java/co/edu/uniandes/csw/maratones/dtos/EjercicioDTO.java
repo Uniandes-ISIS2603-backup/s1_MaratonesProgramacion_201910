@@ -54,53 +54,59 @@ import java.io.Serializable;
 public class EjercicioDTO implements Serializable{
     
     /*
-    
+    *Atributo que modela el nombre del ejercicio
     */
     private String nombre;
     
     /*
-    
+    *Atributo que modela la descripcion del ejercicio
     */
     private String descripcion;
     
     /*
-    
+    *Atributo que representa la ruta de un input
     */
     private String inputt;
     
     /*
-    
+    *Atributo que representa la ruta de un output
     */
     private String outputt;
     
     /*
-    
+    *Atributp que modela el puntaje que ofrece a los equipos un ejercicio
     */
     private Integer puntaje;
     
     /*
-    
+    *Atributo que modela el nivel de dificultad de un ejercicio
     */
     private Integer nivel;
     
     /**
-     * 
+     * Atributo que modela el identificador de un ejercicio
      */
     private Long id;
     
     /**
-     * 
+     * Atributo que modela la competencia a la cual pertenece un ejercicio
      */
     private CompetenciaDTO competencia;
     
 
     
-    
+    /**
+     * Constructor basico requerido
+     */
     public EjercicioDTO()
     {
         
     }
     
+    /**
+     * Metodo constructor que permite crear un ejercicio a partir de una entidad persistida
+     * @param entity la entidad ejercicio que ya existe en la capa de persistencia
+     */
     public EjercicioDTO(EjercicioEntity entity)
     {
         if(entity != null)
@@ -126,89 +132,105 @@ public class EjercicioDTO implements Serializable{
     
     
     /**
-     * @return the nombre
+     * Metodo para consultar el nombre de un ejercicio
+     * @return the nombre el nombre del ejercicio
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * @param nombre the nombre to set
+     * Metodo para cambiar el nombre de un ejercicio
+     * @param nombre the nombre to set el nombre nuevo del ejercicio
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * @return the descripcion
+     * Metodo para consultar la descripcion de un ejercicio
+     * @return the descripcion la descripcion del ejercicio
      */
     public String getDescripcion() {
         return descripcion;
     }
 
     /**
-     * @param descripcion the descripcion to set
+     * Metodo para cambiar la descripcion de un ejercicio
+     * @param descripcion the descripcion to set la descripcion nueva del ejercicio
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
     /**
-     * @return the input
+     * Metodo para obtener el inputt de un ejercicio
+     * @return the input el input del ejercicio
      */
     public String getInputt() {
         return inputt;
     }
 
     /**
-     * @param input the input to set
+     * Metodo para cambiar el inputt de un ejercicio
+     * @param input the input to set el inputt nuevo del ejercicio
      */
     public void setInputt(String input) {
         this.inputt = input;
     }
 
     /**
-     * @return the output
+     * Metodo para consultar el outputt de un ejercicio
+     * @return the output el outputt del ejercicio
      */
     public String getOutputt() {
         return outputt;
     }
 
     /**
-     * @param output the output to set
+     * Metodo para cambiar el outputt de un ejercicio
+     * @param output the output to set el outputt nuevo del ejercicio
      */
     public void setOutputt(String output) {
         this.outputt = output;
     }
 
     /**
-     * @return the puntaje
+     * Metodo para consultar el puntaje del ejercicio
+     * @return the puntaje el puntaje del ejercicio
      */
     public Integer getPuntaje() {
         return puntaje;
     }
 
     /**
-     * @param puntaje the puntaje to set
+     * Metodo para cambiar el puntaje que ofrece el ejercicio
+     * @param puntaje the puntaje to set el puntaje nuevo del ejercicio
      */
     public void setPuntaje(Integer puntaje) {
         this.puntaje = puntaje;
     }
 
     /**
-     * @return the nivel
+     * Metodo para obtener el nivel de dificultad del ejercicio
+     * @return the nivel el nivel de dificultad del ejercicio
      */
     public Integer getNivel() {
         return nivel;
     }
 
     /**
-     * @param nivel the nivel to set
+     * Metodo para cambiar el nivel de dificultad del ejercicio
+     * @param nivel the nivel to set el nivel nuevo del ejercicio
      */
     public void setNivel(Integer nivel) {
         this.nivel = nivel;
     }
 
+    /**
+     * Metodo para poder cambiar el objeto DTO ejercicio a una Entidad persistible
+     * @return la entidad ejercicio creada
+     */
     public EjercicioEntity toEntity() {
         
         EjercicioEntity entity = new EjercicioEntity();
@@ -246,14 +268,16 @@ public class EjercicioDTO implements Serializable{
     }
 
     /**
-     * @return the competencia
+     * Metodo para obtener el DTO de la competencia a la cual pertenece el ejercicio
+     * @return the competencia la competencia que contiene el ejercicio
      */
     public CompetenciaDTO getCompetencia() {
         return competencia;
     }
 
     /**
-     * @param competencia the competencia to set
+     * Metodo para cambiar la competencia a la cual pertenece 
+     * @param competencia the competencia to set la nueva competencia del ejercicio
      */
     public void setCompetencia(CompetenciaDTO competencia) {
         this.competencia = competencia;

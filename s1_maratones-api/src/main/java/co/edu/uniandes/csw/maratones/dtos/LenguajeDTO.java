@@ -49,25 +49,29 @@ import java.io.Serializable;
 public class LenguajeDTO implements Serializable{
    
     /*
-    
+    * Atributo que modela el nombre del lenguaje
     */
     private String nombre;
     
     /*
-    
+    * Atributo que modela la experiencia medida en anhos del usuario
     */
     private Integer experiencia;
     
     /*
-    
+    * Atributo que representa el usuario que tiene asociado este lenguaje
     */
     private UsuarioDTO programador;
     
     /**
-     * 
+     * Atributo que modela el id unico del lenguaje
      */
     private Long id;
     
+    /**
+     * Metodo que permite construir un lenguaje a partir de una entidad 
+     * @param entity la entidad persistida que representa el lenguaje
+     */
     public LenguajeDTO(LenguajeEntity entity)
     {
         if(entity != null)
@@ -82,39 +86,47 @@ public class LenguajeDTO implements Serializable{
         }
     }
 
+    /**
+     * Constructor basico, vacio
+     */
     public LenguajeDTO() {
     }
     
     
     /**
-     * @return the nombre
+     * Metodo que permite obtener el nombre del lenguaje 
+     * @return the nombre el nombre del lenguaje
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * @param nombre the nombre to set
+     * Metodo que permite cambiar el nombre del lenguaje
+     * @param nombre the nombre to set el nuevo nombre del lenguaje
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * @return the experiencia
+     * Metodo que permite obtener la experiencia del lenguaje
+     * @return the experiencia la experiencia medida en anhos que se tiene del lenguaje
      */
     public Integer getExperiencia() {
         return experiencia;
     }
 
     /**
-     * @param experiencia the experiencia to set
+     * Metodo que permite cambiar la experiencia que se tiene del lenguaje
+     * @param experiencia the experiencia to set la nueva experiencia del lenguaje
      */
     public void setExperiencia(Integer experiencia) {
         this.experiencia = experiencia;
     }
 
     /**
+     * Metodo que permite consultar el programador que conoce el lenguaje
      * @return the programador
      */
     public UsuarioDTO getProgramador() {
@@ -122,12 +134,17 @@ public class LenguajeDTO implements Serializable{
     }
 
     /**
+     * Metodo que permite cambiar el programador de un lenguaje
      * @param programador the programador to set
      */
     public void setProgramador(UsuarioDTO programador) {
         this.programador = programador;
     }
     
+    /**
+     * Metodo que permite  convertir el lenguaje en una unidad persistible
+     * @return la entidad que fue creada a partir del DTO
+     */
     public LenguajeEntity toEntity()
     {
         LenguajeEntity entity = new LenguajeEntity();

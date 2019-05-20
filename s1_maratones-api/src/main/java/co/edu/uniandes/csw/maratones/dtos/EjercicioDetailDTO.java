@@ -60,18 +60,24 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     
     
     /*
-    
+    * Lista de submissions que estan asociadas al ejercicio 
     */
     private List<SubmissionDTO> submissions;
 
     
     
-    
+    /**
+     * Constructor basico requerido
+     */
     public EjercicioDetailDTO()
     {
         super();
     }
     
+    /**
+     * Ampliacion del metodo padre, Este metodo construye el ejercicio y el detalle de este agregando las submissions asociadas 
+     * @param entity entidad del ejercicio persistida
+     */
     public EjercicioDetailDTO(EjercicioEntity entity)
     {
         super(entity);
@@ -88,19 +94,25 @@ public class EjercicioDetailDTO extends EjercicioDTO implements Serializable{
     
     
     /**
-     * @return the submissions
+     * Metodo para obtener la listas de submissions del ejercicio
+     * @return the submissions las submissions del ejercicio
      */
     public List<SubmissionDTO> getSubmissions() {
         return submissions;
     }
 
     /**
+     * Metodo para cambiar las submissions de un ejercicio
      * @param submissions the submissions to set
      */
     public void setSubmissions(List<SubmissionDTO> submissions) {
         this.submissions = submissions;
     }
     
+    /**
+     * Metodo que sobreescribe el metodo del padre, permitiendo persistir en una entidad las submissions asociadas al detalle del ejercicio
+     * @return la entidad creada del ejercicio con sus submissions
+     */
     @Override
     public EjercicioEntity toEntity()
     {
