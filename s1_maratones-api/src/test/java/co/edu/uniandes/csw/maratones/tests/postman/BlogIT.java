@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.tests.postman;
 
-import co.edu.uniandes.csw.maratones.dtos.CascaraDTO;
+import co.edu.uniandes.csw.maratones.dtos.EjercicioDTO;
 import co.edu.uniandes.csw.maratones.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.maratones.resources.RestConfig;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class BlogIT {
-    private static final String COLLECTION = "BlogResource-collection.postman_collection";
+    private static final String COLLECTION = "BlogResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -38,7 +38,7 @@ public class BlogIT {
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
                 .addPackage(RestConfig.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(CascaraDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(EjercicioDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")

@@ -37,13 +37,14 @@ public class EjercicioSubmissionsLogic {
      * @param ejerciciosId
      * @param submissionsId
      * @return Instancia de BookEntity que fue asociada a Author
-     */ public SubmissionEntity addSubmission(Long ejerciciosId, Long submissionsId) {
+     */ public EjercicioEntity addSubmission(Long ejerciciosId, Long submissionsId) {
         LOGGER.log(Level.INFO, "Inicia proceso de asociarle una submission al ejercicio con id = {0}", ejerciciosId);
         EjercicioEntity ejerEntity = ejercicioPersistence.find(ejerciciosId);
         SubmissionEntity subEntity = submissionPersistence.find(submissionsId);
+        subEntity.setEjercicioEntity(ejerEntity);
         ejerEntity.getSubmissions().add(subEntity);
         LOGGER.log(Level.INFO, "Termina proceso de asociarle una submission al ejercicio con id = {0}", ejerciciosId);
-        return submissionPersistence.find(submissionsId);
+        return ejercicioPersistence.find(ejerciciosId);
     }
      
      /**
@@ -61,52 +62,16 @@ public class EjercicioSubmissionsLogic {
 
     
     public SubmissionEntity getSubmission(Long ejerciciosId, Long submissionsId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la submission con id = {0} del ejercicio con id = " + ejerciciosId, submissionsId);
+        
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la submission con id = {0} del ejercicio con id = {1}", new Object[]{submissionsId, ejerciciosId});
         List<SubmissionEntity> submissions = ejercicioPersistence.find(ejerciciosId).getSubmissions();
         SubmissionEntity submissionEntity = submissionPersistence.find(submissionsId);
         int index = submissions.indexOf(submissionEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la submission con id = {0} del ejercicio con id = " + ejerciciosId, submissionsId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la submission con id = {0} del ejercicio con id = {1}", new Object[]{submissionsId, ejerciciosId});
         if (index >= 0) {
             return submissions.get(index);
         }
         throw new BusinessLogicException("La submission no esta asociada al ejercicio");
     }
-    
-    
-    /**
-     * Desasocia una Submission existente de un Ejercicio existente
-     *
-     * @param ejerciciosId
-     * @param submissionsId
-     */
-    public void removeSubmission(Long ejerciciosId, Long submissionsId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar una submission del ejercicio con id = {0}", ejerciciosId);
-        EjercicioEntity ejercicioEntity = ejercicioPersistence.find(ejerciciosId);
-        SubmissionEntity submissionEntity = submissionPersistence.find(submissionsId);
-        ejercicioEntity.getSubmissions().remove(submissionEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar una submission del ejercicio con id = {0}", ejerciciosId);
-    }
-    
-    
-        /**
-     * Remplazar submissions de un ejercicio
-     *
-     * @param submissions Lista de submissions que serán los de el ejercicio.
-     * @param ejerciciosId El id del ejercicio que se quiere actualizar.
-     * @return La lista de submissions actualizada.
-     */
-    public List<SubmissionEntity> replaceSubmissions(Long ejerciciosId, List<SubmissionEntity> submissions) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el ejercicio con id = {0}", ejerciciosId);
-        EjercicioEntity ejercicioEntity = ejercicioPersistence.find(ejerciciosId);
-        List<SubmissionEntity> submissionList = submissionPersistence.findAll();
-        for (SubmissionEntity submission : submissionList) {
-            if (submissions.contains(submission)) {
-                submission.setEjercicioEntity(ejercicioEntity);
-            } else if (submission.getEjercicioEntity() != null && submission.getEjercicioEntity().equals(ejercicioEntity)) {
-                submission.setEjercicioEntity(null);
-            }
-        }
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", ejerciciosId);
-        return submissions;
-    }
+       
 }

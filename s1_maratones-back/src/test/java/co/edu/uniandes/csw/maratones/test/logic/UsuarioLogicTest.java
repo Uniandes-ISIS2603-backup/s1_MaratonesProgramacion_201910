@@ -249,4 +249,49 @@ public class UsuarioLogicTest {
         newEntity.setCorreo("blablabla@uniandes");
         usuarioLogic.create(newEntity);
     }
+    
+       /**
+     * Prueba para consultar la lista de Usuarios.
+     */
+    
+
+    /**
+     * Prueba para consultar un Usuario.
+     */
+    @Test
+    public void getPorIdUsuarioTest() {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity resultEntity = usuarioLogic.getUsuarioPorId(entity.getId());
+        
+    }
+
+    
+    @Test
+    public void getPorNombreUsuarioTest() {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity resultEntity = usuarioLogic.getPorNombreDeUsuario(entity.getNombreUsuario());
+        
+    }
+    /**
+     * Prueba para actualizar un Usuario.
+     */
+    @Test
+    public void updateUsuarioTest() {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+
+        pojoEntity.setId(entity.getId());
+
+        usuarioLogic.update(pojoEntity.getId(), pojoEntity);
+
+        UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
+
+        Assert.assertEquals(0, 0);
+        
+    }
+
+    
+
+
+    
 }

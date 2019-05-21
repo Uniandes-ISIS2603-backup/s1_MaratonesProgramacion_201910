@@ -116,13 +116,18 @@ public class EquipoResource {
      */
     @PUT
     @Path("{equipoId: \\d+}")
-    public EquipoDetailDTO updateEquipo(@PathParam("equipoId") Long equipoId, EquipoDetailDTO book) throws BusinessLogicException {
+    public EquipoDetailDTO updateEquipo(@PathParam("equipoId") Long equipoId, EquipoDetailDTO book) throws BusinessLogicException, Exception {
         LOGGER.log(Level.INFO, "EquipoResource updateEquipo: input: id: {0} , book: {1}", new Object[]{equipoId, book});
         book.setId(equipoId);
         if (equipoLogic.getEquipo(equipoId) == null) {
             throw new WebApplicationException("El recurso /equipos/" + equipoId + " no existe.", 404);
         }
-        EquipoDetailDTO detailDTO = new EquipoDetailDTO(equipoLogic.update(equipoId, book.toEntity()));
+        EquipoDetailDTO detailDTO =null;
+        try{
+         detailDTO = new EquipoDetailDTO(equipoLogic.update(equipoId, book.toEntity()));
+        }catch(Exception e){
+            throw new BusinessLogicException();
+        }
         LOGGER.log(Level.INFO, "EquipoResource updateEquipo: output: {0}", detailDTO);
         return detailDTO;
     }

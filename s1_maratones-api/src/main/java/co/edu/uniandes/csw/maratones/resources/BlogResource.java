@@ -80,14 +80,15 @@ public class BlogResource {
     @Path("{blogsId: \\d+}")
     public BlogDetailDTO updateBlog(@PathParam("blogsId") Long blogsId, BlogDetailDTO blog) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BlogResource updateBlog: input: id: {0} , blog: {1}", new Object[]{blogsId, blog});
-        blog.setId(blogsId);
         if (blogLogic.getBlog(blogsId) == null) {
             throw new WebApplicationException("El recurso /blogs/" + blogsId + " no existe.", 404);
         }
+        blog.setId(blogsId);
         BlogDetailDTO detailDTO = new BlogDetailDTO(blogLogic.updateBlog(blogsId, blog.toEntity()));
         LOGGER.log(Level.INFO, "BlogResource updateBlog: output: {0}", detailDTO);
         return detailDTO;
     }
+    
     @DELETE
     @Path("{blogsId: \\d+}")
     public void deleteBlog(@PathParam("blogsId") Long blogsId) throws BusinessLogicException {

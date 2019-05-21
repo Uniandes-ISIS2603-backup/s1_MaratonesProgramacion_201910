@@ -118,7 +118,7 @@ public class LugarCompetenciaPersistenceTest {
      * Prueba para consultar la lista de Books.
      */
     @Test
-    public void getBooksTest() {
+    public void getLugarCompetenciasTest() {
         List<LugarCompetenciaEntity> list = lugarCompetenciaPersistence.findAll();
         Assert.assertEquals(data.size(), list.size());
         for (LugarCompetenciaEntity ent : list) {
@@ -136,7 +136,7 @@ public class LugarCompetenciaPersistenceTest {
      * Prueba para consultar un Book.
      */
     @Test
-    public void getBookTest() {
+    public void getLugarCompetenciaTest() {
         LugarCompetenciaEntity entity = data.get(0);
         LugarCompetenciaEntity newEntity = lugarCompetenciaPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
@@ -148,7 +148,7 @@ public class LugarCompetenciaPersistenceTest {
      * Prueba para eliminar un Book.
      */
     @Test
-    public void deleteBookTest() {
+    public void deleteLugarCompetenciaTest() {
         LugarCompetenciaEntity entity = data.get(0);
         lugarCompetenciaPersistence.delete(entity.getId());
         LugarCompetenciaEntity deleted = em.find(LugarCompetenciaEntity.class, entity.getId());
@@ -159,7 +159,7 @@ public class LugarCompetenciaPersistenceTest {
      * Prueba para actualizar un Book.
      */
     @Test
-    public void updateBookTest() {
+    public void updateLugarCompetenciaTest() {
         LugarCompetenciaEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);

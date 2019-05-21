@@ -107,7 +107,7 @@ public class EquipoDetailDTO extends EquipoDTO implements Serializable {
      *
      * @return the participantes
      */
-    public List<UsuarioDTO> getBooks() {
+    public List<UsuarioDTO> getParticipantes() {
         return participantes;
     }
 
@@ -123,5 +123,33 @@ public class EquipoDetailDTO extends EquipoDTO implements Serializable {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the submissions
+     */
+    public List<SubmissionDTO> getSubmissions() {
+        return submissions;
+    }
+
+    /**
+     * @param submissions the submissions to set
+     */
+    public void setSubmissions(List<SubmissionDTO> submissions) {
+        this.submissions = submissions;
+    }
+
+    /**
+     * @return the competencias
+     */
+    public List<CompetenciaDTO> getCompetencias() {
+        return competencias;
+    }
+
+    /**
+     * @param competencias the competencias to set
+     */
+    public void setCompetencias(List<CompetenciaDTO> competencias) {
+        this.competencias = competencias;
     }
 }

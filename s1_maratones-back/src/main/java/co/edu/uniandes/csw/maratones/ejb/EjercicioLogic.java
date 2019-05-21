@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.maratones.ejb;
 
-import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
@@ -51,7 +50,7 @@ public class EjercicioLogic {
         
         if(ejercicio.getNivel() <= 0)
         {
-            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero nu negativo");
+            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero ni negativo");
         }
         
         if(ejercicio.getPuntaje() <= 0)
@@ -100,7 +99,7 @@ public class EjercicioLogic {
         
         if(ejercicioEntity.getNivel() <= 0)
         {
-            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero nu negativo");
+            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero ni negativo");
         }
         
         if(ejercicioEntity.getPuntaje() <= 0)
@@ -117,6 +116,8 @@ public class EjercicioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el ejercicio con id = {0}", ejerID);
         
         List<SubmissionEntity> submissionsAsociadasA = getEjercicio(ejerID).getSubmissions();
+        
+        
         if( submissionsAsociadasA!= null  && !submissionsAsociadasA.isEmpty() )
         {
             throw new BusinessLogicException("No se puede borrar el ejercicio porque tiene submissions asociadas");

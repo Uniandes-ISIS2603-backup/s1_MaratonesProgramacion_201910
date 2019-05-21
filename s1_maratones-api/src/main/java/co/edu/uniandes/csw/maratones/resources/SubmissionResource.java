@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.maratones.resources;
 
-import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
 import co.edu.uniandes.csw.maratones.dtos.SubmissionDTO;
 import co.edu.uniandes.csw.maratones.ejb.SubmissionLogic;
 import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
@@ -45,6 +44,17 @@ public class SubmissionResource {
     @Inject
     private SubmissionLogic submissionLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     
+    
+    /**
+     * Crea una nueva submission con la informacion que se recibe en el cuerpo de la
+     * petición y se regresa un objeto identico con un id auto-generado por la
+     * base de datos.
+     *
+     * @param submission {@link SubmissionDTO} - La submission que se desea guardar.
+     * @return JSON {@link SubmissionDTO} - La submission guardada con el atributo id
+     * autogenerado.
+     * @throws co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException error de logica que se genera al intentar crear la submission
+     */
     @POST
     public SubmissionDTO createSubmission(SubmissionDTO submission) throws BusinessLogicException
     {
@@ -59,6 +69,15 @@ public class SubmissionResource {
         return nuevoSubDTO;
     }
     
+    /**
+     * Busca el autor con el id asociado recibido en la URL y lo devuelve.
+     *
+     * @param submissionsId Identificador de la submission que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @return JSON {@link SubmissionDTO} - La submission buscada
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la submission.
+     */
     @GET
     @Path("{submissionsId: \\d+}")
     public SubmissionDTO getSubmission(@PathParam("submissionsId") Long submissionsId) {
@@ -74,7 +93,7 @@ public class SubmissionResource {
     
     
     /**
-     * Busca y devuelve todos las submissions que existen en la aplicacion.
+     * Busca y devuelve todas las submissions que existen en la aplicacion.
      *
      * @return JSONArray {@link LenguajeDetailDTO} - Los libros encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
@@ -134,13 +153,13 @@ public class SubmissionResource {
     }
     
     /**
-     * Borra el libro con el id asociado recibido en la URL.
+     * Borra la submission con el id asociado recibido en la URL.
      *
-     * @param submissionsId Identificador del libro que se desea borrar. Este debe ser
+     * @param submissionsId Identificador de la submission que se desea borrar. Este debe ser
      * una cadena de dígitos.
      * @throws BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el libro.
+     * Error de lógica que se genera cuando no se encuentra la submission.
      */
     @DELETE
     @Path("{submissionsId: \\d+}")

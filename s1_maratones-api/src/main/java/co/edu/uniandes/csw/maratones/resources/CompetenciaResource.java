@@ -117,7 +117,7 @@ public class CompetenciaResource {
      */
     @PUT
     @Path("{competenciasId: \\d+}")
-    public CompetenciaDetailDTO updateCompetencia(@PathParam("competenciasId") Long competenciasId, CompetenciaDetailDTO competencia) throws WebApplicationException {
+    public CompetenciaDetailDTO updateCompetencia(@PathParam("competenciasId") Long competenciasId, CompetenciaDetailDTO competencia) throws WebApplicationException, BusinessLogicException {
         LOGGER.log(Level.INFO, "CompetenciaResource updateCompetencia: input: id:{0} , competencia: {1}", new Object[]{competenciasId, competencia});
         competencia.setId(competenciasId);
         if (logic.getCompetencia(competenciasId) == null) {
