@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 
 import javax.ws.rs.WebApplicationException;
-@Path("/usuarios")
+@Path("usuarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
