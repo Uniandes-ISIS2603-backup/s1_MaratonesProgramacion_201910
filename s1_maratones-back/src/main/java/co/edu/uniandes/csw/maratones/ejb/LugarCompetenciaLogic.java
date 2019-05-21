@@ -44,14 +44,10 @@ public class LugarCompetenciaLogic {
     public LugarCompetenciaEntity createLugarCompetencia(LugarCompetenciaEntity lugarCompetenciaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del lugarCompetencia");
         if(lugarCompetenciaEntity.getCompetencia()==null)
-                {
-                    throw new BusinessLogicException("La competencia es inválida");
-                }
-            
-        //TODO Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con el mismo id
-        if (lugarCompetenciaPersistence.find(lugarCompetenciaEntity.getId())!=null) {
-            throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
+        {
+            throw new BusinessLogicException("El lugar no tiene competencia");
         }
+            
         //TODO ubicaciones del lugar de competencias puede llegar nulo, validar donde se certifica que no llega a esta línea como valor nulo
         if(lugarCompetenciaEntity.getUbicaciones()==null)
         {
@@ -77,12 +73,10 @@ public class LugarCompetenciaLogic {
         CompetenciaEntity competencia =lugarCompetenciaEntity.getCompetencia();
         //TODO date o dateC... es nulo, es necesario certificar que los valores no llegarán nulos a esta parte del método
         Date date = lugarCompetenciaEntity.getFecha();
-        System.out.println(date+"=================================");
         if(competencia!= null )
         {
             Date dateCompetenciaInicio = competencia.getFechaInicio();
             
-            System.out.println("competenia inicio fecha"+ dateCompetenciaInicio+"======================================");
             Date dateCompetenciaFin = competencia.getFechaFin();
             if(date.before(dateCompetenciaInicio)||date.after(dateCompetenciaFin))
             {

@@ -34,7 +34,7 @@ public class BlogDTO implements Serializable{
     private Long id;
     private String nombre;
     private String descripcion;
-
+ private UsuarioDTO usuario;
     public BlogDTO(){
         
     }
@@ -102,5 +102,19 @@ public class BlogDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(UsuarioDTO usuario) {
+        this.usuario = usuario;
     }
 }

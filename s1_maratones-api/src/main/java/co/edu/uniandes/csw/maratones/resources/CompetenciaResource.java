@@ -54,7 +54,7 @@ public class CompetenciaResource {
      * Error de lógica que se genera cuando ya existe la editorial.
      */
     @POST
-    public CompetenciaDTO createCompetencia(CompetenciaDTO competencia )throws BusinessLogicException {
+    public CompetenciaDTO createCompetencia(CompetenciaDetailDTO competencia )throws BusinessLogicException {
         LOGGER.log(Level.INFO, "CompetenciaResource createCompetencia: input: {0}", competencia);
         // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
         CompetenciaEntity competenciaEntity = competencia.toEntity();
@@ -62,7 +62,7 @@ public class CompetenciaResource {
         CompetenciaEntity nuevoCompetenciaEntity = logic.create(competenciaEntity);
         // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
         CompetenciaDTO nuevoCompetenciaDTO=  new CompetenciaDTO(nuevoCompetenciaEntity);
-        LOGGER.log(Level.INFO, "EditorialResource createCompetencia: output: {0}", nuevoCompetenciaDTO);
+        LOGGER.log(Level.INFO, "CompetenciaResource createCompetencia: output: {0}", nuevoCompetenciaDTO);
         return nuevoCompetenciaDTO;
     }
     

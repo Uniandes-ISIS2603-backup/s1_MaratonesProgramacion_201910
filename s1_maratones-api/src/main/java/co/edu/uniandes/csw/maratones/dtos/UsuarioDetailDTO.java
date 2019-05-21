@@ -19,6 +19,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.BlogEntity;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
@@ -44,7 +45,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     private List<EquipoDTO> equipos;
     private List<LenguajeDTO> lenguajes;
     private List<CompetenciaDetailDTO> competenciasJuez;
-    
+    private List<BlogDTO> blog;
     /**
      * Constructor por defecto
      */
@@ -79,7 +80,14 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
                 competenciasJuez.add(new CompetenciaDetailDTO(entity));
             }
         }
-        
+        if (usuarioEntity != null) {
+            if (usuarioEntity.getBlogs()!= null) {
+                blog = new ArrayList<>();
+                for (BlogEntity entityBlog : usuarioEntity.getBlogs()) {
+                    blog.add(new BlogDTO(entityBlog));
+                }
+            }
+        }
     }
     public List<EquipoDTO> getEquipos() {
         return equipos;
@@ -124,6 +132,13 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
             usuarioEntity.setCompetenciasJuez(entity);
         }
+        if (blog != null) {
+            List<BlogEntity> blogsEntity = new ArrayList<>();
+            for (BlogDTO dtoBlog: blog) {
+                blogsEntity.add(dtoBlog.toEntity());
+            }
+            usuarioEntity.setBlogs(blogsEntity);
+        }
         return usuarioEntity;
     }
     
@@ -144,6 +159,20 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
      */
     public void setCompetenciasJuez(List<CompetenciaDetailDTO> competenciasJuez) {
         this.competenciasJuez = competenciasJuez;
+    }
+
+    /**
+     * @return the blog
+     */
+    public List<BlogDTO> getBlog() {
+        return blog;
+    }
+
+    /**
+     * @param blog the blog to set
+     */
+    public void setBlog(List<BlogDTO> blog) {
+        this.blog = blog;
     }
    
     

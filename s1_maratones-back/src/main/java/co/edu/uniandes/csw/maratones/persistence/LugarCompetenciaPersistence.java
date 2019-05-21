@@ -32,9 +32,9 @@ public class LugarCompetenciaPersistence {
         return lugarCompetenciaEntity;
     }
     
-    public LugarCompetenciaEntity find (Long lugarCompetenicaId)
+    public LugarCompetenciaEntity find (Long lugarCompetenciaId)
     {
-        return em.find(LugarCompetenciaEntity.class, lugarCompetenicaId);
+        return em.find(LugarCompetenciaEntity.class, lugarCompetenciaId);
     }
     
    /**
