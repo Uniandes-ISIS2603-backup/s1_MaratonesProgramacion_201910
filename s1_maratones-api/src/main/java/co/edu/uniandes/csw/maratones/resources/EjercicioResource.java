@@ -164,16 +164,24 @@ public class EjercicioResource {
         return list;
     }
     
-    /**
-     * Metodo que permite obtener el recurso de la asociacion con Submission
-     * @param id el id del ejercicio que contiene las submissions
-     * @return la clase de la asociacion
+     /**
+     * Conexión con el servicio de libros para un autor.
+     * {@link AuthorBooksResource}
+     *
+     * Este método conecta la ruta de /authors con las rutas de /books que
+     * dependen del autor, es una redirección al servicio que maneja el segmento
+     * de la URL que se encarga de los libros.
+     *
+     * @param authorsId El ID del autor con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de Libros para ese autor en paricular.
      */
-    @Path("{ejercicioId: \\d+}/submissions")
-    public Class<EjercicioSubmissionsResource> getEjercicioSubmissionsResource(@PathParam("ejercicioId") Long id)
-    {
+    @Path("{ejerciciosId: \\d+}/submissions")
+    public Class<EjercicioSubmissionsResource> getEjercicioSubmissionsResource(@PathParam("ejerciciosId") Long ejerciciosId) {
+        if (ejercicioLogic.getEjercicio(ejerciciosId) == null) {
+            throw new WebApplicationException("El recurso /authors/" + ejerciciosId + " no existe.", 404);
+        }
         return EjercicioSubmissionsResource.class;
     }
-    
     
 }

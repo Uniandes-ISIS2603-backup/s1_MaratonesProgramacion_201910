@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.resources;
 
+import co.edu.uniandes.csw.maratones.dtos.EjercicioDetailDTO;
 import co.edu.uniandes.csw.maratones.dtos.SubmissionDTO;
 import co.edu.uniandes.csw.maratones.ejb.EjercicioLogic;
 import co.edu.uniandes.csw.maratones.ejb.EjercicioSubmissionsLogic;
@@ -47,15 +48,16 @@ public class EjercicioSubmissionsResource {
      * Asocia un libro existente con un autor existente
      *
      * @param ejerciciosId
-     * @param submission
+     * @param submissionsId
      * @return JSON {@link SubmissionDTO} - El libro asociado.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la submission.
      */
     @POST
-    public SubmissionDTO addSubmission(@PathParam("ejerciciosId") Long ejerciciosId, SubmissionDTO submission) {
-        LOGGER.log(Level.INFO, "EjercicioSubmissionsResource addSubmission: input: ejerciciosId {0} , submissionsId {1}", new Object[]{ejerciciosId, submission.getId()});
-        SubmissionDTO detailDTO = new SubmissionDTO(ejercicioSubmissionLogic.addSubmission(ejerciciosId, submission.toEntity()));
+    @Path("{submissionsId: \\d+}")
+    public EjercicioDetailDTO addSubmission(@PathParam("ejerciciosId") Long ejerciciosId, @PathParam("submissionsId") Long submissionsId) {
+        LOGGER.log(Level.INFO, "EjercicioSubmissionsResource addSubmission: input: ejerciciosId {0} , submissionsId {1}", new Object[]{ejerciciosId, submissionsId});
+        EjercicioDetailDTO detailDTO = new EjercicioDetailDTO(ejercicioSubmissionLogic.addSubmission(ejerciciosId, submissionsId));
         LOGGER.log(Level.INFO, "EjercicioSubmissionsResource adSubmission: output: {0}", detailDTO);
         return detailDTO;
     }

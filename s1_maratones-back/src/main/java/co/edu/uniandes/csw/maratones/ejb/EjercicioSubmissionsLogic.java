@@ -35,15 +35,16 @@ public class EjercicioSubmissionsLogic {
      * Asocia una Submission existente a un Ejercicio
      *
      * @param ejerciciosId
-     * @param submission
+     * @param submissionsId
      * @return Instancia de BookEntity que fue asociada a Author
-     */ public SubmissionEntity addSubmission(Long ejerciciosId, SubmissionEntity submission) {
+     */ public EjercicioEntity addSubmission(Long ejerciciosId, Long submissionsId) {
         LOGGER.log(Level.INFO, "Inicia proceso de asociarle una submission al ejercicio con id = {0}", ejerciciosId);
         EjercicioEntity ejerEntity = ejercicioPersistence.find(ejerciciosId);
-        SubmissionEntity subEntity = submissionPersistence.find(submission.getId());
+        SubmissionEntity subEntity = submissionPersistence.find(submissionsId);
+        subEntity.setEjercicioEntity(ejerEntity);
         ejerEntity.getSubmissions().add(subEntity);
         LOGGER.log(Level.INFO, "Termina proceso de asociarle una submission al ejercicio con id = {0}", ejerciciosId);
-        return submissionPersistence.find(submission.getId());
+        return ejercicioPersistence.find(ejerciciosId);
     }
      
      /**
