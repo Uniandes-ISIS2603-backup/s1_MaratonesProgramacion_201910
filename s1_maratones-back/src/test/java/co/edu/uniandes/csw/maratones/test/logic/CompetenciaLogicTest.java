@@ -184,6 +184,11 @@ public class CompetenciaLogicTest {
         ArrayList usuarios = new ArrayList <>();
         usuarios.add(usuario);
         EjercicioEntity ejercicio = factory.manufacturePojo(EjercicioEntity.class);
+        ejercicio.setDescripcion("Descripcion");
+        ejercicio.setNombre("Nombre");
+        ejercicio.setPuntaje(1);
+        ejercicio.setNivel(1);
+        
         ArrayList ejercicios = new ArrayList<>();
         ejercicios.add (ejercicio);
         CompetenciaEntity newEntity = factory.manufacturePojo(CompetenciaEntity.class);
@@ -201,7 +206,7 @@ public class CompetenciaLogicTest {
         Assert.assertNotNull(result);
         CompetenciaEntity entity = em.find(CompetenciaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertTrue("La lista de ejercicios está vacia",result.getEjercicioEntitys().isEmpty());
+        Assert.assertTrue("La lista de ejercicios está vacia",!result.getEjercicioEntitys().isEmpty());
         Assert.assertEquals(result.getEjercicioEntitys(), entity.getEjercicioEntitys());
         
     }

@@ -43,6 +43,7 @@ public class CompetenciaEjercicioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de asociarle una submission al ejercicio con id = {0}", competenciasId);
         CompetenciaEntity comEntity = competenciaPersistence.find(competenciasId);
         EjercicioEntity ejerEntity = ejercicioPersistence.find(ejerciciosId);
+        ejerEntity.setCompetencia(comEntity);
         comEntity.getEjercicioEntitys().add(ejerEntity);
         LOGGER.log(Level.INFO, "Termina proceso de asociarle una submission al ejercicio con id = {0}", competenciasId);
         return ejercicioPersistence.find(ejerciciosId);
