@@ -139,6 +139,13 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
             usuarioEntity.setBlogs(blogsEntity);
         }
+        if (blog != null) {
+            List<BlogEntity> blogsEntity = new ArrayList<>();
+            for (BlogDTO dtoBlog: blog) {
+                blogsEntity.add(dtoBlog.toEntity());
+            }
+            usuarioEntity.setBlogs(blogsEntity);
+        }
         return usuarioEntity;
     }
     
@@ -174,6 +181,6 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     public void setBlog(List<BlogDTO> blog) {
         this.blog = blog;
     }
-   
+
     
 }

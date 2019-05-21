@@ -46,6 +46,7 @@ public class ApplicationConfig extends Application {
         resources.add(co.edu.uniandes.csw.maratones.resources.LenguajeResource.class);
         resources.add(co.edu.uniandes.csw.maratones.resources.LugarCompetenciaCompetenciaResource.class);
         resources.add(co.edu.uniandes.csw.maratones.resources.LugarCompetenciaResource.class);
+        resources.add(co.edu.uniandes.csw.maratones.resources.PublicacionResource.class);
         resources.add(co.edu.uniandes.csw.maratones.resources.SubmissionEquipoResource.class);
         resources.add(co.edu.uniandes.csw.maratones.resources.SubmissionResource.class);
         resources.add(co.edu.uniandes.csw.maratones.resources.UsuarioEquipoResource.class);
