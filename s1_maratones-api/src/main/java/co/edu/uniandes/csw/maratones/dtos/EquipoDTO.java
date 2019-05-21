@@ -46,6 +46,12 @@ public class EquipoDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public EquipoDTO(){
+        
+    }
+    
+    
     public EquipoDTO(EquipoEntity equipoEntity) {
         if (equipoEntity != null) {
             this.nombreEquipo = equipoEntity.getNombreEquipo();
