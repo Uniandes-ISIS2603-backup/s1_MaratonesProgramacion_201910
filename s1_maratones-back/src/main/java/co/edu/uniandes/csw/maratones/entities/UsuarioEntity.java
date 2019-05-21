@@ -41,7 +41,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     private List<EquipoEntity> equipos = new ArrayList<>();
     
     @PodamExclude
-    @OneToMany(mappedBy = "programador",cascade = {
+    @OneToMany(mappedBy = "programadorEntity",cascade = {
         CascadeType.REMOVE
     })
     private List<LenguajeEntity> lenguajes = new ArrayList<>();
@@ -130,3 +130,4 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     }
   
 }
+

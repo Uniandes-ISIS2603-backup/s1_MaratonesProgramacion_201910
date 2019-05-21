@@ -34,7 +34,7 @@ public class LenguajeEntity extends BaseEntity implements Serializable{
      */
     @PodamExclude
     @ManyToOne 
-    private UsuarioEntity programador;
+    private UsuarioEntity programadorEntity;
     
     /**
      * @return the nombre
@@ -68,14 +68,14 @@ public class LenguajeEntity extends BaseEntity implements Serializable{
      * @return the programador
      */
     public UsuarioEntity getProgramador() {
-        return programador;
+        return programadorEntity;
     }
 
     /**
      * @param programador the programador to set
      */
     public void setProgramador(UsuarioEntity programador) {
-        this.programador = programador;
+        this.programadorEntity = programador;
     }
     
     

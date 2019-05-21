@@ -59,72 +59,79 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class SubmissionDTO implements Serializable{
     
     /*
-    
+    * Atributo que modela el tiempo que tomo hacer la submission
     */
     private Double tiempo;
     
     /*
-    
+    * Atributo que modela el veredicto de una submission, este atributo solo puede modelarse con las constantes definidas
     */
     private String veredicto;
     
     /*
-    
+    * Atributo que modela la ruta del archivo de una entrega
     */
     private String archivo;
     
     /*
-    
+    *Atributo que modela la fecha en la que fue creada esta submission
     */
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fecha;
     
     /*
-    
+    * Atributo que modela la memoria que ocupa la submission
     */
     private Double memoria;
     
     /*
-    
+    * Atributo que modela el codigo de la submission
     */
     private String codigo;
     
     /*
-    
+    * Atributo que modela el id del submission
     */
     private Long id;
     
     /*
-    
+    * Atributo que modela el ejercicio al que fue entregada la submission
     */
     private EjercicioDTO ejercicio;
     
     /**
-     * 
+     * COnstante para modelar que una entrega esta en revision
      */
     public static final String EN_REVISION = "En revision";
     
-        /**
-     * 
+     /**
+     * Constante para modelar que una entrega esta aprobada
      */
     public static final String APROBADA = "Aprobada";
     
         /**
-     * 
+     * Constante para modelar que una entrega no compila
      */
     public static final String ERROR_COMPILACION = "Error de compilacion";
     
         /**
-     * 
+     * Constante para modelar que una entrega fue recibida despues del tiempo permitido por el ejercicio
      */
     public static final String ERROR_TIEMPO= "Error de tiempo limite excedido";
     
 
+    /**
+     * Constructor basico, vacio
+     */
     public SubmissionDTO()
     {
         
     }
     
+    /**
+     * Metodo que permite construir una entrega a partir de una entidad persistida 
+     * @param entity la entidad que contiene la informacion de la submission
+     */
     public SubmissionDTO(SubmissionEntity entity)
     {
         if(entity != null)
@@ -136,101 +143,117 @@ public class SubmissionDTO implements Serializable{
             this.memoria = entity.getMemoria();
             this.tiempo = entity.getTiempo();
             this.veredicto = entity.getVeredicto();
-        }
-        if (entity.getEjercicioEntity() != null) {
+            if (entity.getEjercicioEntity() != null) {
                 this.ejercicio = new EjercicioDTO(entity.getEjercicioEntity());
             } else {
                 this.ejercicio = null;
             }
+        }
+        
     }       
         
     
     /**
-     * @return the tiempo
+     * Metodo para consultar el tiempo de una submission
+     * @return the tiempo el tiempo que se demoro en realizar una submission
      */
     public Double getTiempo() {
         return tiempo;
     }
 
     /**
-     * @param tiempo the tiempo to set
+     * Metodo para cmabiar el tiemp ode entrega de una submission
+     * @param tiempo the tiempo to set el tiempo nuevo de una submission
      */
     public void setTiempo(Double tiempo) {
         this.tiempo = tiempo;
     }
 
     /**
-     * @return the veredicto
+     * Metodo para consultar el veredicto de una submission 
+     * @return the veredicto el veredicto de una submission
      */
     public String getVeredicto() {
         return veredicto;
     }
 
     /**
-     * @param veredicto the veredicto to set
+     * Metodo para cambiar el veredicto de una submission
+     * @param veredicto the veredicto to set el veredicto nuevo de una submission
      */
     public void setVeredicto(String veredicto) {
         this.veredicto = veredicto;
     }
 
     /**
-     * @return the archivo
+     * Metodo para obtener la ruta de archivo de una submission
+     * @return the archivo la ruta del archivo de una submission 
      */
     public String getArchivo() {
         return archivo;
     }
 
     /**
-     * @param archivo the archivo to set
+     * Metodo para cambiar el archivo de una submission
+     * @param archivo the archivo to set el nuevo archivo de una submission
      */
     public void setArchivo(String archivo) {
         this.archivo = archivo;
     }
 
     /**
-     * @return the fecha
+     * Metodo para obtener la fecha de entrega de una submission
+     * @return the fecha la fecha de la submission
      */
     public Date getFecha() {
         return fecha;
     }
 
     /**
-     * @param fecha the fecha to set
+     * Metodo para cambiar la fecha de una submission
+     * @param fecha the fecha to set la nueva fecha de la submission
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
     /**
-     * @return the memoria
+     * Metodo para obtener la memoria que ocupa una submission
+     * @return the memoria el espacio en memoria que ocupa una submission
      */
     public Double getMemoria() {
         return memoria;
     }
 
     /**
-     * @param memoria the memoria to set
+     * Metodo para cambiar el espacio que ocupa en memoria una submission
+     * @param memoria the memoria to set el nuevo espacio que ocupa
      */
     public void setMemoria(Double memoria) {
         this.memoria = memoria;
     }
 
     /**
-     * @return the codigo
+     * Metodo para obtener el codigo de una submission
+     * @return the codigo el codigo de la submission
      */
     public String getCodigo() {
         return codigo;
     }
 
     /**
-     * @param codigo the codigo to set
+     * Metodo para cambiar el codigo de una submission
+     * @param codigo the codigo to set el nuevo codigo de la submission
      */
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
     
     
-    
+    /**
+     * Metodo que permite convertir el DTO en una unidad de persistencia
+     * @return la entidad creada
+     */
     public SubmissionEntity toEntity()
     {
         SubmissionEntity submission = new SubmissionEntity();
@@ -271,14 +294,16 @@ public class SubmissionDTO implements Serializable{
     }
 
     /**
-     * @return the ejercicio
+     * Metodo para consultar El ejercicio al cual esta asociada la submission
+     * @return the ejercicio el ejercicio de la submission
      */
     public EjercicioDTO getEjercicio() {
         return ejercicio;
     }
 
     /**
-     * @param ejercicio the ejercicio to set
+     * Metodo para cambiar el ejercicio de una submission
+     * @param ejercicio the ejercicio to set el ejercicio nuevo de la submission
      */
     public void setEjercicio(EjercicioDTO ejercicio) {
         this.ejercicio = ejercicio;
