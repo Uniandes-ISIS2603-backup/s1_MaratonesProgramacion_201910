@@ -179,7 +179,7 @@ public class EjercicioResource {
     @Path("{ejerciciosId: \\d+}/submissions")
     public Class<EjercicioSubmissionsResource> getEjercicioSubmissionsResource(@PathParam("ejerciciosId") Long ejerciciosId) {
         if (ejercicioLogic.getEjercicio(ejerciciosId) == null) {
-            throw new WebApplicationException("El recurso /authors/" + ejerciciosId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /ejercicios/" + ejerciciosId + " no existe.", 404);
         }
         return EjercicioSubmissionsResource.class;
     }

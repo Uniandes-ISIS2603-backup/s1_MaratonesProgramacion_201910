@@ -31,20 +31,27 @@ public class UsuarioLenguajesLogic {
     @Inject
     private LenguajePersistence lenguajePersistence;
     
-     /**
-     * Asocia un lenguaje existente a un Usuario
-     *
-     * @param usuarioId Identificador de la instancia de Usuario
-     * @param lenguajesId Identificador de la instancia de Lenguaje
-     * @return Instancia de LenguajeEntity que fue asociado con UsuarioEntity
-     */
-    public LenguajeEntity addLenguaje(Long usuarioId, Long lenguajesId) {
+    
+     
+    public UsuarioEntity addLenguaje(Long usuarioId, LenguajeEntity lenguaje) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de asociarle un lenguaje al usuario con id = {0}", usuarioId);
-        LenguajeEntity lenguajeEntity = lenguajePersistence.find(lenguajesId);
-        //UsuarioEntity usuarioEntity = usuarioPersistence.find(usuarioId);
-        //usuarioEntity.getLeguajes().add(lenguajeEntity);
+        UsuarioEntity usuarioEntity = usuarioPersistence.find(usuarioId);
+        
+        for(LenguajeEntity lenguajesUsuario: usuarioEntity.getLenguajes())
+        {
+            if(lenguaje.getNombre().equals(lenguajesUsuario.getNombre()))
+            {
+                throw new BusinessLogicException("El usuario ya tiene un lenguaje con el nombre especificado");
+            }
+        }
+        
+        lenguaje.setProgramador(usuarioEntity);
+        usuarioEntity.getLenguajes().add(lenguaje);
+        
+        lenguajePersistence.update(lenguaje);
+        usuarioPersistence.update(usuarioEntity);
         LOGGER.log(Level.INFO, "Termina proceso de asociarle un lenguaje al autor con id = {0}", usuarioId);
-        return lenguajePersistence.find(lenguajesId);
+        return usuarioPersistence.find(usuarioId);
     }
     
     /**
@@ -57,8 +64,7 @@ public class UsuarioLenguajesLogic {
      */
     public List<LenguajeEntity> getLenguajes(Long usuarioId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los lenguajes del usuario con id = {0}", usuarioId);
-        //return usuarioPersistence.find(usuarioId).getLeguajes();
-        return null;
+        return usuarioPersistence.find(usuarioId).getLenguajes();
     }
 
     /**
@@ -71,12 +77,12 @@ public class UsuarioLenguajesLogic {
      */
     public LenguajeEntity getLenguaje(Long usuarioId, Long lenguajeId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el lenguaje con id = {0} del usuario con id = " + usuarioId, lenguajeId);
-       //List<LenguajeEntity> lenguajes = usuarioPersistence.find(usuarioId).getLeguajes();
+       List<LenguajeEntity> lenguajes = usuarioPersistence.find(usuarioId).getLenguajes();
         LenguajeEntity lenguajeEntity = lenguajePersistence.find(lenguajeId);
-      // int index = lenguajes.indexOf(lenguajeEntity);
+       int index = lenguajes.indexOf(lenguajeEntity);
         LOGGER.log(Level.INFO, "Termina proceso de consultar el lenguaje con id = {0} del usuario con id = " + usuarioId, lenguajeId);
-        //if (index >= 0) {
-           // return lenguajes.get(index);
+        if (index >= 0) {
+            return lenguajes.get(index);}
         
         throw new BusinessLogicException("El lenguaje no esta asociado al usuario");
     }
@@ -90,10 +96,12 @@ public class UsuarioLenguajesLogic {
      */
     public void removeLenguaje(Long usuarioId, Long lenguajeId){
         LOGGER.log(Level.INFO, "Inicia proceso de borrar un libro del author con id = {0}", usuarioId);
-        //UsuarioEntity usuarioEntity = usuarioPersistence.find(usuarioId);
+        UsuarioEntity usuarioEntity = usuarioPersistence.find(usuarioId);
         LenguajeEntity lenguajeEntity = lenguajePersistence.find(lenguajeId);
-        //usuarioEntity.getLeguajes().remove(lenguajeEntity);
+        usuarioEntity.getLenguajes().remove(lenguajeEntity);
         LOGGER.log(Level.INFO, "Termina proceso de borrar un libro del author con id = {0}", usuarioId);
     }
+    
+    
     
 }
