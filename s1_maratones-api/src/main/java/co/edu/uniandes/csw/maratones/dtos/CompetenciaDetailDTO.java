@@ -21,15 +21,12 @@ import java.util.List;
  */
 public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable {
     
-    private List<LugarCompetenciaDTO> lugarCompetencias;
-    private List<EquipoDetailDTO> inscritos;    
+    private List<LugarCompetenciaDTO> lugarCompetencias;  
     private List<UsuarioDetailDTO> jueces;
     
     private List<EquipoDTO> equipos;
     
     private UsuarioDTO patrocinadores;
-    
-    private List<LenguajeDTO> lenguajes;
     
     public CompetenciaDetailDTO (CompetenciaEntity entity) {
         super(entity);
@@ -63,14 +60,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
             {
                 patrocinadores = new UsuarioDTO(entity.getPatrocinadores());
             }
-            if(entity.getLenguajes()!=null)
-            {
-                lenguajes = new ArrayList<>();
-                for(LenguajeEntity entityLenguaje: entity.getLenguajes())
-                {
-                    lenguajes.add(new LenguajeDTO(entityLenguaje));
-                }
-            }
+
             
         }
     }
@@ -111,14 +101,6 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
        if(patrocinadores!=null)
        {
            competenciaEntity.setPatrocinadores(patrocinadores.toEntity());
-       }
-       if(lenguajes!= null){
-           List<LenguajeEntity> lenguajesEntity = new ArrayList<>();
-           for(LenguajeDTO dtoLenguajes: lenguajes)
-           {
-               lenguajesEntity.add(dtoLenguajes.toEntity());
-           }
-           competenciaEntity.setLenguajes(lenguajesEntity);
        }
                 
         return competenciaEntity;         
@@ -166,42 +148,5 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
         this.equipos = equipos;
     }
 
-//     /**
-//      * @return the patrocinadores
-//      */
-// <<<<<<< jd.mendozar
-//     public UsuarioDTO getPatrocinadores() {
-//         return patrocinadores;
-// =======
-//     public List<EquipoDetailDTO> getInscritos() {
-//         return inscritos;
-// >>>>>>> master
-//     }
-
-//     /**
-//      * @param patrocinadores the patrocinadores to set
-//      */
-// <<<<<<< jd.mendozar
-//     public void setPatrocinadores(UsuarioDTO patrocinadores) {
-//         this.patrocinadores = patrocinadores;
-// =======
-//     public void setInscritos(List<EquipoDetailDTO> inscritos) {
-//         this.inscritos = inscritos;
-// >>>>>>> master
-//     }
-
-    /**
-     * @return the lenguajes
-     */
-    public List<LenguajeDTO> getLenguajes() {
-        return lenguajes;
-    }
-
-    /**
-     * @param lenguajes the lenguajes to set
-     */
-    public void setLenguajes(List<LenguajeDTO> lenguajes) {
-        this.lenguajes = lenguajes;
-    }
 
 }

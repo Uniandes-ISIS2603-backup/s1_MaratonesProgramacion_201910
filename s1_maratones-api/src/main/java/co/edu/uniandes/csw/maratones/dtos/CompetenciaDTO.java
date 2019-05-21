@@ -5,9 +5,12 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.adapters.DateAdapter;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import java.io.Serializable;
+import java.util.Date;
 import java.time.LocalDateTime;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -17,9 +20,10 @@ import java.time.LocalDateTime;
 public class CompetenciaDTO implements Serializable{
     private Long id;
 
-    private Boolean esVirtual;
+    private String esVirtual;
     
-    private LocalDateTime fechaInicio;
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date fechaInicio;
     
     private String nombre;
     
@@ -29,7 +33,8 @@ public class CompetenciaDTO implements Serializable{
     
     private String condiciones;
     
-    private LocalDateTime fechaFin;
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date fechaFin;
     
     private Integer nivel;
    
@@ -75,28 +80,28 @@ public class CompetenciaDTO implements Serializable{
     /**
      * @return the esVirtual
      */
-    public boolean isEsVirtual() {
+    public String isEsVirtual() {
         return esVirtual;
     }
 
     /**
      * @param esVirtual the esVirtual to set
      */
-    public void setEsVirtual(boolean esVirtual) {
+    public void setEsVirtual(String esVirtual) {
         this.esVirtual = esVirtual;
     }
 
     /**
      * @return the fechaInicio
      */
-    public LocalDateTime getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
     /**
      * @param fechaInicio the fechaInicio to set
      */
-    public void setFechaInicio(LocalDateTime fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
@@ -159,14 +164,14 @@ public class CompetenciaDTO implements Serializable{
     /**
      * @return the fechaFin
      */
-    public LocalDateTime getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
     /**
      * @param fechaFin the fechaFin to set
      */
-    public void setFechaFin(LocalDateTime fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 
