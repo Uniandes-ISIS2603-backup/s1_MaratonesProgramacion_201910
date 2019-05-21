@@ -30,7 +30,7 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author c.mendez11
  */
-@Path ( "publicaciones" )
+
 @Produces ( " application/json " )
 @Consumes ( " application/json " )
 @RequestScoped
@@ -41,7 +41,7 @@ public class PublicacionResource {
    @POST
    public PublicacionDTO crearPublicacion(@PathParam("blogsId") Long blogsId,PublicacionDTO publicacion) throws BusinessLogicException{
        LOGGER.log(Level.INFO, "PublicacionResource createPublicacion: input: {0}", publicacion);
-      
+        
         Date f = new Date();
         publicacion.setFecha(f);
         PublicacionDTO bpublicacion = new PublicacionDTO(publicacionLogic.createPublicacion(blogsId,publicacion.toEntity()));
@@ -81,9 +81,11 @@ public class PublicacionResource {
     public PublicacionDTO updatePublicacion(@PathParam("publicacionesId") Long publicacionesId, PublicacionDTO publicacion) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "PublicacionResource updatePublicacion: input: id: {0} , Publicacion: {1}", new Object[]{publicacionesId, publicacion});
         publicacion.setId(publicacionesId);
+        
         if (publicacionLogic.getPublicacion(publicacionesId) == null) {
             throw new WebApplicationException("El recurso /Publicacion/" + publicacionesId + " no existe.", 404);
         }
+        publicacion.setFecha(publicacionLogic.getPublicacion(publicacionesId).getFecha());
         PublicacionDTO detailDTO = new PublicacionDTO(publicacionLogic.updatePublicacion(publicacionesId, publicacion.toEntity()));
         LOGGER.log(Level.INFO, "PublicacionResource updatePublicacion: output: {0}", detailDTO);
         return detailDTO;

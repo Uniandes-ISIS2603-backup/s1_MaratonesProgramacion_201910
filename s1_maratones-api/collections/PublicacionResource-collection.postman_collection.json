@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "556da44f-a2eb-483b-8a11-19a9f7125dd7",
+		"name": "Publicacion Test",
+		"description": "test postamn para las publicaciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pruebas a Publicacion",
+			"item": [
+				{
+					"name": "POST a Blog",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c9f037e9-7bff-40d4-bc0d-12d939c48811",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "464cd04a-8b6c-4542-9094-8568d80be89a",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"new_id_i\",data.id);",
+									"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\":\"parcticar publicacion\",\r\n  \"descripcion\":\"dara a conocer la imp...\"\r\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:8080/s1_maratones-api/api/blogs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Publicacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "584f7c12-e9be-4d6c-8819-42d73adc8709",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"new_id_i2\",data.id);",
+									"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n \"texto\":\"La realización de ejercicios fuera de la competencia fortalece...\"\r\n }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}/publicaciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}",
+								"publicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Publicacion 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "584f7c12-e9be-4d6c-8819-42d73adc8709",
+								"exec": [
+									"var data = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"new_id_i2\",data.id);",
+									"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n \"texto\":\"segunda publicacion ...\"\r\n }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}/publicaciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}",
+								"publicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Publicacion blog no existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "38613973-4a95-453c-ab41-c470289e8918",
+								"exec": [
+									"tests[\"No se puede asociar una publicacion a un blog que no existe.\"] = responseCode.code === 404;",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /blogs/0/públicaciones no existe.\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n \"texto\":\"blog no existe...\"\r\n }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/0/publicaciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"0",
+								"publicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar publicaciones blog no existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13973704-d9a3-42d7-b021-c96a70c5e303",
+								"exec": [
+									"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; ",
+									"tests[\"Mensaje correcto de error\"] = responseBody.has(\"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs0/publicaciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs0",
+								"publicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar publicaciones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13973704-d9a3-42d7-b021-c96a70c5e303",
+								"exec": [
+									"var data= JSON.parse(responseBody);",
+									"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+									"tests[\"Contador publicaciones\"] = data.length >= 0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}/publicaciones",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}",
+								"publicaciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar publicacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e4d28511-0f22-487d-b257-7e57b46c618d",
+								"exec": [
+									"console.log(responseBody);",
+									"var data = JSON.parse(responseBody);",
+									"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n \"texto\":\"Editando publicacion...\"\r\n \r\n }"
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}/publicaciones/{{new_id_i2}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}",
+								"publicaciones",
+								"{{new_id_i2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar publicacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c08e02f-899e-4d8b-857a-6a9c43aa07e8",
+								"exec": [
+									"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs/{{new_id_i}}/publicaciones/{{new_id_i2}}",
+							"protocol": "http",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{puerto}}",
+							"path": [
+								"s1_maratones-api",
+								"api",
+								"blogs",
+								"{{new_id_i}}",
+								"publicaciones",
+								"{{new_id_i2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Pruebas de la clase PublicacionDTO"
+		}
+	]
+}
