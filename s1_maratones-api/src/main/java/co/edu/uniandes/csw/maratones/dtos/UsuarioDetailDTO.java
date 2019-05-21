@@ -19,6 +19,7 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
@@ -42,6 +43,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
 
     private List<EquipoDTO> equipos;
     private List<LenguajeDTO> lenguajes;
+    private List<CompetenciaDetailDTO> competenciasJuez;
     
     /**
      * Constructor por defecto
@@ -68,6 +70,16 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
                 equipos.add(new EquipoDTO(entity));
             }
         }
+        
+        if (usuarioEntity.getCompetenciasJuez()!=null)
+        {
+            competenciasJuez = new ArrayList();
+            for (CompetenciaEntity entity: usuarioEntity.getCompetenciasJuez())
+            {
+                competenciasJuez.add(new CompetenciaDetailDTO(entity));
+            }
+        }
+        
     }
     public List<EquipoDTO> getEquipos() {
         return equipos;
@@ -103,12 +115,35 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
             usuarioEntity.setEquipos(entity);
         }
+        if(getCompetenciasJuez() !=null)
+        {
+            List<CompetenciaEntity> entity = new ArrayList<>();
+            for(CompetenciaDetailDTO eldto: getCompetenciasJuez())
+            {
+                entity.add(eldto.toEntity());
+            }
+            usuarioEntity.setCompetenciasJuez(entity);
+        }
         return usuarioEntity;
     }
     
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    /**
+     * @return the competenciasJuez
+     */
+    public List<CompetenciaDetailDTO> getCompetenciasJuez() {
+        return competenciasJuez;
+    }
+
+    /**
+     * @param competenciasJuez the competenciasJuez to set
+     */
+    public void setCompetenciasJuez(List<CompetenciaDetailDTO> competenciasJuez) {
+        this.competenciasJuez = competenciasJuez;
     }
    
     
