@@ -19,13 +19,8 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
-import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * UsuarioDTO Objeto de transferencia de datos de Usuario. Los DTO contienen las
  * representaciones de los JSON que se transfieren entre el cliente y el
@@ -156,11 +151,11 @@ public class UsuarioDTO implements Serializable {
         this.clave = clave;
     }
 
-    public int getPuntaje() {
+    public Integer getPuntaje() {
         return puntaje;
     }
 
-    public void setPuntaje(int puntaje) {
+    public void setPuntaje(Integer puntaje) {
         this.puntaje = puntaje;
     }
 
