@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,7 +39,7 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     
     
     @PodamExclude
-    @OneToMany(fetch = FetchType.LAZY, cascade = 
+    @ManyToMany(mappedBy= "competencias" ,fetch = FetchType.LAZY, cascade = 
             {
                 CascadeType.PERSIST
             })

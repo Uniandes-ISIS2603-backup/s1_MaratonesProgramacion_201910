@@ -44,7 +44,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
 
     private List<EquipoDTO> equipos;
     private List<LenguajeDTO> lenguajes;
-    private List<CompetenciaDetailDTO> competenciasJuez;
+    private List<CompetenciaDetailDTO> competencias;
     private List<BlogDTO> blog;
     /**
      * Constructor por defecto
@@ -72,12 +72,12 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
         }
         
-        if (usuarioEntity.getCompetenciasJuez()!=null)
+        if (usuarioEntity.getCompetencias()!=null)
         {
-            competenciasJuez = new ArrayList();
-            for (CompetenciaEntity entity: usuarioEntity.getCompetenciasJuez())
+            competencias = new ArrayList();
+            for (CompetenciaEntity entity: usuarioEntity.getCompetencias())
             {
-                competenciasJuez.add(new CompetenciaDetailDTO(entity));
+                competencias.add(new CompetenciaDetailDTO(entity));
             }
         }
         if (usuarioEntity != null) {
@@ -123,14 +123,21 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
             usuarioEntity.setEquipos(entity);
         }
-        if(getCompetenciasJuez() !=null)
+        if(getCompetencias() !=null)
         {
             List<CompetenciaEntity> entity = new ArrayList<>();
-            for(CompetenciaDetailDTO eldto: getCompetenciasJuez())
+            for(CompetenciaDetailDTO eldto: getCompetencias())
             {
                 entity.add(eldto.toEntity());
             }
-            usuarioEntity.setCompetenciasJuez(entity);
+            usuarioEntity.setCompetencias(entity);
+        }
+        if (blog != null) {
+            List<BlogEntity> blogsEntity = new ArrayList<>();
+            for (BlogDTO dtoBlog: blog) {
+                blogsEntity.add(dtoBlog.toEntity());
+            }
+            usuarioEntity.setBlogs(blogsEntity);
         }
         if (blog != null) {
             List<BlogEntity> blogsEntity = new ArrayList<>();
@@ -148,17 +155,17 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     }
 
     /**
-     * @return the competenciasJuez
+     * @return the competencias
      */
-    public List<CompetenciaDetailDTO> getCompetenciasJuez() {
-        return competenciasJuez;
+    public List<CompetenciaDetailDTO> getCompetencias() {
+        return competencias;
     }
 
     /**
-     * @param competenciasJuez the competenciasJuez to set
+     * @param competencias the competencias to set
      */
-    public void setCompetenciasJuez(List<CompetenciaDetailDTO> competenciasJuez) {
-        this.competenciasJuez = competenciasJuez;
+    public void setCompetencias(List<CompetenciaDetailDTO> competencias) {
+        this.competencias = competencias;
     }
 
     /**
@@ -174,6 +181,6 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     public void setBlog(List<BlogDTO> blog) {
         this.blog = blog;
     }
-   
+
     
 }
