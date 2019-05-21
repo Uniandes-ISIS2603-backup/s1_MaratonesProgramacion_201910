@@ -200,4 +200,18 @@ public class BlogLogicTest {
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
         Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
     }
+    
+     @Test(expected = BusinessLogicException.class)
+    public void updateBlogTestDescripcionLarga()throws BusinessLogicException  {
+        BlogEntity entity = data.get(0);
+        entity.setDescripcion("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        bl.updateBlog(entity.getId(),entity);
+    }
+    
+     @Test(expected = BusinessLogicException.class)
+    public void updateBlogTestNombreLargo()throws BusinessLogicException  {
+        BlogEntity entity = data.get(0);
+        entity.setNombre("este nombre claramente excede los 60 caracteres que es el limite que el nombre de un blog puede tener porque parece una descripcion");
+        bl.updateBlog(entity.getId(),entity);
+    }
 }

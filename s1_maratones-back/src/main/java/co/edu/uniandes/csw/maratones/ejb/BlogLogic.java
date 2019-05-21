@@ -75,6 +75,26 @@ public class BlogLogic {
         if(blogId==null || blogId<0){
              throw new BusinessLogicException("El Id del blog no es valido");
         }
+        //Reglas del nombre
+        if(blogEntity.getNombre()==null)
+        {
+            throw new BusinessLogicException("El nombre del blog invalido");
+        }
+        if(blogEntity.getNombre().length()>60)
+        {
+            throw new BusinessLogicException("El numero de caracteres maximo es 60");
+        }
+      
+        //Reglas para descripcion
+        if(blogEntity.getDescripcion()==null)
+        {
+            throw new BusinessLogicException("La descripcion del blog invalida");
+        }
+        if(blogEntity.getDescripcion().length()>500)
+        {
+            throw new BusinessLogicException("El numero de caracteres maximo es 500");
+        }
+        
         BlogEntity newEntity = persistence.update(blogEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el blog con id = {0}", blogEntity.getId());
         return newEntity;
