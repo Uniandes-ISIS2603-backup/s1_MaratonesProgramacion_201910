@@ -50,12 +50,12 @@
 							"raw": "{\r\n  \"nombre\":\"parcticar publicacion\",\r\n  \"descripcion\":\"dara a conocer la imp...\"\r\n  }"
 						},
 						"url": {
-							"raw": "http://localhost:8080/s1_maratones-api/api/blogs",
+							"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/blogs",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"{{ip}}"
 							],
-							"port": "8080",
+							"port": "{{puerto}}",
 							"path": [
 								"s1_maratones-api",
 								"api",
