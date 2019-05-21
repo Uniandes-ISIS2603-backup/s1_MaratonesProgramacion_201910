@@ -46,9 +46,20 @@ public class EquipoDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public EquipoDTO(){
+        
+    }
+    
+    
     public EquipoDTO(EquipoEntity equipoEntity) {
         if (equipoEntity != null) {
             this.nombreEquipo = equipoEntity.getNombreEquipo();
+            this.id = equipoEntity.getId();
+            if(equipoEntity.getCoach() != null)
+            {
+                this.coach = new UsuarioDTO(equipoEntity.getCoach());
+            }
         }
     }
     

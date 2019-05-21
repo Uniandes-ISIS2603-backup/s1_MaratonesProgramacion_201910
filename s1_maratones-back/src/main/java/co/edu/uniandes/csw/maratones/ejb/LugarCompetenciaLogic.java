@@ -48,10 +48,6 @@ public class LugarCompetenciaLogic {
             throw new BusinessLogicException("El lugar no tiene competencia");
         }
             
-        //TODO Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con el mismo id
-        if (lugarCompetenciaPersistence.find(lugarCompetenciaEntity.getId())!=null) {
-            throw new BusinessLogicException("Ya existe un lugarCompetencia con el id \"" + lugarCompetenciaEntity.getId() + "\"");
-        }
         //TODO ubicaciones del lugar de competencias puede llegar nulo, validar donde se certifica que no llega a esta línea como valor nulo
         if(lugarCompetenciaEntity.getUbicaciones()==null)
         {
