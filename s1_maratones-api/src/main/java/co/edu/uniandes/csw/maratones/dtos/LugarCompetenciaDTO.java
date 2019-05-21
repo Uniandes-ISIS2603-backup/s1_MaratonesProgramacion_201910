@@ -5,10 +5,12 @@
  */
 package co.edu.uniandes.csw.maratones.dtos;
 
+import co.edu.uniandes.csw.maratones.adapters.DateAdapter;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -18,7 +20,8 @@ public class LugarCompetenciaDTO implements Serializable{
  
     private Long id;
     
-    private LocalDateTime fecha;
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date fecha;
     
     private String ubicacion;
 
@@ -75,14 +78,14 @@ public class LugarCompetenciaDTO implements Serializable{
     /**
      * @return the fecha
      */
-    public LocalDateTime getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
     /**
      * @param fecha the fecha to set
      */
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

@@ -10,8 +10,12 @@ import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;
+import java.util.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -101,8 +105,12 @@ public class LugarCompetenciaLogicTest {
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             CompetenciaEntity competencia = factory.manufacturePojo(CompetenciaEntity.class);
-            competencia.setFechaInicio(LocalDateTime.now());
-            competencia.setFechaFin(competencia.getFechaInicio().plusHours(20));
+            Date inicio = competencia.getFechaInicio();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(inicio);
+            cal.add(Calendar.HOUR_OF_DAY,10);
+            Date fin = cal.getTime();
+            competencia.setFechaFin(fin);
             em.persist(competencia);
             competenciaData.add(competencia);
         }
@@ -123,7 +131,12 @@ public class LugarCompetenciaLogicTest {
     public void createLugarCompetenciaTest() throws BusinessLogicException {
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         newEntity.setCompetencia(competenciaData.get(0));
-        newEntity.setFecha(newEntity.getCompetencia().getFechaInicio().plusHours(2));
+        Date inicio = competenciaData.get(0).getFechaInicio();
+        Calendar cal = Calendar.getInstance();
+            cal.setTime(inicio);
+            cal.add(Calendar.HOUR_OF_DAY,5);
+            Date fin = cal.getTime();
+        newEntity.setFecha(fin);
         LugarCompetenciaEntity result = lugarCompetenciaLogic.createLugarCompetencia(newEntity);
         Assert.assertNotNull(result);
         LugarCompetenciaEntity entity = em.find(LugarCompetenciaEntity.class, result.getId());
@@ -155,8 +168,11 @@ public class LugarCompetenciaLogicTest {
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
         newEntity.setCompetencia(competenciaData.get(0));
         newEntity.setUbicaciones(null);
+        System.out.println(newEntity.getId());
         lugarCompetenciaLogic.createLugarCompetencia(newEntity);
     }
+    
+    
     
     /**
      * Prueba para crear un LugarCompetencia con ubiciones existente.
@@ -169,6 +185,7 @@ public class LugarCompetenciaLogicTest {
         newEntity.setCompetencia(competenciaData.get(0));
         newEntity.setUbicaciones(lugarCompetenciaData.get(0).getUbicaciones());
         lugarCompetenciaLogic.createLugarCompetencia(newEntity);
+        // debe revisarse en el create que la ubicacion no exista.
     }
     
     /**
@@ -179,7 +196,7 @@ public class LugarCompetenciaLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createLugarCompetenciaTestConCompetenciaInexistente() throws BusinessLogicException {
         LugarCompetenciaEntity newEntity = factory.manufacturePojo(LugarCompetenciaEntity.class);
-        CompetenciaEntity competenciaEntity = new CompetenciaEntity();
+        CompetenciaEntity competenciaEntity = factory.manufacturePojo(CompetenciaEntity.class);
         competenciaEntity.setId(Long.MIN_VALUE);
         newEntity.setCompetencia(competenciaEntity);
         lugarCompetenciaLogic.createLugarCompetencia(newEntity);
