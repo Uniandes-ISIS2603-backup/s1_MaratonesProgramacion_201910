@@ -39,6 +39,7 @@ public class LugarCompetenciaDTO implements Serializable{
     {
         if(entity!= null)
         {
+           this.id = entity.getId();
            this.fecha = entity.getFecha();
            this.ubicacion = entity.getUbicaciones();
            
@@ -58,6 +59,7 @@ public class LugarCompetenciaDTO implements Serializable{
         
         entity.setFecha(this.fecha);
         entity.setUbicaciones(this.ubicacion);
+        entity.setCompetencia(this.competencia.toEntity());
         return entity;
     }
 

@@ -7,40 +7,28 @@
 	},
 	"item": [
 		{
-			"name": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/100",
+			"name": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "2cdddaa1-cb89-4449-99c9-6aa8397c5ddb",
+						"id": "8669439c-c25c-48b7-922b-2d7f7cb400b0",
 						"exec": [
-							"",
-							"tests[\"No genera error en el GET\"] = responseCode.code ===200;"
+							"tests[\"No genera error en el Get\"]=responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/100",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -49,8 +37,7 @@
 					"path": [
 						"s1_maratones-api",
 						"api",
-						"lugarCompetencias",
-						"100"
+						"lugarCompetencias"
 					]
 				}
 			},
