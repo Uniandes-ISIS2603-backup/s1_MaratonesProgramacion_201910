@@ -148,6 +148,9 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     public void setCompetencias(List<CompetenciaEntity> competencias) {
         this.competencias = competencias;
     }
-  
+
+   
+
+   
 }
 
