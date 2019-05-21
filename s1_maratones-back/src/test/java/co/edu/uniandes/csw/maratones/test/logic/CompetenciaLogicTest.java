@@ -131,6 +131,7 @@ public class CompetenciaLogicTest {
         usuarioData.clear();
         ejercicioData.clear();
         competenciaData.clear();
+        
     }
 
      /**
@@ -180,10 +181,10 @@ public class CompetenciaLogicTest {
     @Test
     public void createCompetenciaTest() throws BusinessLogicException {
         UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-        ArrayList usuarios = new ArrayList <UsuarioEntity>();
+        ArrayList usuarios = new ArrayList <>();
         usuarios.add(usuario);
         EjercicioEntity ejercicio = factory.manufacturePojo(EjercicioEntity.class);
-        ArrayList ejercicios = new ArrayList<EjercicioEntity>();
+        ArrayList ejercicios = new ArrayList<>();
         ejercicios.add (ejercicio);
         CompetenciaEntity newEntity = factory.manufacturePojo(CompetenciaEntity.class);
             newEntity.setEjercicioEntitys(ejercicios);
