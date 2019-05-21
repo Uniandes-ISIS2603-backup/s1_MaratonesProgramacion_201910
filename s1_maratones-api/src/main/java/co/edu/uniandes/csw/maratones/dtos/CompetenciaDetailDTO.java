@@ -26,8 +26,6 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
     
     private List<EquipoDTO> equipos;
     
-    private UsuarioDTO patrocinadores;
-    
     public CompetenciaDetailDTO (CompetenciaEntity entity) {
         super(entity);
         
@@ -56,10 +54,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
                     equipos.add(new EquipoDTO(entityEquipo));
                 }
             }
-            if(entity.getPatrocinadores()!=null)
-            {
-                patrocinadores = new UsuarioDTO(entity.getPatrocinadores());
-            }
+            
 
             
         }
@@ -98,11 +93,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
            }
            competenciaEntity.setEquipos(equiposEntity);
        }
-       if(patrocinadores!=null)
-       {
-           competenciaEntity.setPatrocinadores(patrocinadores.toEntity());
-       }
-                
+            
         return competenciaEntity;         
     }
 

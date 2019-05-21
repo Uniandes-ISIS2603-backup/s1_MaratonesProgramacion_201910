@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -46,10 +47,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     })
     private List<LenguajeEntity> lenguajes = new ArrayList<>();
 
+    @PodamExclude
+    @ManyToMany(mappedBy = "jueces", fetch = FetchType.LAZY)
+    private List<CompetenciaEntity> competenciasJuez = new ArrayList<>();
     public List<EquipoEntity> getEquipos() {
         return equipos;
     }
-
+    
+    
     public void setEquipos(List<EquipoEntity> equipos) {
         this.equipos = equipos;
     }
@@ -127,6 +132,20 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
      */
     public void setLenguajes(List<LenguajeEntity> lenguajes) {
         this.lenguajes = lenguajes;
+    }
+
+    /**
+     * @return the competenciasJuez
+     */
+    public List<CompetenciaEntity> getCompetenciasJuez() {
+        return competenciasJuez;
+    }
+
+    /**
+     * @param competenciasJuez the competenciasJuez to set
+     */
+    public void setCompetenciasJuez(List<CompetenciaEntity> competenciasJuez) {
+        this.competenciasJuez = competenciasJuez;
     }
   
 }
