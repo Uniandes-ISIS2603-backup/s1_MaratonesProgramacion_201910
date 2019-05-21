@@ -160,7 +160,6 @@ public class CompetenciaLogicTest {
             ejer.add(ejercicioData.get(i));
             ejercicioData.get(i).setCompetencia(competencia);
             competencia.setEjercicioEntitys(ejer);
-            competencia.setPatrocinadores(usuarioData.get(0));
             Date inicio= competencia.getFechaInicio();
             Calendar cal = Calendar.getInstance();
             cal.setTime(inicio);
@@ -238,7 +237,6 @@ public class CompetenciaLogicTest {
         Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion() );
         Assert.assertEquals(entity.getPuntos(),resultEntity.getPuntos() );
         Assert.assertEquals(entity.getNivel(), resultEntity.getNivel() );
-        Assert.assertEquals("Falla los patrocinadores",entity.getPatrocinadores(),resultEntity.getPatrocinadores());
         Assert.assertEquals("Falla los lenguajes",entity.getLenguajes(),resultEntity.getLenguajes() );
         Assert.assertEquals("Falla los ejercicios",entity.getEjercicioEntitys(), resultEntity.getEjercicioEntitys());
         Assert.assertEquals("Falla los equipos",entity.getEquipos(), resultEntity.getEquipos());
@@ -277,7 +275,6 @@ public class CompetenciaLogicTest {
         Assert.assertEquals(pojoEntity.getPuntos(),resp.getPuntos() );
         Assert.assertEquals(pojoEntity.getLenguajes(),resp.getLenguajes() );
         Assert.assertEquals(pojoEntity.getNivel(), resp.getNivel() );
-        Assert.assertEquals(pojoEntity.getPatrocinadores(),resp.getPatrocinadores() );
     }
     /**
      * Prueba para eliminar una competencia.

@@ -37,9 +37,6 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
             })
     private List<LugarCompetenciaEntity> lugarCompetencias;
     
-    @PodamExclude
-    @OneToOne(fetch = FetchType.LAZY)
-    private UsuarioEntity patrocinadores;
     
     @PodamExclude
     @OneToMany(fetch = FetchType.LAZY, cascade = 
@@ -104,20 +101,6 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
      */
     public void setLugarCompetencias(List<LugarCompetenciaEntity> lugarCompetencias) {
         this.lugarCompetencias = lugarCompetencias;
-    }
-
-    /**
-     * @return the patrocinadores
-     */
-    public UsuarioEntity getPatrocinadores() {
-        return patrocinadores;
-    }
-
-    /**
-     * @param patrocinadores the patrocinadores to set
-     */
-    public void setPatrocinadores(UsuarioEntity patrocinadores) {
-        this.patrocinadores = patrocinadores;
     }
 
     /**
