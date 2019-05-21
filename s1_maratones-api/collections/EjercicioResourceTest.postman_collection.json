@@ -139,6 +139,182 @@
 			"response": []
 		},
 		{
+			"name": "Crear ejercicio con nombre vacio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ab3967e-9ec8-4373-b843-ed89b2b00b38",
+						"exec": [
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nombre de un ejercicio no puede ir vacio\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"\",  \n   \"descripcion\": \"asf\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputdelejercicio\",\n   \"puntaje\" : 123,\n   \"nivel\" : 123\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear ejercicio con descripcion vacia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ab3967e-9ec8-4373-b843-ed89b2b00b38",
+						"exec": [
+							"tests[\"No crea con descripcion vacia\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La descripcion de un ejercicio no puede ir vacia\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"raaandom\",  \n   \"descripcion\": \"\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputdelejercicio\",\n   \"puntaje\" : 123,\n   \"nivel\" : 123\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear ejercicio con puntaje negativo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ab3967e-9ec8-4373-b843-ed89b2b00b38",
+						"exec": [
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El puntaje que ofrece un ejercicio no puede ser cero ni negativo\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"therandom2\",  \n   \"descripcion\": \"asf\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputdelejercicio\",\n   \"puntaje\" : -1,\n   \"nivel\" : 123\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear ejercicio con nivel negativo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ab3967e-9ec8-4373-b843-ed89b2b00b38",
+						"exec": [
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nivel de un ejercicio no puede ser ni cero ni negativo\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"darandom3mufuka\",  \n   \"descripcion\": \"asf\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputdelejercicio\",\n   \"puntaje\" : 123,\n   \"nivel\" : -1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Editar ejercicio",
 			"event": [
 				{
@@ -165,7 +341,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \n   \"descripcion\": \"blablablabla\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputoutputdelejercicio\",\n   \"puntaje\" : 1234,\n   \"nivel\" : 123\n}"
+					"raw": "{  \n   \"descripcion\": \"bla\",\n   \"nombre\":\"nuevo nombre\",\n   \"inputt\" : \"inputdelejercicio\",\n   \"outputt\" : \"outputoutputdelejercicio\",\n   \"puntaje\" : 12,\n   \"nivel\" : 12\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
@@ -218,6 +394,186 @@
 						"api",
 						"ejercicios",
 						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar ejercicio con nuevo nombre vacio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e57e1a0a-6876-4f6b-959c-2ae046d2fe9f",
+						"exec": [
+							"tests[\"No crea con nombre vacio\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nombre de un ejercicio no puede ir vacio\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"descripcion\": \"asdf\",\n   \"nombre\":\"\",\n   \"inputt\" : \"asadasdda\",\n   \"outputt\" : \"outputoutputdelejercicio\",\n   \"puntaje\" : 1234,\n   \"nivel\" : 123\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios",
+						"{{newnewejercicio}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar ejercicio con nueva descripcion vacia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e57e1a0a-6876-4f6b-959c-2ae046d2fe9f",
+						"exec": [
+							"tests[\"No crea con descripcion vacia\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La descripcion de un ejercicio no puede ir vacia\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"descripcion\": \"\",\n   \"inputt\" : \"asdssas\",\n   \"outputt\" : \"outputoutputdelejercicio\",\n   \"puntaje\" : 1234,\n   \"nivel\" : 123\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios",
+						"{{newnewejercicio}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar ejercicio con nuevo puntaje negativo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e57e1a0a-6876-4f6b-959c-2ae046d2fe9f",
+						"exec": [
+							"tests[\"No crea con puntaje negativo\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El puntaje que ofrece un ejercicio no puede ser cero ni negativo\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"descripcion\": \"asaddsf\",\n   \"nombre\": \"asdsggrr\",\n   \"inputt\" : \"asdssas\",\n   \"outputt\" : \"outputoutputdelejercicio\",\n   \"puntaje\" : -1,\n   \"nivel\" : 123\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios",
+						"{{newnewejercicio}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar ejercicio con nuevo nivel negativo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e57e1a0a-6876-4f6b-959c-2ae046d2fe9f",
+						"exec": [
+							"tests[\"No crea con descripcion vacia\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El nivel de un ejercicio no puede ser ni cero ni negativo\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"descripcion\": \"asdas\",\n   \"nombre\": \"name\",\n   \"inputt\" : \"asdssas\",\n   \"outputt\" : \"outputoutputdelejercicio\",\n   \"puntaje\" : 1234,\n   \"nivel\" : -1\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/ejercicios/{{newnewejercicio}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"ejercicios",
+						"{{newnewejercicio}}"
 					]
 				}
 			},
