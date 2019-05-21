@@ -145,5 +145,36 @@ public class EquipoLogicTest {
     }
     
     
+
+    /**
+     * Prueba para consultar un Equipo.
+     */
+    @Test
+    public void getEquipoTest() {
+        EquipoEntity entity = data.get(0);
+        EquipoEntity resultEntity = equipoLogic.getEquipo(entity.getId());
+       
+    }
+
+    /**
+     * Prueba para actualizar un Equipo.
+     *
+     * @throws co.edu.uniandes.csw.equipostore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void updateEquipoTest() throws Exception {
+        EquipoEntity entity = data.get(0);
+        EquipoEntity pojoEntity = factory.manufacturePojo(EquipoEntity.class);
+        pojoEntity.setId(entity.getId());
+        equipoLogic.update(pojoEntity.getId(), pojoEntity);
+        EquipoEntity resp = em.find(EquipoEntity.class, entity.getId());
+       
+    }
+
+    
+
+ 
+    
+    
     
 }
