@@ -51,6 +51,7 @@ public class LenguajeLogic {
     /**
      * 
      * @param lenguaje 
+     * @return  
      */
     public LenguajeEntity updateLenguaje(LenguajeEntity lenguaje) throws BusinessLogicException
     {
@@ -70,9 +71,9 @@ public class LenguajeLogic {
     public void deleteLenguaje(Long lenguajeId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el lenguaje con id = {0}", lenguajeId);
-        LenguajeEntity lengEnt = persistence.find(lenguajeId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el lenguaje con id = {0}", lenguajeId);
         persistence.delete(lenguajeId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el lenguaje con id = {0}", lenguajeId);
+        
     }
     
     public LenguajeEntity getLenguaje(Long lenguajeId)
