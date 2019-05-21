@@ -50,7 +50,7 @@ public class EjercicioLogic {
         
         if(ejercicio.getNivel() <= 0)
         {
-            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero nu negativo");
+            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero ni negativo");
         }
         
         if(ejercicio.getPuntaje() <= 0)
@@ -99,7 +99,7 @@ public class EjercicioLogic {
         
         if(ejercicioEntity.getNivel() <= 0)
         {
-            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero nu negativo");
+            throw new BusinessLogicException("El nivel de un ejercicio no puede ser ni cero ni negativo");
         }
         
         if(ejercicioEntity.getPuntaje() <= 0)

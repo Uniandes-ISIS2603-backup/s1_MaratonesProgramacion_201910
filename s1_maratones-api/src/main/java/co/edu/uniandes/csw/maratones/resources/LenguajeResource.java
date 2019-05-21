@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.maratones.dtos.LenguajeDTO;
 
 import co.edu.uniandes.csw.maratones.ejb.LenguajeLogic;
 import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
-import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,16 @@ public class LenguajeResource {
     @Inject
     private LenguajeLogic lenguajeLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
-    
+    /**
+     * Crea un nuevo lenguaje con la informacion que se recibe en el cuerpo de la
+     * petición y se regresa un objeto identico con un id auto-generado por la
+     * base de datos.
+     *
+     * @param lenguaje {@link LenguajeDTO} - EL lenguaje que se desea guardar.
+     * @return JSON {@link LenguajeDTO} - El lenguaje guardado con el atributo id
+     * autogenerado.
+     * @throws BusinessLogicException en caso de que se viole alguna de las reglas definidas en la capa de logica del lenguaje 
+     */
     @POST
     public LenguajeDTO createLenguaje(LenguajeDTO lenguaje) throws BusinessLogicException
     {
@@ -59,6 +67,16 @@ public class LenguajeResource {
         return nuevoLenguajeDTO;
     }
     
+    
+    /**
+     * Busca el lenguaje con el id asociado recibido en la URL y lo devuelve.
+     *
+     * @param lenguajesId Identificador del lenguajes que se esta buscando. Este debe
+     * ser una cadena de dígitos.
+     * @return JSON {@link LenguajeDTO} - El lenguaje buscado
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el autor.
+     */
     @GET
     @Path("{lenguajesId: \\d+}")
     public LenguajeDTO getLenguaje(@PathParam("lenguajesId") Long lenguajesId) {
@@ -74,9 +92,9 @@ public class LenguajeResource {
     
     
     /**
-     * Busca y devuelve todos los libros que existen en la aplicacion.
+     * Busca y devuelve todos los lenguajes que existen en la aplicacion.
      *
-     * @return JSONArray {@link LenguajeDetailDTO} - Los libros encontrados en la
+     * @return JSONArray {@link LenguajeDTO} - Los lenguajes encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
@@ -107,7 +125,7 @@ public class LenguajeResource {
     
     
     /**
-     * Actualiza el libro con el id recibido en la URL con la información que se
+     * Actualiza el lenguaje con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
      *
      * @param lenguajesId
@@ -133,6 +151,16 @@ public class LenguajeResource {
         return delDTO;
     }
     
+    /**
+     * Borra el lenguaje con el id asociado recibido en la URL.
+     *
+     * @param lenguajesId Identificador del lenguaje que se desea borrar. Este debe
+     * ser una cadena de dígitos.
+     * @throws BusinessLogicException
+     * se retorna excepcion cuando se  viola alguna regla definida en la logica de lenguaje
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper}
+     * Error de lógica que se genera cuando no se encuentra el lenguaje a borrar.
+     */
     @DELETE
     @Path("{lenguajesId: \\d+}")
     public void deletLenguaje(@PathParam("lenguajesId") Long lenguajesId) throws BusinessLogicException {

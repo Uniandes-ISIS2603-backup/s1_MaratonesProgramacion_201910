@@ -41,9 +41,6 @@ public class EjercicioSubmissionsResource {
     private EjercicioSubmissionsLogic ejercicioSubmissionLogic;
 
     @Inject
-    private EjercicioLogic ejercicioLogic;
-
-    @Inject
     private SubmissionLogic submissionLogic;
 
     /**
@@ -53,12 +50,11 @@ public class EjercicioSubmissionsResource {
      * @param submission
      * @return JSON {@link SubmissionDTO} - El libro asociado.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el libro.
+     * Error de lógica que se genera cuando no se encuentra la submission.
      */
     @POST
     public SubmissionDTO addSubmission(@PathParam("ejerciciosId") Long ejerciciosId, SubmissionDTO submission) {
         LOGGER.log(Level.INFO, "EjercicioSubmissionsResource addSubmission: input: ejerciciosId {0} , submissionsId {1}", new Object[]{ejerciciosId, submission.getId()});
-
         SubmissionDTO detailDTO = new SubmissionDTO(ejercicioSubmissionLogic.addSubmission(ejerciciosId, submission.toEntity()));
         LOGGER.log(Level.INFO, "EjercicioSubmissionsResource adSubmission: output: {0}", detailDTO);
         return detailDTO;
@@ -67,7 +63,7 @@ public class EjercicioSubmissionsResource {
     /**
      * Busca y devuelve todos los libros que existen en un autor.
      *
-     * @param authorsId El ID del autor del cual se buscan los libros
+     * @param ejercicioId
      * @return JSONArray {@link BookDetailDTO} - Los libros encontrados en el
      * autor. Si no hay ninguno retorna una lista vacía.
      */
@@ -79,23 +75,6 @@ public class EjercicioSubmissionsResource {
         return lista;
     }
 
-    /**
-     * Elimina la conexión entre el libro y e autor recibidos en la URL. * Error
-     * de lógica que se genera cuando no se encuentra el libro.
-     *
-     * @param ejerciciosId
-     * @param submissionsId
-     */
-    @DELETE
-    @Path("{submissionsId: \\d+}")
-    public void removeSubmission(@PathParam("ejerciciosId") Long ejerciciosId, @PathParam("submissionsId") Long submissionsId) {
-        LOGGER.log(Level.INFO, "EjercicioSubmissionsResource removeSubmission: input: ejerciciosId {0} , submissionsId {1}", new Object[]{ejerciciosId, submissionsId});
-        if (submissionLogic.getSubmission(submissionsId) == null) {
-            throw new WebApplicationException("El recurso /submissions/" + submissionsId + " no existe.", 404);
-        }
-        ejercicioSubmissionLogic.removeSubmission(ejerciciosId, submissionsId);
-        LOGGER.info("EjercicioSubmissionsResource removeSubmission: output: void");
-    }
 
     @GET
     @Path("{submissionsId: \\d+}")
@@ -109,19 +88,6 @@ public class EjercicioSubmissionsResource {
         return detailDTO;
     }
 
-    /**
-     * Convierte una lista de BookDetailDTO a una lista de BookEntity.
-     *
-     * @param dtos Lista de BookDetailDTO a convertir.
-     * @return Lista de BookEntity convertida.
-     */
-    private List<SubmissionEntity> submissionsListDTO2Entity(List<SubmissionDTO> dtos) {
-        List<SubmissionEntity> list = new ArrayList<>();
-        for (SubmissionDTO dto : dtos) {
-            list.add(dto.toEntity());
-        }
-        return list;
-    }
 
     /**
      * Convierte una lista de BookEntity a una lista de BookDetailDTO.
@@ -137,29 +103,5 @@ public class EjercicioSubmissionsResource {
         return list;
     }
 
-    /**
-     * Remplaza las instancias de Submission asociadas a una instancia de
-     * Ejercicio
-     *
-     * @param ejerciciosId
-     * @param submissions
-     * @return JSON {@link BookDTO} - El arreglo de submissions guardado en el
-     * ejercicio.
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la submission.
-     */
-    @PUT
-    @Path("{submissionsId: \\d+}")
-    public List<SubmissionDTO> replaceSubmissions(@PathParam("ejerciciosId") Long ejerciciosId, List<SubmissionDTO> submissions) {
-        LOGGER.log(Level.INFO, "EjercicioSubmissionsResource replaceSubmissions: input: ejerciciosId: {0} , submissions: {1}", new Object[]{ejerciciosId, submissions});
-        for (SubmissionDTO submission : submissions) {
-            if (submissionLogic.getSubmission(submission.getId()) == null) {
-                throw new WebApplicationException("El recurso /submissions/" + submission.getId() + " no existe.", 404);
-            }
-        }
-        List<SubmissionDTO> listaDTOs = submissionsListEntity2DTO(ejercicioSubmissionLogic.replaceSubmissions(ejerciciosId, submissionsListDTO2Entity(submissions)));
-        LOGGER.log(Level.INFO, "EjercicioSubmissionsResource replaceSubmissions: output: {0}", listaDTOs);
-        return listaDTOs;
-    }
 
 }
