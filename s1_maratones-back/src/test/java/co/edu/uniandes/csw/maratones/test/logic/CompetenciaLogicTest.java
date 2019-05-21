@@ -121,9 +121,12 @@ public class CompetenciaLogicTest {
      *
      */
     private void clearData() {
-        em.createQuery("delete from CompetenciaEntity").executeUpdate();
-        em.createQuery("DELETE FROM EjercicioEntity").executeUpdate();
+        
+       
+        
         em.createQuery("DELETE FROM UsuarioEntity").executeUpdate();
+         em.createQuery("DELETE FROM EjercicioEntity").executeUpdate();
+        em.createQuery("delete from CompetenciaEntity").executeUpdate();
         em.createQuery("delete from EquipoEntity").executeUpdate();
         usuarioData.clear();
         ejercicioData.clear();
