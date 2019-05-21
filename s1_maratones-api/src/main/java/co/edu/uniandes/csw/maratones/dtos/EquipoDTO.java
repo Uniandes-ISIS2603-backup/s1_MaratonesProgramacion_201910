@@ -55,6 +55,11 @@ public class EquipoDTO implements Serializable {
     public EquipoDTO(EquipoEntity equipoEntity) {
         if (equipoEntity != null) {
             this.nombreEquipo = equipoEntity.getNombreEquipo();
+            this.id = equipoEntity.getId();
+            if(equipoEntity.getCoach() != null)
+            {
+                this.coach = new UsuarioDTO(equipoEntity.getCoach());
+            }
         }
     }
     
