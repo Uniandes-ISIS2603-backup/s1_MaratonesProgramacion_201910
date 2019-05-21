@@ -65,6 +65,22 @@ public class EquipoLogic {
         return books;
     }
     
+    /**
+     * Eliminar un libro por ID
+     *
+     * @param equipoid El ID del equipo a eliminar
+     * @throws BusinessLogicException si el equipo tiene usuarioss asociados
+     */
+    public void borrarEquipo(Long equipoid) throws Exception {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el equipo con id = {0}", equipoid);
+        List<UsuarioEntity> authors = getEquipo(equipoid).getParticipantes();
+        if (authors != null && !authors.isEmpty()) {
+            throw new Exception("No se puede borrar el equipo con id = " + equipoid + " porque tiene autores asociados");
+        }
+        persistence.delete(equipoid);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el equipo con id = {0}", equipoid);
+    }
+    
     public EquipoEntity getEquipo(Long equiposId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el equipo con id = {0}", equiposId);
         EquipoEntity entity = persistence.find(equiposId);
@@ -75,7 +91,7 @@ public class EquipoLogic {
         return entity;
     }
     
-    public EquipoEntity update(Long equipoId, EquipoEntity equipoEntity) throws BusinessLogicException {
+    public EquipoEntity update(Long equipoId, EquipoEntity equipoEntity) throws Exception {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el equipo con id = {0}", equipoId);
         EquipoEntity newEntity = persistence.update(equipoEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el equipo con id = {0}", equipoEntity.getId());
