@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.maratones.test.logic;
 
 import co.edu.uniandes.csw.maratones.ejb.EjercicioLogic;
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
+import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.EjercicioPersistence;
 import java.util.ArrayList;
@@ -275,9 +276,20 @@ public class EjercicioLogicTest {
         
     }
     
-    @Test(expected = BusinessLogicException.class)
-    public void deleteEjercicioConSubmissionsTest() throws BusinessLogicException {
+    @Test
+    public void deleteEjercicio() throws BusinessLogicException {
         EjercicioEntity entity = data.get(0);
+        ejercicioLogic.deleteEjercicio(entity.getId());
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void deleteEjercicioConSubmissions() throws BusinessLogicException {
+        EjercicioEntity entity = data.get(0);
+        SubmissionEntity newEntity = factory.manufacturePojo(SubmissionEntity.class);
+        List<SubmissionEntity> subs = new ArrayList<>();
+        subs.add(newEntity);
+        entity.setSubmissions(subs);
+        ejercicioLogic.updateEjercicio(entity.getId(), entity);
         ejercicioLogic.deleteEjercicio(entity.getId());
     }
 }
