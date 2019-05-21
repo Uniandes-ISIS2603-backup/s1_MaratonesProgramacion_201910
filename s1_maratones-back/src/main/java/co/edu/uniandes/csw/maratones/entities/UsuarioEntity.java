@@ -49,7 +49,13 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
 
     @PodamExclude
     @ManyToMany(mappedBy = "jueces", fetch = FetchType.LAZY)
+    
     private List<CompetenciaEntity> competenciasJuez = new ArrayList<>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BlogEntity> blogs = new ArrayList<BlogEntity>();
+    
     public List<EquipoEntity> getEquipos() {
         return equipos;
     }
@@ -147,6 +153,21 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     public void setCompetenciasJuez(List<CompetenciaEntity> competenciasJuez) {
         this.competenciasJuez = competenciasJuez;
     }
-  
+
+    /**
+     * @return the blogs
+     */
+    public List<BlogEntity> getBlogs() {
+        return blogs;
+    }
+
+    /**
+     * @param blogs the blogs to set
+     */
+    public void setBlogs(List<BlogEntity> blogs) {
+        this.blogs = blogs;
+    }
+
+   
 }
 

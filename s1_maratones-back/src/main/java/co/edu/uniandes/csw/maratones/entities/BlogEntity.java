@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -27,6 +28,9 @@ public class BlogEntity extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PublicacionEntity> publicaciones = new ArrayList<PublicacionEntity>();
     
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private UsuarioEntity usuario;
     public BlogEntity(){
      
     }
@@ -70,6 +74,20 @@ public class BlogEntity extends BaseEntity implements Serializable{
      */
     public void setPublicaciones(List<PublicacionEntity> publicaciones) {
         this.publicaciones = publicaciones;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public UsuarioEntity getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(UsuarioEntity usuario) {
+        this.usuario = usuario;
     }
     
 }
