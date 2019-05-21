@@ -122,7 +122,12 @@ public class EquipoResource {
         if (equipoLogic.getEquipo(equipoId) == null) {
             throw new WebApplicationException("El recurso /equipos/" + equipoId + " no existe.", 404);
         }
-        EquipoDetailDTO detailDTO = new EquipoDetailDTO(equipoLogic.update(equipoId, book.toEntity()));
+        EquipoDetailDTO detailDTO =null;
+        try{
+         detailDTO = new EquipoDetailDTO(equipoLogic.update(equipoId, book.toEntity()));
+        }catch(Exception e){
+            throw new BusinessLogicException();
+        }
         LOGGER.log(Level.INFO, "EquipoResource updateEquipo: output: {0}", detailDTO);
         return detailDTO;
     }
