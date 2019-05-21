@@ -116,7 +116,7 @@ public class EquipoResource {
      */
     @PUT
     @Path("{equipoId: \\d+}")
-    public EquipoDetailDTO updateEquipo(@PathParam("equipoId") Long equipoId, EquipoDetailDTO book) throws BusinessLogicException {
+    public EquipoDetailDTO updateEquipo(@PathParam("equipoId") Long equipoId, EquipoDetailDTO book) throws BusinessLogicException, Exception {
         LOGGER.log(Level.INFO, "EquipoResource updateEquipo: input: id: {0} , book: {1}", new Object[]{equipoId, book});
         book.setId(equipoId);
         if (equipoLogic.getEquipo(equipoId) == null) {
