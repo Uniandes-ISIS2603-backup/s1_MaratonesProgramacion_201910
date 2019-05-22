@@ -61,7 +61,7 @@ public class UsuarioResource {
 
     @GET
     @Path("{usuariosId: \\d+}")
-    public UsuarioDetailDTO get(@PathParam("usuariosId") Long usuariosId) {
+    public UsuarioDetailDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
         LOGGER.log(Level.INFO, "UsuarioResource get: input: {0}", usuariosId);
         UsuarioEntity entity = usuarioLogic.getUsuarioPorId(usuariosId);
         if (entity == null) {

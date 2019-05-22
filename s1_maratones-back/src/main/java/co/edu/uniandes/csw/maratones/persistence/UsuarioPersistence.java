@@ -113,6 +113,7 @@ public class UsuarioPersistence {
      */
     public UsuarioEntity find(Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando el usuario con id={0}", usuarioId);
+        
         return em.find(UsuarioEntity.class, usuarioId);
     }
 

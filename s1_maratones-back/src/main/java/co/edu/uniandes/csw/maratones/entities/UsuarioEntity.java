@@ -57,6 +57,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BlogEntity> blogs = new ArrayList<BlogEntity>();
     
+     
     public List<EquipoEntity> getEquipos() {
         return equipos;
     }

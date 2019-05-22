@@ -61,8 +61,9 @@ public class UsuarioLogic {
         if (!(usuarioEntity.getRol().equals("COUCH")||usuarioEntity.getRol().equals("RESPONSABLE")||usuarioEntity.getRol().equals("PARTICIPANTE"))) {
             throw new BusinessLogicException("rol invalido");
         }
-        LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
         persistence.create(usuarioEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
+        
         return usuarioEntity;
     }
     

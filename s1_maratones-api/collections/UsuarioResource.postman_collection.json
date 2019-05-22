@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1b4d5710-acfc-4ec7-beef-9020854a9445",
+		"_postman_id": "179a7376-d5f6-482d-902e-b9944124b515",
 		"name": "UsuarioResource",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -33,7 +33,53 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"rol\": \"PARTICIPANTE\", \n    \"nombre\": \"Maria Camila\",\n    \"nombreUsuario\": \"camilalonart\", \n    \"clave\": \"blablabla\", \n    \"correo\": \"mc.londono@uniandes.edu.co\",\n    \"imagen\": \"www.blablabla.com/bla.jpg\"\n}\n"
+					"raw": "{\n\t\"rol\": \"PARTICIPANTE\", \n    \"nombre\": \"Maria Camila\",\n    \"nombreUsuario\": \"camilalonart\", \n    \"clave\": \"blablabla\", \n    \"correo\": \"mc.londono@uniandes.edu.co\",\n    \"imagen\": \"www.blablabla.com/bla.jpg\",\n     \"puntaje\":\"0\"\n}\n"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear usuario 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c316a455-4b49-44eb-b2e6-4ef3aaacf288",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"newnew2\", data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rol\": \"PARTICIPANTE\", \n    \"nombre\": \"Maria\",\n    \"nombreUsuario\": \"cam12345\", \n    \"clave\": \"abcd1234\", \n    \"correo\": \"camimimi@uniandes.edu.co\",\n    \"imagen\": \"www.bla.com/bla.jpg\",\n    \"puntaje\":\"0\"\n}\n"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios",
@@ -59,9 +105,9 @@
 					"script": {
 						"id": "3229dfa6-012d-4683-93e0-4b82344fcd78",
 						"exec": [
+							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"newnew\", data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -82,7 +128,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios/{{newnew}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -91,7 +137,8 @@
 					"path": [
 						"s1_maratones-api",
 						"api",
-						"usuarios"
+						"usuarios",
+						"{{newnew}}"
 					]
 				}
 			},
@@ -105,9 +152,7 @@
 					"script": {
 						"id": "3229dfa6-012d-4683-93e0-4b82344fcd78",
 						"exec": [
-							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"newnew\", data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
@@ -172,10 +217,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"rol\": \"PARTICIPANTE\", \n    \"nombre\": \"Maria Nuevo\",\n    \"nombreUsuario\": \"camilalonart1\", \n    \"clave\": \"blablabla1\", \n    \"correo\": \"mc.londono1@uniandes.edu.co\",\n    \"imagen\": \"www.blablabla1.com/bla.jpg\"\n}\n"
+					"raw": "{\n\t\"rol\": \"PARTICIPANTE\", \n    \"nombre\": \"Maria Nuevo\",\n    \"nombreUsuario\": \"camilalonart1\", \n    \"clave\": \"blablabla1\", \n    \"correo\": \"mc.londono1@uniandes.edu.co\",\n    \"imagen\": \"www.blablabla1.com/bla.jpg\",\n    \"puntaje\": \"10\"\n}\n"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios/{{newnew}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios/{{newnew2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -185,51 +230,7 @@
 						"s1_maratones-api",
 						"api",
 						"usuarios",
-						"{{newnew}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crear usuario 2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c316a455-4b49-44eb-b2e6-4ef3aaacf288",
-						"exec": [
-							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"rol\": \"PARTICIPANTE\", \n    \"nombre\": \"Maria\",\n    \"nombreUsuario\": \"cam12345\", \n    \"clave\": \"abcd\", \n    \"correo\": \"camimimi@uniandes.edu.co\",\n    \"imagen\": \"www.bla.com/bla.jpg\"\n}\n"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s1_maratones-api",
-						"api",
-						"usuarios"
+						"{{newnew2}}"
 					]
 				}
 			},

@@ -43,12 +43,13 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
 
     private List<EquipoDTO> equipos;
     private List<LenguajeDTO> lenguajes;
-    private List<CompetenciaDetailDTO> competencias;
+    private List<CompetenciaDTO> competencias;
     private List<BlogDTO> blog;
     /**
      * Constructor por defecto
      */
     public UsuarioDetailDTO() {
+        super();
     }
 
     /**
@@ -76,10 +77,10 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             competencias = new ArrayList();
             for (CompetenciaEntity entity: usuarioEntity.getCompetencias())
             {
-                competencias.add(new CompetenciaDetailDTO(entity));
+                competencias.add(new CompetenciaDTO(entity));
             }
         }
-        if (usuarioEntity != null) {
+        if (usuarioEntity.getBlogs() != null) {
             if (usuarioEntity.getBlogs()!= null) {
                 blog = new ArrayList<>();
                 for (BlogEntity entityBlog : usuarioEntity.getBlogs()) {
@@ -125,7 +126,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         if(getCompetencias() !=null)
         {
             List<CompetenciaEntity> entity = new ArrayList<>();
-            for(CompetenciaDetailDTO eldto: getCompetencias())
+            for(CompetenciaDTO eldto: getCompetencias())
             {
                 entity.add(eldto.toEntity());
             }
@@ -148,22 +149,22 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         return usuarioEntity;
     }
     
-    @Override
+  /*  @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
+    }*/
 
     /**
      * @return the competencias
      */
-    public List<CompetenciaDetailDTO> getCompetencias() {
+    public List<CompetenciaDTO> getCompetencias() {
         return competencias;
     }
 
     /**
      * @param competencias the competencias to set
      */
-    public void setCompetencias(List<CompetenciaDetailDTO> competencias) {
+    public void setCompetencias(List<CompetenciaDTO> competencias) {
         this.competencias = competencias;
     }
 

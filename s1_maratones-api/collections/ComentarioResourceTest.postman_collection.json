@@ -1,10 +1,101 @@
 {
 	"info": {
-		"_postman_id": "e2fb7070-e36a-4fcc-b12e-8f0f8688e0a9",
+		"_postman_id": "78a7f231-14c0-4bbb-bd51-da605602f8e5",
 		"name": "Comentario Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Crear usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3229dfa6-012d-4683-93e0-4b82344fcd78",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"newnew\", data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rol\": \"PARTICIPANTE\", \n    \"nombre\": \"Maria Foro comentario\",\n    \"nombreUsuario\": \"camilalonart\", \n    \"clave\": \"blablabla\", \n    \"correo\": \"mc.londono@uniandes.edu.co\",\n    \"imagen\": \"www.blablabla.com/bla.jpg\",\n     \"puntaje\":\"0\"\n}\n"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un foro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82d2293-b036-4663-920a-a80e5b01170c",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nombre\":\"No sé nada de este tema foro comentario\",\n\"votosAFavor\":0,\n\"votosEnContra\":0,\n\"descripcion\":\"forocomentario1\",\n\"tags\":\"nada\"\n\n\t\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/foros",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"foros"
+					]
+				},
+				"description": "**Release: Paso-5**\r\n\r\nCrea una nueva editorial. El recurso solo tiene de atributo \"name\" que debe ser único. El Id es inicializado por la BD y se debe ver en la respuesta. \r\n\r\nPara la prueba, se guarda el id en una variable que será utilizada en otras peticiones de la colección.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
 		{
 			"name": "Crear un comentario",
 			"event": [
@@ -57,12 +148,12 @@
 					"listen": "test",
 					"script": {
 						"id": "b671f4fd-2e8e-4662-a534-d450acfc06d0",
-						"type": "text/javascript",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
 							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -74,59 +165,20 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/frontstepbystep-api/api/books/{{new_id_b}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/comentarios/{{new_id_b}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s1_maratones-api",
 						"api",
-						"books",
+						"comentarios",
 						"{{new_id_b}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nConsulta un libro de la aplicación.  \r\nLa petición no tiene cuerpo.\r\nSe envía el id del libro deseado por la URL de la petición.\r\n\r\n**Código http esperado: 200**"
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar un comentario",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "2ec74fba-bc15-4973-99bd-0c1a86a28a2e",
-						"type": "text/javascript",
-						"exec": [
-							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
-						]
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/frontstepbystep-api/api/books/{{new_id_b}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"frontstepbystep-api",
-						"api",
-						"books",
-						"{{new_id_b}}"
-					]
-				},
-				"description": "**Release: Paso-5**\n\nBorra un libro. Se envía el id del libro creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		},
@@ -137,12 +189,12 @@
 					"listen": "test",
 					"script": {
 						"id": "1077a573-437a-4a11-9b9a-87cb45264001",
-						"type": "text/javascript",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
 							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -159,20 +211,59 @@
 					"raw": "{\n    \"description\": \"Jorge Fondebrider traza un mundo fantastico con mapas de la geografia real y de sus mitologias, observando a los hombres lobo que han vivido en la imaginacion de Europa y America.\",\n    \"image\": \"https://static.iris.net.co/arcadia/upload/images/2017/7/31/64899_1.jpg\",\n    \"isbn\": \"930330149-8\",\n    \"editorial\": { \"id\": {{new_id_e}} },\n    \"name\": \"Se ha editado la Historia de los hombres lobo 2\",\n    \"publishingdate\": \"2000-08-20T00:00:00-05:00\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/frontstepbystep-api/api/books/{{new_id_b}}",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/comentarios/{{new_id_b}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
 					"port": "{{puerto}}",
 					"path": [
-						"frontstepbystep-api",
+						"s1_maratones-api",
 						"api",
-						"books",
+						"comentarios",
 						"{{new_id_b}}"
 					]
 				},
 				"description": "**Release: Paso-5**\r\n\r\nActualiza un libro existente. \r\nse envía el Id en la URL de la petición.\r\n\r\n**Código http esperado: 200**"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un comentario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2ec74fba-bc15-4973-99bd-0c1a86a28a2e",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/comentarios/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"comentarios",
+						"{{new_id_b}}"
+					]
+				},
+				"description": "**Release: Paso-5**\n\nBorra un libro. Se envía el id del libro creado anteriormente.\n\n**Código HTTP esperado: 204**"
 			},
 			"response": []
 		}
