@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.EquipoPersistence;
-import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,7 +74,7 @@ public class EquipoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el equipo con id = {0}", equipoid);
         List<UsuarioEntity> authors = getEquipo(equipoid).getParticipantes();
         if (authors != null && !authors.isEmpty()) {
-            throw new Exception("No se puede borrar el equipo con id = " + equipoid + " porque tiene autores asociados");
+            throw new BusinessLogicException("No se puede borrar el equipo con id = " + equipoid + " porque tiene autores asociados");
         }
         persistence.delete(equipoid);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el equipo con id = {0}", equipoid);

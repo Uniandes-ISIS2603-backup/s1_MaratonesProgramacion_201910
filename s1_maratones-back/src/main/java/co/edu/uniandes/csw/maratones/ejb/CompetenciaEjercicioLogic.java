@@ -7,14 +7,9 @@ package co.edu.uniandes.csw.maratones.ejb;
 
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EjercicioEntity;
-import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
-import co.edu.uniandes.csw.maratones.entities.SubmissionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
 import co.edu.uniandes.csw.maratones.persistence.EjercicioPersistence;
-import co.edu.uniandes.csw.maratones.persistence.LenguajePersistence;
-import co.edu.uniandes.csw.maratones.persistence.SubmissionPersistence;
-import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

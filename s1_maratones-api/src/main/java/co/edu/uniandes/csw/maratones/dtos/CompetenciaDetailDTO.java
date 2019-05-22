@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.maratones.dtos;
 
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
-import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
@@ -64,6 +63,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
      *
      * @return
      */
+    @Override
     public CompetenciaEntity toEntity ()
     {
         CompetenciaEntity competenciaEntity= super.toEntity();

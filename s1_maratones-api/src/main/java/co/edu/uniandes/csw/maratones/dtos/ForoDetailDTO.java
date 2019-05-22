@@ -55,14 +55,12 @@ public class ForoDetailDTO extends ForoDTO implements Serializable {
     public ForoDetailDTO(ForoEntity foroEntity)
     {
         super(foroEntity);
-        if(foroEntity != null)
+        if(foroEntity != null && foroEntity.getComentarios() != null)
         {
-            if (foroEntity.getComentarios() != null) {
                 comentarios = new ArrayList<>();
                 for (ComentarioEntity entityComentario : foroEntity.getComentarios()) {
                     comentarios.add(new ComentarioDTO(entityComentario));
                 }
-            }
         }
     }
     
