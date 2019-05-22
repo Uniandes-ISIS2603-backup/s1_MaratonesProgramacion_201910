@@ -74,7 +74,7 @@ public class UsuarioResource {
     @GET
     public List<UsuarioDetailDTO> getUsuarios() {
         LOGGER.info("UsuarioResource getUsuarios: input: void");
-        List<UsuarioDetailDTO> listaBooks = listEntity2DetailDTO(usuarioLogic.getUsuarios());
+        List<UsuarioDetailDTO> listaBooks = listEntity2DetailDTO(usuarioLogic.getTodosLosUsuarios());
         LOGGER.log(Level.INFO, "UsuarioResource getUsuarios output: {0}", listaBooks);
         return listaBooks;
     }
