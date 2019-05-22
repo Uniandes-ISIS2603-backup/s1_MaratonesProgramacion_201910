@@ -72,10 +72,10 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
         }
         
-        if (usuarioEntity.getCompetenciasJuez()!=null)
+        if (usuarioEntity.getCompetencias()!=null)
         {
             competencias = new ArrayList();
-            for (CompetenciaEntity entity: usuarioEntity.getCompetenciasJuez())
+            for (CompetenciaEntity entity: usuarioEntity.getCompetencias())
             {
                 competencias.add(new CompetenciaDetailDTO(entity));
             }
@@ -130,7 +130,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             {
                 entity.add(eldto.toEntity());
             }
-            usuarioEntity.setCompetenciasJuez(entity);
+            usuarioEntity.setCompetencias(entity);
         }
         if (blog != null) {
             List<BlogEntity> blogsEntity = new ArrayList<>();
