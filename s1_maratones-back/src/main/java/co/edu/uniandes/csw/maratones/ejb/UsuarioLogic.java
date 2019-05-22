@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.maratones.ejb;
 
+import co.edu.uniandes.csw.maratones.entities.BlogEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
@@ -33,8 +34,8 @@ public class UsuarioLogic {
      */
     public UsuarioEntity create(UsuarioEntity usuarioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del usuario");
-        UsuarioEntity newusuarioEntity = persistence.create(usuarioEntity);
-        if (persistence.findByUsername(usuarioEntity.getNombreUsuario()) != null) {
+        
+        if (persistence.findByUsername(usuarioEntity.getNombreUsuario())!=null) {
             throw new BusinessLogicException("ya existe un usuario con ese nombre de usuario");
         }
         if (usuarioEntity.getNombreUsuario().length() < 8) {
@@ -46,8 +47,8 @@ public class UsuarioLogic {
         if (usuarioEntity.getNombre().equals("")) {
             throw new BusinessLogicException("el nombre no puede estar vacio");
         }
-        if (!usuarioEntity.getCorreo().matches("\"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$\"")) {
-            throw new BusinessLogicException("el correo no es valido");
+        if (!usuarioEntity.getCorreo().matches("^(.+)@(.+)$")) {
+            throw new BusinessLogicException("el correo no es validod");
         }
         if (usuarioEntity.getClave().length()> 7) {
             throw new BusinessLogicException("la clave debe tener un minimo de 8 caracteres");
@@ -62,7 +63,8 @@ public class UsuarioLogic {
             throw new BusinessLogicException("rol invalido");
         }
         LOGGER.log(Level.INFO, "Termina proceso de creación del usuario");
-        return newusuarioEntity;
+        persistence.create(usuarioEntity);
+        return usuarioEntity;
     }
     
     /**

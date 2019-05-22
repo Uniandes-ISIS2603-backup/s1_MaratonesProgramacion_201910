@@ -35,6 +35,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
     private String clave;
     private int puntaje;
     // atributto nque represeta la institucion a la que pertenec el usuario
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private InstitucionEntity institucion;
     
     @PodamExclude
@@ -165,6 +167,20 @@ public class UsuarioEntity extends BaseEntity implements Serializable{
      */
     public void setBlogs(List<BlogEntity> blogs) {
         this.blogs = blogs;
+    }
+
+    /**
+     * @return the institucion
+     */
+    public InstitucionEntity getInstitucion() {
+        return institucion;
+    }
+
+    /**
+     * @param institucion the institucion to set
+     */
+    public void setInstitucion(InstitucionEntity institucion) {
+        this.institucion = institucion;
     }
 
    

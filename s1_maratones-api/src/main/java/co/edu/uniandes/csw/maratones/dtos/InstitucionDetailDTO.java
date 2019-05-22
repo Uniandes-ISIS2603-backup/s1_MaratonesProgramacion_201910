@@ -38,7 +38,7 @@ public class InstitucionDetailDTO extends InstitucionDTO implements Serializable
            if(usuarios!=null)
            {
                List<UsuarioEntity> usuariosEntity = new ArrayList<>();
-            for (UsuarioDTO usuarioDto : getUsuarios()) {
+            for (UsuarioDTO usuarioDto : this.getUsuarios()) {
                 usuariosEntity.add(usuarioDto.toEntity());
             }
             institucionEntity.setUsuarios(usuariosEntity);
