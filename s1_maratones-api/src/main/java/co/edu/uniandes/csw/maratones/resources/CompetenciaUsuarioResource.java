@@ -5,10 +5,11 @@
  */
 package co.edu.uniandes.csw.maratones.resources;
 
-import co.edu.uniandes.csw.maratones.dtos.LugarCompetenciaDTO;
-import co.edu.uniandes.csw.maratones.ejb.CompetenciaLugarCompetenciasLogic;
-import co.edu.uniandes.csw.maratones.ejb.LugarCompetenciaLogic;
-import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
+import co.edu.uniandes.csw.maratones.dtos.UsuarioDTO;
+import co.edu.uniandes.csw.maratones.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.csw.maratones.ejb.CompetenciaUsuarioLogic;
+import co.edu.uniandes.csw.maratones.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,62 @@ public class CompetenciaUsuarioResource
  private static final Logger LOGGER = Logger.getLogger(CompetenciaUsuarioResource.class.getName()); 
  
  @Inject
-    private CompetenciaLugarCompetenciasLogic competenciaUsuarioLogic;
+ private CompetenciaUsuarioLogic competenciaUsuarioLogic;
  
+ @Inject
+ private UsuarioLogic usuarioLogic;
+ 
+ /**
+     * Guarda un usuario dentro de una comptencia con la informacion que recibe el
+     * la URL. Se devuelve el usuario que se guarda en la competencia.
+     *
+     * @param competenciasId Identificador de la competencia que se esta
+     * actualizando. Este debe ser una cadena de dígitos.
+     * @param usuariosId Identificador del usuario que se desea guardar. Este debe
+     * ser una cadena de dígitos.
+     * @return JSON {@link usuarioDTO} - El libro guardado en la competencia.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el usuario.
+     */
+    @POST
+    @Path("{usuariosId: \\d+}")
+    public UsuarioDetailDTO addJuez(@PathParam("competenciasId") Long competenciasId, @PathParam("usuariosId") Long usuariosId) {
+        LOGGER.log(Level.INFO, "CompetenciaUsuarioResource addJuez: input: competenciasID: {0} , usuariosId: {1}", new Object[]{competenciasId, usuariosId});
+        if (usuarioLogic.getUsuarioPorId(usuariosId) == null) {
+            throw new WebApplicationException("El recurso /usuarios/" + usuariosId + " no existe.", 404);
+        }
+        UsuarioDetailDTO usuarioDTO = new UsuarioDetailDTO(competenciaUsuarioLogic.addJuez(usuariosId, competenciasId));
+        LOGGER.log(Level.INFO, "CompetenciausuarioResource addusuario: output: {0}", usuarioDTO);
+        return usuarioDTO;
+    }
+ 
+    /**
+     * Busca y devuelve todos los usuarios que existen en la competencia.
+     *
+     * @param competenciasId Identificador de la competencia que se esta buscando.
+     * Este debe ser una cadena de dígitos.
+     * @return JSONArray {@link usuarioDetailDTO} - Los usuario encontrados en la
+     * competencia. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    public List<UsuarioDetailDTO> getJueces(@PathParam("competenciasId") Long competenciasId) {
+        LOGGER.log(Level.INFO, "CompetenciausuarioResource getusuarios: input: {0}", competenciasId);
+        List<UsuarioDetailDTO> listaDetailDTOs = usuariosListEntity2DTO(competenciaUsuarioLogic.getJueces(competenciasId));
+        LOGGER.log(Level.INFO, "CompetenciausuarioResource getusuarios: output: {0}", listaDetailDTOs);
+        return listaDetailDTOs;
+    }
+    
+    /**
+     * Convierte una lista de UsuarioEntity a una lista de UsuarioDetailDTO.
+     *
+     * @param entityList Lista de UsuarioEntity a convertir.
+     * @return Lista de UsuarioDTO convertida.
+     */
+    private List<UsuarioDetailDTO> usuariosListEntity2DTO(List<UsuarioEntity> entityList) {
+        List<UsuarioDetailDTO> list = new ArrayList();
+        for (UsuarioEntity entity : entityList) {
+            list.add(new UsuarioDetailDTO(entity));
+        }
+        return list;
+    }
 }

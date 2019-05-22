@@ -99,119 +99,6 @@
 			"response": []
 		},
 		{
-			"name": "Get lugarCompetencia",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "8669439c-c25c-48b7-922b-2d7f7cb400b0",
-						"exec": [
-							"tests[\"No genera error en el Get\"]=responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s1_maratones-api",
-						"api",
-						"lugarCompetencias"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get lugar con id 100",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ac9d71c2-85e5-4b45-b6e3-2549d2ea5fd4",
-						"exec": [
-							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/100",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s1_maratones-api",
-						"api",
-						"lugarCompetencias",
-						"100"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get de lugar no existence",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "6207b506-14bf-43dc-8c3c-5c44238efb98",
-						"exec": [
-							"tests[\"Genera error de recurso no existente\"] = responseCode.code === 404;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/000",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s1_maratones-api",
-						"api",
-						"lugarCompetencias",
-						"000"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Crear lugarCompetencia con ubicacion existente",
 			"event": [
 				{
@@ -251,6 +138,119 @@
 						"s1_maratones-api",
 						"api",
 						"lugarCompetencias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get lugarCompetencia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8669439c-c25c-48b7-922b-2d7f7cb400b0",
+						"exec": [
+							"tests[\"No genera error en el Get\"]=responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"lugarCompetencias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get lugar por id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac9d71c2-85e5-4b45-b6e3-2549d2ea5fd4",
+						"exec": [
+							"tests[\"No genera error en el get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/{{newLugar}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"lugarCompetencias",
+						"{{newLugar}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get de lugar no existence",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6207b506-14bf-43dc-8c3c-5c44238efb98",
+						"exec": [
+							"tests[\"Genera error de recurso no existente\"] = responseCode.code === 404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/000",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"lugarCompetencias",
+						"000"
 					]
 				}
 			},
