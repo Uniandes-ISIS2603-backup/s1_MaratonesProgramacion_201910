@@ -24,6 +24,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class EquipoEntity extends BaseEntity implements Serializable{
 
+    @PodamExclude
     private UsuarioEntity coach;
     private String nombreEquipo;
     
@@ -69,6 +70,20 @@ public class EquipoEntity extends BaseEntity implements Serializable{
     
     public EquipoEntity(){
         }
+
+    /**
+     * @return the competencias
+     */
+    public List<CompetenciaEntity> getCompetencias() {
+        return competencias;
+    }
+
+    /**
+     * @param competencias the competencias to set
+     */
+    public void setCompetencias(List<CompetenciaEntity> competencias) {
+        this.competencias = competencias;
+    }
    
     
 }

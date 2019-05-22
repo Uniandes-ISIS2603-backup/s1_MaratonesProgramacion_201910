@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.maratones.ejb;
 
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
-import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.CompetenciaPersistence;
 import co.edu.uniandes.csw.maratones.persistence.LugarCompetenciaPersistence;

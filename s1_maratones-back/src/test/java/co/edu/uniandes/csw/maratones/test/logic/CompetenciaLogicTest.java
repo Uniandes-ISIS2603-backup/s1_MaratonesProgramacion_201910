@@ -245,7 +245,7 @@ public class CompetenciaLogicTest {
         Assert.assertEquals(entity.getNivel(), resultEntity.getNivel() );
         Assert.assertEquals("Falla los lenguajes",entity.getLenguajes(),resultEntity.getLenguajes() );
         Assert.assertEquals("Falla los ejercicios",entity.getEjercicioEntitys(), resultEntity.getEjercicioEntitys());
-        Assert.assertEquals("Falla los equipos",entity.getEquipos(), resultEntity.getEquipos());
+        Assert.assertEquals("Falla los equipos",entity.getEquipoEntity(), resultEntity.getEquipoEntity());
         
 //        Assert.assertEquals(entity.getJueces(), resultEntity.getJueces());
         ;
@@ -276,7 +276,7 @@ public class CompetenciaLogicTest {
         Assert.assertEquals(pojoEntity.getCondiciones(), resp.getCondiciones());
         Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion() );
 //        Assert.assertEquals(pojoEntity.getEjercicioEntitys(), resp.getEjercicioEntitys());
-        Assert.assertEquals(pojoEntity.getEquipos(), resp.getEquipos());
+        Assert.assertEquals(pojoEntity.getEquipoEntity(), resp.getEquipoEntity());
 //        Assert.assertEquals(pojoEntity.getJueces(), resp.getJueces());
         Assert.assertEquals(pojoEntity.getPuntos(),resp.getPuntos() );
         Assert.assertEquals(pojoEntity.getLenguajes(),resp.getLenguajes() );

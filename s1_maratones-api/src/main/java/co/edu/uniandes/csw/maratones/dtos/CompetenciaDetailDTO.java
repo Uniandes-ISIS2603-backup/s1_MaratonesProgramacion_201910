@@ -47,9 +47,9 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
                     jueces.add(new UsuarioDetailDTO(entityUsuario));
                 }
             }
-            if(entity.getEquipos()!= null){
+            if(entity.getEquipoEntity()!= null){
                 equipos = new ArrayList<>();
-                for(EquipoEntity entityEquipo: entity.getEquipos())
+                for(EquipoEntity entityEquipo: entity.getEquipoEntity())
                 {
                     equipos.add(new EquipoDTO(entityEquipo));
                 }
@@ -91,7 +91,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
            {
                equiposEntity.add(dtoEquipos.toEntity());
            }
-           competenciaEntity.setEquipos(equiposEntity);
+           competenciaEntity.setEquipoEntity(equiposEntity);
        }
             
         return competenciaEntity;         
