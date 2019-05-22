@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.maratones.adapters.DateAdapter;
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import java.io.Serializable;
 import java.util.Date;
-import java.time.LocalDateTime;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 

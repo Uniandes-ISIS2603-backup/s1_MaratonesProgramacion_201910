@@ -47,13 +47,11 @@ public class LugarCompetenciaLogic {
             throw new BusinessLogicException("El lugar no tiene competencia");
         }
             
-        //TODO ubicaciones del lugar de competencias puede llegar nulo, validar donde se certifica que no llega a esta línea como valor nulo
         if(lugarCompetenciaEntity.getUbicaciones()==null)
         {
             throw new BusinessLogicException("La ubicacion no puede ser null");
         }
        
-         //TODO Verifica la regla de negocio que dice que no puede haber dos lugarCompetencia con la misma ubicación
          List<LugarCompetenciaEntity> ubicaciones = lugarCompetenciaPersistence.findAll();
          if(ubicaciones!= null){
          for (int i = 0; i < ubicaciones.size(); i++) {
@@ -70,7 +68,6 @@ public class LugarCompetenciaLogic {
             throw new BusinessLogicException("El lugarCompetencia tiene una ubicación no valida");
         }
         CompetenciaEntity competencia =lugarCompetenciaEntity.getCompetencia();
-        //TODO date o dateC... es nulo, es necesario certificar que los valores no llegarán nulos a esta parte del método
         Date date = lugarCompetenciaEntity.getFecha();
         if(competencia!= null )
         {
