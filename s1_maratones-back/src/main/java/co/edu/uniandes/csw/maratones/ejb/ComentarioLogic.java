@@ -51,9 +51,9 @@ public class ComentarioLogic {
 
     public ComentarioEntity createComentario(ComentarioEntity comentarioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del comentario");
-        if (comentarioEntity.getForo() == null || foroPersistence.find(comentarioEntity.getForo().getId()) == null) {
+       /* if (comentarioEntity.getForo() == null || foroPersistence.find(comentarioEntity.getForo().getId()) == null) {
             throw new BusinessLogicException("La editorial es inválida");
-        }
+        }*/
         //se agregan más condiciones si son necesarias
         
         persistence.create(comentarioEntity);
