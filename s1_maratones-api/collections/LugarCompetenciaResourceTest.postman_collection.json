@@ -160,10 +160,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias",
 					"protocol": "http",
@@ -197,10 +193,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/{{newLugar}}",
 					"protocol": "http",
@@ -235,12 +227,8 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/000",
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -250,7 +238,7 @@
 						"s1_maratones-api",
 						"api",
 						"lugarCompetencias",
-						"000"
+						"0"
 					]
 				}
 			},
@@ -264,7 +252,7 @@
 					"script": {
 						"id": "ff1c5357-c18b-4465-91f7-8ed19d2dcd91",
 						"exec": [
-							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -273,10 +261,6 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/{{newRecontraNewLugar}}",
 					"protocol": "http",
@@ -312,10 +296,6 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/0",
 					"protocol": "http",
