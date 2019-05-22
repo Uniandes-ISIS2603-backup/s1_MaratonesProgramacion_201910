@@ -71,6 +71,14 @@ public class UsuarioResource {
         return elDetailDTO;
     }
     
+    @GET
+    public List<UsuarioDetailDTO> getUsuarios() {
+        LOGGER.info("UsuarioResource getUsuarios: input: void");
+        List<UsuarioDetailDTO> listaBooks = listEntity2DetailDTO(usuarioLogic.getUsuarios());
+        LOGGER.log(Level.INFO, "UsuarioResource getUsuarios output: {0}", listaBooks);
+        return listaBooks;
+    }
+    
     /**
      * Actualiza el usuario con el id recibido en la URL con la información que
      * se recibe en el cuerpo de la petición.

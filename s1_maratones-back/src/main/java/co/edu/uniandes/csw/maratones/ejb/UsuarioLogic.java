@@ -132,6 +132,12 @@ public class UsuarioLogic {
         return usuarioEntity;
     }
 
+    public List<UsuarioEntity> getUsuarios() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los usuarios");
+        List<UsuarioEntity> books = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los usuarios");
+        return books;
+    }
     
     
 }
