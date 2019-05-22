@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.maratones.ejb;
 
-import co.edu.uniandes.csw.maratones.entities.BlogEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.UsuarioPersistence;
@@ -140,5 +139,9 @@ public class UsuarioLogic {
         return books;
     }
     
-    
+    public List<UsuarioEntity> getUsuariosFiltro(String atribute, String parameter){
+        List<UsuarioEntity> filtro = persistence.findBy(atribute, parameter);
+
+        return filtro;
+    }
 }
