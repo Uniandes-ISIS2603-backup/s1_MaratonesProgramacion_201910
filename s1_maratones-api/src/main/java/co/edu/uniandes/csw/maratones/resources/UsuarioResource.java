@@ -156,15 +156,15 @@ public class UsuarioResource {
         return LenguajeUsuarioResource.class;
     }
     
-//    @GET
-//    @Path("/filter")
-//    public List<UsuarioDTO> getUsuariosFiltro(@QueryParam("atribute")String atribute, @QueryParam("param") String param)throws BusinessLogicException {
-//        
-//        List<UsuarioDTO> usuarios= new ArrayList<>();
-//        for(UsuarioEntity siteEntity: usuarioLogic.getUsuariosFiltro(atribute, param)) {
-//            usuarios.add(new UsuarioDTO(usuarioEntity));
-//        }
-//       // LOGGER.log(Level.INFO, "SitioWebResource getUsuarios: output: {0}", usuarios.toString());
-//        return usuarios;
-//    }
+    @GET
+    @Path("/filter")
+    public List<UsuarioDTO> getUsuariosFiltro(@QueryParam("atribute")String atribute, @QueryParam("param") String param)throws BusinessLogicException {
+        
+        List<UsuarioDTO> usuarios= new ArrayList<>();
+        for(UsuarioEntity siteEntity: usuarioLogic.getUsuariosFiltro(atribute, param)) {
+            usuarios.add(new UsuarioDTO(siteEntity));
+        }
+       // LOGGER.log(Level.INFO, "SitioWebResource getUsuarios: output: {0}", usuarios.toString());
+        return usuarios;
+    }
   }  
