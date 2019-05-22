@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.maratones.dtos;
 
 import co.edu.uniandes.csw.maratones.entities.CompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
-import co.edu.uniandes.csw.maratones.entities.LenguajeEntity;
 import co.edu.uniandes.csw.maratones.entities.LugarCompetenciaEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
@@ -47,9 +46,9 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
                     jueces.add(new UsuarioDetailDTO(entityUsuario));
                 }
             }
-            if(entity.getEquipos()!= null){
+            if(entity.getEquipoEntity()!= null){
                 equipos = new ArrayList<>();
-                for(EquipoEntity entityEquipo: entity.getEquipos())
+                for(EquipoEntity entityEquipo: entity.getEquipoEntity())
                 {
                     equipos.add(new EquipoDTO(entityEquipo));
                 }
@@ -64,6 +63,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
      *
      * @return
      */
+    @Override
     public CompetenciaEntity toEntity ()
     {
         CompetenciaEntity competenciaEntity= super.toEntity();
@@ -91,7 +91,7 @@ public class CompetenciaDetailDTO extends CompetenciaDTO implements Serializable
            {
                equiposEntity.add(dtoEquipos.toEntity());
            }
-           competenciaEntity.setEquipos(equiposEntity);
+           competenciaEntity.setEquipoEntity(equiposEntity);
        }
             
         return competenciaEntity;         

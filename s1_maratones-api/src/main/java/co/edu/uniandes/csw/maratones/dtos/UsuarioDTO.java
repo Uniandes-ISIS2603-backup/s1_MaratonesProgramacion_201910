@@ -91,6 +91,7 @@ public class UsuarioDTO implements Serializable {
             this.imagen = usuarioEntity.getImagen();
             this.rol = usuarioEntity.getRol();
             this.puntaje = usuarioEntity.getPuntaje();
+            this.id=usuarioEntity.getId();
         }
     }
     
@@ -161,13 +162,14 @@ public class UsuarioDTO implements Serializable {
 
     public UsuarioEntity toEntity() {
         UsuarioEntity usuario = new UsuarioEntity();
-        usuario.setNombre(this.nombre);
-        usuario.setClave(this.clave);
-        usuario.setNombreUsuario(this.nombreUsuario);
-        usuario.setCorreo(this.correo);
-        usuario.setImagen(this.imagen);
         usuario.setRol(this.rol);
+        usuario.setNombreUsuario(this.nombreUsuario);
+        usuario.setNombre(this.nombre);    
+        usuario.setImagen(this.imagen);
+        usuario.setCorreo(this.correo);
+        usuario.setClave(this.clave);
         usuario.setPuntaje(this.puntaje);
+        usuario.setId(id);
         return usuario;
     }
     

@@ -44,11 +44,9 @@ public class CompetenciaUsuarioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de agregarle un Usuario a la competencia con id = {0}", competenciasId);
         CompetenciaEntity competenciaEntity = competenciaPersistence.find(competenciasId);
         UsuarioEntity usuarioEntity = usuarioPersistence.find(usuariosId);
-        List<CompetenciaEntity> competenciasJuez = new ArrayList<>();
-        competenciasJuez = usuarioEntity.getCompetencias();
+        List<CompetenciaEntity> competenciasJuez = usuarioEntity.getCompetencias();
         competenciasJuez.add(competenciaEntity);
-        List<UsuarioEntity> jueces = new ArrayList<>();
-        jueces = competenciaEntity.getJueces();
+        List<UsuarioEntity> jueces = competenciaEntity.getJueces();
         competenciaEntity.setJueces(jueces);
         usuarioEntity.setCompetencias(competenciasJuez);
         LOGGER.log(Level.INFO, "Termina proceso de agregarle un Usuario a la competencia con id = {0}", competenciasId);

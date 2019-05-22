@@ -76,14 +76,11 @@ public class ForoResource {
     public ForoDTO createForo(ForoDTO foro) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "ForoResource createForo: input: {0}", foro.toString());
-         // Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.
-        ForoEntity foroEntity = foro.toEntity();
-        // Invoca la lógica para crear la editorial nueva
-        ForoEntity nuevoForoEntity = foroLogic.createForo(foroEntity);
+        
         // Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo
-        ForoDTO nuevoForoDTO = new ForoDTO(nuevoForoEntity);
+        ForoDTO nuevoForoDTO = new ForoDTO(foroLogic.createForo(foro.toEntity()));
         LOGGER.log(Level.INFO, "EditorialResource createEditorial: output: {0}", nuevoForoDTO.toString());
-        return foro;
+        return nuevoForoDTO;
     }
     
      /**

@@ -26,8 +26,8 @@ import org.junit.runner.RunWith;
  * @author c.mendez11
  */
 @RunWith(Arquillian.class)
-public class PublicacionIT {
-     private static final String COLLECTION = "PublicacionResourceTest.postman_collection";
+public class UsuarioIT {
+    private static final String COLLECTION = "UsuarioResource.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -62,5 +62,5 @@ public class PublicacionIT {
         Assert.assertEquals("Error en Test-Scripts de: " + COLLECTION, desiredResult, tp.getTest_scripts_failed());
 
         Assert.assertEquals("Error en Assertions de: " + COLLECTION, desiredResult, tp.getAssertions_failed());
-    }
+    } 
 }

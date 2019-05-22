@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.QueryParam;
 
 import javax.ws.rs.WebApplicationException;
 @Path("usuarios")
@@ -60,7 +61,7 @@ public class UsuarioResource {
 
     @GET
     @Path("{usuariosId: \\d+}")
-    public UsuarioDetailDTO get(@PathParam("usuariosId") Long usuariosId) {
+    public UsuarioDetailDTO getUsuario(@PathParam("usuariosId") Long usuariosId) {
         LOGGER.log(Level.INFO, "UsuarioResource get: input: {0}", usuariosId);
         UsuarioEntity entity = usuarioLogic.getUsuarioPorId(usuariosId);
         if (entity == null) {
@@ -153,5 +154,17 @@ public class UsuarioResource {
             throw new WebApplicationException("El recurso /usuarios/" + usuarioid + " no existe.", 404);
         }
         return LenguajeUsuarioResource.class;
+    }
+    
+    @GET
+    @Path("/filter")
+    public List<UsuarioDTO> getUsuariosFiltro(@QueryParam("atribute")String atribute, @QueryParam("param") String param)throws BusinessLogicException {
+        
+        List<UsuarioDTO> usuarios= new ArrayList<>();
+        for(UsuarioEntity siteEntity: usuarioLogic.getUsuariosFiltro(atribute, param)) {
+            usuarios.add(new UsuarioDTO(siteEntity));
+        }
+       // LOGGER.log(Level.INFO, "SitioWebResource getUsuarios: output: {0}", usuarios.toString());
+        return usuarios;
     }
   }  

@@ -10,7 +10,6 @@ import co.edu.uniandes.csw.maratones.entities.PublicacionEntity;
 import co.edu.uniandes.csw.maratones.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.maratones.persistence.BlogPersistence;
 import co.edu.uniandes.csw.maratones.persistence.PublicacionPersistence;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,25 +42,11 @@ public class PublicacionLogic {
         {
             throw new BusinessLogicException("La fecha de la Publicacion invalida");
         }
-        /*Date instante =new Date();
-       
-        if(!evaluarLimite(instante, publicacionEntity.getFecha())){
-            throw new BusinessLogicException("La fecha de la Publicacion invalida");
-        }*/
         persistence.create(publicacionEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de una Publicacion");
         return publicacionEntity;
     }
-    /*public static boolean evaluarLimite(Date date1, Date date2) {
-    boolean correcto = false;
-    long diferencia = (Math.abs(date1.getTime() - date2.getTime())) / 1000;
-    long limit = (60 * 1000) / 100L;//limite de tiempo
 
-    if (diferencia <= limit) {
-        correcto= true;
-    }
-    return correcto;
-    }*/
     public PublicacionEntity getPublicacion(Long publicacionId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar una Publicacion con id = {0}", publicacionId);
         PublicacionEntity publicacionEntity = persistence.find(publicacionId);

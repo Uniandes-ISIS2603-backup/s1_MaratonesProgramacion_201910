@@ -23,7 +23,6 @@ import co.edu.uniandes.csw.maratones.entities.EquipoEntity;
 import co.edu.uniandes.csw.maratones.entities.UsuarioEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -78,13 +77,11 @@ public class EquipoDetailDTO extends EquipoDTO implements Serializable {
     public EquipoDetailDTO(EquipoEntity equipoEntity) {
         
         super(equipoEntity);
-        if (equipoEntity != null) {
-            if (equipoEntity.getParticipantes() != null) {
+        if (equipoEntity != null &&equipoEntity.getParticipantes() != null) {
                 participantes = new ArrayList<>();
                 for (UsuarioEntity entityBook : equipoEntity.getParticipantes()) {
                     participantes.add(new UsuarioDTO(entityBook));
                 }
-            }
         }
     
     }

@@ -113,7 +113,38 @@ public class UsuarioPersistence {
      */
     public UsuarioEntity find(Long usuarioId) {
         LOGGER.log(Level.INFO, "Consultando el usuario con id={0}", usuarioId);
+        
         return em.find(UsuarioEntity.class, usuarioId);
     }
 
+    public UsuarioEntity findByIp(String ip) {
+        TypedQuery<UsuarioEntity> query = em.createQuery("Select e from UsuarioEntity e where e.rol= :rol", UsuarioEntity.class);
+        query = query.setParameter("rol", ip);
+        List<UsuarioEntity > sameParam = query.getResultList();
+
+        UsuarioEntity result;
+        
+        if (sameParam == null) {
+            result = null;
+        } 
+        else if (sameParam.isEmpty()) {
+            result = null;
+        } 
+        else {
+            result = sameParam.get(0);
+        }
+        return result;
+    }
+    public List<UsuarioEntity> findBy(String atribute, String parameter)
+    {
+        Query q = null;
+        if(atribute.equals("id"))
+        {
+            q = em.createQuery("SELECT u from UsuarioEntity u WHERE u."+atribute+" = :parameter").setParameter("parameter", Integer.valueOf(parameter));
+        }
+        else{
+            q = em.createQuery("SELECT u from UsuarioEntity u WHERE u."+atribute+" LIKE :parameter").setParameter("parameter", "%"+parameter+"%");
+        }
+        return q.getResultList();
+    }
 }
