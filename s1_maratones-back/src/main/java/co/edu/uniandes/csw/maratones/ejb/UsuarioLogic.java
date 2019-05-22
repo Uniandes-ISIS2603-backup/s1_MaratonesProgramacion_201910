@@ -137,5 +137,9 @@ public class UsuarioLogic {
         return books;
     }
     
-    
+//    public List<UsuarioEntity> getUsuariosFiltro(String atribute, String parameter){
+//        List<UsuarioEntity> filtro = persistence.findBy(atribute, parameter);
+//
+//        return filtro;
+//    }
 }

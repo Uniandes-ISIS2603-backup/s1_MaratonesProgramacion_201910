@@ -46,11 +46,8 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     private List<UsuarioEntity> jueces;
     
     @PodamExclude
-    @OneToMany(fetch = FetchType.LAZY, cascade = 
-            {
-                CascadeType.PERSIST
-            })
-    private List<EquipoEntity> equipos;
+    @ManyToMany(mappedBy = "competencias")
+    private List<EquipoEntity> equipoEntity;
     
     private List<String> lenguajes;
     
@@ -118,17 +115,17 @@ public class CompetenciaEntity extends BaseEntity implements Serializable{
     }
 
     /**
-     * @return the equipos
+     * @return the equipoEntity
      */
-    public List<EquipoEntity> getEquipos() {
-        return equipos;
+    public List<EquipoEntity> getEquipoEntity() {
+        return equipoEntity;
     }
 
     /**
-     * @param equipos the equipos to set
+     * @param equipoEntity the equipoEntity to set
      */
-    public void setEquipos(List<EquipoEntity> equipos) {
-        this.equipos = equipos;
+    public void setEquipoEntity(List<EquipoEntity> equipoEntity) {
+        this.equipoEntity = equipoEntity;
     }
 
     /**

@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n        \"fecha\": \"2019-01-13\",\n        \"competencia\": {\n            \"fechaInicio\": \"2019-01-12\",\n            \"fechaFin\": \"2019-01-12\",\n            \"condiciones\": \"cabeza\",\n            \"descripcion\": \"mehmeh\",\n            \"esVirtual\": \"si\",\n            \"id\": 100,\n            \"nivel\": 10,\n            \"nombre\": \"thotho\",\n            \"puntos\": 30\n        },\n        \"ubicacion\": \"cra 20 # 20 20\"\n    }"
+					"raw": "{\n        \"fecha\": \"2019-01-12 15:12:34\",\n        \"competencia\": {\n            \"fechaInicio\": \"2019-01-12\",\n            \"fechaFin\": \"2019-01-12\",\n            \"condiciones\": \"cabeza\",\n            \"descripcion\": \"mehmeh\",\n            \"esVirtual\": \"si\",\n            \"id\": 100,\n            \"nivel\": 10,\n            \"nombre\": \"thotho\",\n            \"puntos\": 30\n        },\n        \"ubicacion\": \"cra 20 # 20 20\"\n    }"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias",
@@ -251,6 +251,83 @@
 						"api",
 						"lugarCompetencias",
 						"000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar lugar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff1c5357-c18b-4465-91f7-8ed19d2dcd91",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/{{newRecontraNewLugar}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"lugarCompetencias",
+						"{{newRecontraNewLugar}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar lugar no existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "323178d9-eecb-4448-8a6a-c95705b3af36",
+						"exec": [
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /lugarCompetencias/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s1_maratones-api/api/lugarCompetencias/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s1_maratones-api",
+						"api",
+						"lugarCompetencias",
+						"0"
 					]
 				}
 			},

@@ -145,7 +145,9 @@ public class LugarCompetenciaResource {
     @Path("{lugarCompetenciasId: \\d+}")
     public void deleteLugarCompetencia(@PathParam("lugarCompetenciasId") Long lugarCompetenciasId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "LugarCompetenciaResource deleteLugarCompetencia: input: {0}", lugarCompetenciasId);
-        if (lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId) == null) {
+        LugarCompetenciaEntity entity = lugarCompetenciaLogic.getLugarCompetencia(lugarCompetenciasId);
+        
+        if (entity == null) {
             throw new WebApplicationException("El recurso /lugarCompetencias/" + lugarCompetenciasId + " no existe.", 404);
         }
         lugarCompetenciaLogic.deleteLugarCompetencia(lugarCompetenciasId);
